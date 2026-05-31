@@ -1091,20 +1091,17 @@
         hideForm();
 
         if (error) {
-          // Duplicate email (Postgres unique violation code: 23505)
           if (error.code === '23505') {
+            hideForm();
             showMsg('msgDuplicate');
           } else {
+            hideForm();
             showMsg('msgError');
           }
         } else {
+          hideForm();
           showMsg('msgSuccess');
-          // Bump counter
-          const el  = document.getElementById('counter');
-          const cur = parseInt(el.textContent.replace(/[^\d]/g, '')) || 0;
-          animateNum(el, cur + 1, 500);
         }
-
       } catch (e) {
         hideForm();
         showMsg('msgError');
