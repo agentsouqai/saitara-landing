@@ -1134,6 +1134,9 @@
     }
 
     function showMsg(id) {
+      ['msgSuccess','msgDuplicate','msgError'].forEach(m => {
+        document.getElementById(m).classList.remove('show');
+      });
       document.getElementById(id).classList.add('show');
     }
 
