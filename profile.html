@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سيطرة · ملفك الشخصي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#06080E;--bg2:#0C0F1C;--bg3:#131828;
+      --accent:#00E5A0;--gold:#F0C040;--purple:#A78BFA;
+      --text:#E8EDF5;--mid:#8899BB;--muted:#4A5A78;
+      --border:rgba(0,229,160,0.12);--border2:rgba(255,255,255,0.06);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,160,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,0.025) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;z-index:0;}
+    .orb{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0}
+    .orb1{width:500px;height:500px;background:rgba(0,229,160,0.05);top:-150px;right:-100px;animation:drift 16s ease-in-out infinite alternate}
+    .orb2{width:400px;height:400px;background:rgba(100,50,220,0.06);bottom:-100px;left:-80px;animation:drift 12s ease-in-out infinite alternate-reverse}
+    @keyframes drift{from{transform:translate(0,0)}to{transform:translate(40px,50px)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+    nav{display:flex;align-items:center;justify-content:space-between;padding:24px 48px;border-bottom:1px solid var(--border2)}
+    .nav-logo{font-family:'Cairo',sans-serif;font-size:1.4rem;font-weight:900;color:var(--accent);text-decoration:none}
+    .nav-back{font-size:0.8rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .nav-back:hover{color:var(--text)}
+    .nav-signout{font-size:0.78rem;color:var(--muted);background:transparent;border:1px solid var(--border2);padding:6px 16px;border-radius:20px;cursor:pointer;font-family:'Tajawal',sans-serif;transition:all 0.2s;display:none}
+    .nav-signout:hover{border-color:rgba(255,77,109,0.4);color:#FF4D6D}
+
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+
+    .card{background:var(--bg2);border:1px solid var(--border2);border-radius:24px;padding:48px;width:100%;max-width:580px;animation:fadeUp 0.4s ease both}
+    .card-eyebrow{font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+    .card-title{font-family:'Cairo',sans-serif;font-size:1.8rem;font-weight:800;line-height:1.3;margin-bottom:8px}
+    .card-title span{color:var(--accent)}
+    .card-sub{font-size:0.9rem;color:var(--mid);line-height:1.8;margin-bottom:28px;font-weight:300}
+
+    .field{margin-bottom:20px}
+    .field label{display:block;font-size:0.78rem;color:var(--mid);font-weight:500;margin-bottom:8px}
+    .field input,.field textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:14px 18px;font-family:'Tajawal',sans-serif;font-size:0.95rem;color:var(--text);outline:none;transition:border-color 0.2s}
+    .field input:focus,.field textarea:focus{border-color:var(--accent)}
+    .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+    .field textarea{resize:vertical;min-height:120px;line-height:1.8}
+
+    .section-label{font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:12px;margin-top:28px;display:flex;align-items:center;gap:8px}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* TOPICS */
+    .cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .cat-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:24px;padding:7px 16px;font-family:'Tajawal',sans-serif;font-size:0.82rem;color:var(--mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+    .cat-btn:hover{border-color:rgba(255,255,255,0.15);color:var(--text)}
+    .cat-btn.active{background:rgba(0,229,160,0.1);border-color:var(--accent);color:var(--accent)}
+    .subtopics{display:none;flex-wrap:wrap;gap:7px;padding:14px;background:rgba(0,0,0,0.2);border-radius:12px;border:1px solid var(--border2);margin-bottom:12px;animation:fadeUp 0.2s ease both}
+    .subtopics.show{display:flex}
+    .sub-btn{background:transparent;border:1px solid var(--border2);border-radius:20px;padding:5px 13px;font-family:'Tajawal',sans-serif;font-size:0.78rem;color:var(--mid);cursor:pointer;transition:all 0.2s}
+    .sub-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+    .sub-btn.selected{background:rgba(0,229,160,0.1);border-color:var(--accent);color:var(--accent)}
+    .sub-btn.locked{opacity:0.4;cursor:not-allowed}
+    .chips-row{display:flex;flex-wrap:wrap;gap:7px;min-height:28px;margin-top:8px}
+    .chip{display:flex;align-items:center;gap:5px;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.2);border-radius:20px;padding:4px 12px;font-size:0.76rem;color:var(--accent)}
+    .chip-purple{background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.2);color:var(--purple)}
+    .chip-remove{cursor:pointer;opacity:0.6;font-size:0.85rem;transition:opacity 0.2s}
+    .chip-remove:hover{opacity:1}
+
+    /* COMPANIES */
+    .company-search{position:relative;margin-bottom:10px}
+    .company-search input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:13px 18px 13px 42px;font-family:'Tajawal',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color 0.2s;direction:ltr;text-align:right}
+    .company-search input:focus{border-color:var(--accent)}
+    .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--muted)}
+    .sug-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .sug-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:5px 13px;font-size:0.78rem;color:var(--mid);cursor:pointer;transition:all 0.2s}
+    .sug-btn:hover{border-color:rgba(167,139,250,0.3);color:var(--purple)}
+    .sug-btn.added{opacity:0.4;cursor:not-allowed}
+
+    /* COUNTRIES */
+    .countries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:10px}
+    .country-btn{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:9px 13px;cursor:pointer;transition:all 0.2s;font-size:0.8rem;color:var(--mid)}
+    .country-btn:hover{border-color:rgba(240,192,64,0.3);color:var(--text)}
+    .country-btn.selected{background:rgba(240,192,64,0.07);border-color:rgba(240,192,64,0.3);color:var(--gold)}
+
+    /* SCHEDULE */
+    .schedule-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+    .sch-card{background:var(--bg3);border:2px solid var(--border2);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:center}
+    .sch-card:hover{border-color:rgba(255,255,255,0.15)}
+    .sch-card.selected{border-color:var(--accent);background:rgba(0,229,160,0.05)}
+    .sch-icon{font-size:1.6rem;margin-bottom:6px}
+    .sch-name{font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:2px}
+    .sch-desc{font-size:0.72rem;color:var(--muted)}
+
+    /* LIMIT */
+    .limit-note{font-size:0.72rem;color:var(--muted);margin-top:6px}
+    .limit-note span{color:var(--accent);font-weight:600}
+
+    /* BUTTONS */
+    .btn-row{display:flex;gap:12px;margin-top:28px}
+    .btn-primary{flex:1;background:var(--accent);color:#06080E;border:none;border-radius:12px;padding:15px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-primary:hover{background:#00ffb3}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .spinner{width:16px;height:16px;border:2px solid rgba(6,8,14,0.3);border-top-color:#06080E;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+    .spinner.show{display:block}
+
+    .success-banner{background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.22);border-radius:12px;padding:16px 20px;color:var(--accent);font-weight:600;font-size:0.9rem;display:none;align-items:center;gap:10px;margin-top:16px}
+    .success-banner.show{display:flex;animation:fadeUp 0.3s ease both}
+
+    .email-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.06);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:0.82rem;color:var(--accent);margin-bottom:20px;font-weight:500}
+
+    @media(max-width:640px){
+      nav{padding:18px 20px}
+      .card{padding:28px 20px}
+      main{padding:24px 16px}
+      .schedule-row{grid-template-columns:1fr}
+      .countries-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+    }
+  </style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="page">
+  <nav>
+    <a href="/" class="nav-logo">سيطرة</a>
+    <a href="/" class="nav-back">← الرئيسية</a>
+    <button class="nav-signout" id="signout-btn" onclick="signOut()">تسجيل الخروج</button>
+  </nav>
+
+  <main>
+
+    <!-- ══ STATE 1: LOGIN ══ -->
+    <div class="card" id="screen-login">
+      <div class="card-eyebrow">الوصول إلى ملفك</div>
+      <h2 class="card-title">أدخل بريدك<br/><span>لنرسل لك رابط الدخول</span></h2>
+      <p class="card-sub">سيطرة يرسل لك رابطاً مؤقتاً على بريدك. اضغط عليه وستدخل مباشرة بدون كلمة مرور.</p>
+      <div class="field">
+        <label>بريدك الإلكتروني المسجّل</label>
+        <input type="email" id="login-email" placeholder="name@example.com" style="direction:ltr;text-align:right" onkeydown="if(event.key==='Enter') sendMagicLink()"/>
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="sendMagicLink()" id="login-btn">
+          <span id="login-btn-text">أرسل لي رابط الدخول ✦</span>
+          <span class="spinner" id="login-spinner"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ STATE 2: CHECK EMAIL ══ -->
+    <div class="card" id="screen-sent" style="display:none;text-align:center">
+      <div style="font-size:3.5rem;margin-bottom:20px">📬</div>
+      <div class="card-eyebrow" style="justify-content:center">تم الإرسال</div>
+      <h2 class="card-title" style="text-align:center">تحقق من <span>بريدك</span></h2>
+      <p class="card-sub" style="text-align:center;max-width:360px;margin:0 auto 24px">أرسلنا لك رابط دخول مؤقت. افتح بريدك واضغط على الرابط للدخول مباشرة.</p>
+      <p style="font-size:0.78rem;color:var(--muted);text-align:center">لم يصلك؟ <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="resendLink()">أرسل مرة أخرى</span></p>
+    </div>
+
+    <!-- ══ STATE 3: PROFILE EDITOR ══ -->
+    <div class="card" id="screen-profile" style="display:none;max-width:680px">
+      <div class="card-eyebrow">ملفك الاستخباراتي</div>
+      <h2 class="card-title">عدّل <span>إعداداتك</span></h2>
+      <p class="card-sub">كل تعديل يجعل استخباراتك أدق وأكثر صلة بما تحتاجه.</p>
+
+      <div id="user-email-badge" class="email-badge">📧 <span id="user-email-display"></span></div>
+
+      <!-- NAME -->
+      <div class="field">
+        <label>اسمك</label>
+        <input type="text" id="p-name" placeholder="اسمك الكريم"/>
+      </div>
+
+      <!-- TOPICS -->
+      <div class="section-label">المواضيع</div>
+      <div class="cat-grid" id="p-cat-list"></div>
+      <div id="p-subtopic-area"></div>
+      <div class="chips-row" id="p-topics-display"></div>
+      <p class="limit-note">الخطة المجانية: حتى <span>٤ مواضيع</span></p>
+
+      <!-- COMPANIES -->
+      <div class="section-label">الشركات</div>
+      <div class="company-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="p-company-input" placeholder="اكتب اسم الشركة واضغط Enter" onkeydown="if(event.key==='Enter'){addCompany(this.value.trim(),null);this.value=''}"/>
+      </div>
+      <div class="chips-row" id="p-company-chips"></div>
+      <div class="sug-grid" id="p-sug-companies"></div>
+      <p class="limit-note">الخطة المجانية: حتى <span>٣ شركات</span></p>
+
+      <!-- COUNTRIES -->
+      <div class="section-label">البلدان <span style="font-size:0.65rem;color:var(--muted);font-weight:400;letter-spacing:0">(اختياري)</span></div>
+      <div class="countries-grid" id="p-countries-grid"></div>
+      <p class="limit-note">الخطة المجانية: حتى <span>٣ بلدان</span></p>
+
+      <!-- SCHEDULE -->
+      <div class="section-label">تكرار الإرسال</div>
+      <div class="schedule-row">
+        <div class="sch-card selected" id="p-sch-daily" onclick="selectSch('daily')">
+          <div class="sch-icon">⚡</div>
+          <div class="sch-name">يومي</div>
+          <div class="sch-desc">كل صباح على بريدك</div>
+        </div>
+        <div class="sch-card" id="p-sch-weekly" onclick="selectSch('weekly')">
+          <div class="sch-icon">📅</div>
+          <div class="sch-name">أسبوعي</div>
+          <div class="sch-desc">ملخص شامل كل أسبوع</div>
+        </div>
+      </div>
+
+      <!-- BIO -->
+      <div class="section-label">ملفك الشخصي</div>
+      <div class="field">
+        <textarea id="p-bio" placeholder="أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. كلما أخبرته أكثر، كانت استخباراتك أدق..." style="min-height:140px"></textarea>
+        <div style="font-size:0.72rem;color:var(--muted);margin-top:6px;" id="p-bio-count">٠ حرف</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="saveProfile()" id="save-btn">
+          <span id="save-text">حفظ التغييرات ✦</span>
+          <span class="spinner" id="save-spinner"></span>
+        </button>
+      </div>
+
+      <div class="success-banner" id="save-success">
+        <span>✦</span><span>تم حفظ ملفك بنجاح. سيطرة يعرفك أكثر الآن.</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────
+const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';
+const FREE_TOPIC_LIMIT   = 4;
+const FREE_COMPANY_LIMIT = 3;
+const FREE_COUNTRY_LIMIT = 3;
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── STATE ─────────────────────────────────────────────────────────
+let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', bio:'' };
+let openCat = null;
+
+// ── DATA ──────────────────────────────────────────────────────────
+const CATEGORIES = [
+  { id:'tech',     icon:'💻', label:'التقنية',        subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'] },
+  { id:'biz',      icon:'💼', label:'الأعمال',         subs:['ريادة الأعمال','الاستثمار والتمويل','الاستراتيجية والقيادة','التسويق','المبيعات','التجارة الإلكترونية','الموارد البشرية'] },
+  { id:'medical',  icon:'🏥', label:'الطب والصحة',    subs:['أمراض القلب','الأورام','طب الأعصاب','السكري والغدد','الصحة العامة','الطب النفسي','طب الأطفال','الجراحة'] },
+  { id:'fitness',  icon:'🏋️', label:'اللياقة',        subs:['تمارين المقاومة','الكارديو والجري','علم الرياضة','التعافي والنوم','رياضات المنافسة','اليوغا والتمدد'] },
+  { id:'beauty',   icon:'✨', label:'الجمال والعافية', subs:['العناية بالبشرة','العناية بالشعر','التجميل والمكياج','العافية الشاملة','مكافحة الشيخوخة','البيوهاكينج'] },
+  { id:'nutrition',icon:'🥗', label:'التغذية',         subs:['الحمية والرشاقة','التغذية الرياضية','الأطعمة الوظيفية','الصيام المتقطع','المكملات الغذائية','الميكروبيوم'] },
+  { id:'finance',  icon:'📈', label:'المال والاستثمار',subs:['الأسهم والبورصة','العملات الرقمية','العقارات','صناديق الاستثمار','الاقتصاد الكلي','المصرفية الإسلامية'] },
+  { id:'science',  icon:'🔬', label:'العلوم',           subs:['الذكاء الاصطناعي البحثي','الفضاء والفلك','الفيزياء والكيمياء','علم الأحياء','البيئة والمناخ','علم الجينات'] },
+  { id:'mideast',  icon:'🌍', label:'منطقة MENA',      subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'] },
+  { id:'mental',   icon:'🧠', label:'الصحة النفسية',  subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'] },
+];
+
+const SUGGESTED = ['Apple','Microsoft','Google','Nvidia','OpenAI','Anthropic','Amazon','Meta','Tesla','Saudi Aramco','stc','Palo Alto Networks','CrowdStrike','Accenture','McKinsey','BCG','IBM','Cisco','Oracle','SAP'];
+
+const COUNTRIES = [
+  {flag:'🇸🇦',name:'السعودية',en:'Saudi Arabia'},{flag:'🇦🇪',name:'الإمارات',en:'UAE'},
+  {flag:'🇶🇦',name:'قطر',en:'Qatar'},{flag:'🇰🇼',name:'الكويت',en:'Kuwait'},
+  {flag:'🇧🇭',name:'البحرين',en:'Bahrain'},{flag:'🇴🇲',name:'عُمان',en:'Oman'},
+  {flag:'🇯🇴',name:'الأردن',en:'Jordan'},{flag:'🇪🇬',name:'مصر',en:'Egypt'},
+  {flag:'🇺🇸',name:'أمريكا',en:'USA'},{flag:'🇬🇧',name:'المملكة المتحدة',en:'UK'},
+  {flag:'🇩🇪',name:'ألمانيا',en:'Germany'},{flag:'🇨🇳',name:'الصين',en:'China'},
+  {flag:'🇯🇵',name:'اليابان',en:'Japan'},{flag:'🇮🇳',name:'الهند',en:'India'},
+  {flag:'🇸🇬',name:'سنغافورة',en:'Singapore'},{flag:'🇫🇷',name:'فرنسا',en:'France'},
+];
+
+// ── AUTH ──────────────────────────────────────────────────────────
+async function sendMagicLink() {
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('login-email').style.borderColor = '#FF4D6D';
+    setTimeout(() => document.getElementById('login-email').style.borderColor = '', 1500);
+    return;
+  }
+  const btn = document.getElementById('login-btn');
+  const txt = document.getElementById('login-btn-text');
+  const spn = document.getElementById('login-spinner');
+  btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
+
+  const redirectTo = window.location.origin + '/profile.html';
+  const { error } = await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
+
+  btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+  if (!error) {
+    localStorage.setItem('saitara_pending_email', email);
+    show('screen-sent');
+  } else {
+    alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+  }
+}
+
+async function resendLink() {
+  const email = localStorage.getItem('saitara_pending_email');
+  if (email) {
+    const redirectTo = window.location.origin + '/profile.html';
+    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
+    alert('تم إرسال الرابط مرة أخرى.');
+  }
+}
+
+async function signOut() {
+  await db.auth.signOut();
+  show('screen-login');
+  document.getElementById('signout-btn').style.display = 'none';
+}
+
+// ── SESSION DETECTION ─────────────────────────────────────────────
+db.auth.onAuthStateChange(async (event, session) => {
+  if (session) {
+    document.getElementById('signout-btn').style.display = 'block';
+    document.getElementById('user-email-display').textContent = session.user.email;
+    await loadProfile(session.user.email);
+    show('screen-profile');
+  }
+});
+
+// ── LOAD PROFILE ──────────────────────────────────────────────────
+async function loadProfile(email) {
+  const { data } = await db.from('profiles').select('*').eq('email', email).single();
+  if (data) {
+    profile.topics    = data.topics    || [];
+    profile.companies = data.companies || [];
+    profile.countries = data.countries || [];
+    profile.frequency = data.frequency || 'daily';
+    profile.bio       = data.bio       || '';
+    document.getElementById('p-name').value = data.name || '';
+    document.getElementById('p-bio').value  = data.bio  || '';
+    updateBioCount();
+  }
+  buildUI();
+}
+
+// ── BUILD UI ──────────────────────────────────────────────────────
+function buildUI() {
+  buildCategories();
+  buildSuggestedCompanies();
+  buildCountries();
+  renderTopicChips();
+  renderCompanyChips();
+  selectSch(profile.frequency);
+}
+
+// CATEGORIES
+function buildCategories() {
+  const el = document.getElementById('p-cat-list');
+  el.innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-btn" id="pcat-${c.id}" data-id="${c.id}">${c.icon} ${c.label}</button>`
+  ).join('');
+  el.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => toggleCat(btn.dataset.id));
+  });
+}
+
+function toggleCat(id) {
+  openCat = openCat === id ? null : id;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.id === openCat));
+  renderSubtopics();
+}
+
+function renderSubtopics() {
+  const area = document.getElementById('p-subtopic-area');
+  if (!openCat) { area.innerHTML = ''; return; }
+  const cat = CATEGORIES.find(c => c.id === openCat);
+  const atMax = profile.topics.length >= FREE_TOPIC_LIMIT;
+  area.innerHTML = `<div class="subtopics show">${
+    cat.subs.map(s => {
+      const sel = profile.topics.includes(s);
+      const locked = !sel && atMax;
+      return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" data-sub="${s}">${s}</button>`;
+    }).join('')
+  }</div>`;
+  area.querySelectorAll('.sub-btn:not(.locked)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const s = btn.dataset.sub;
+      const idx = profile.topics.indexOf(s);
+      if (idx > -1) profile.topics.splice(idx, 1);
+      else if (profile.topics.length < FREE_TOPIC_LIMIT) profile.topics.push(s);
+      renderSubtopics();
+      renderTopicChips();
+    });
+  });
+}
+
+function renderTopicChips() {
+  const el = document.getElementById('p-topics-display');
+  el.innerHTML = profile.topics.map((t,i) =>
+    `<div class="chip">${t}<span class="chip-remove" data-i="${i}">×</span></div>`
+  ).join('');
+  el.querySelectorAll('.chip-remove').forEach(s => {
+    s.addEventListener('click', () => {
+      profile.topics.splice(parseInt(s.dataset.i), 1);
+      renderSubtopics(); renderTopicChips();
+    });
+  });
+}
+
+// COMPANIES
+function buildSuggestedCompanies() {
+  const el = document.getElementById('p-sug-companies');
+  el.innerHTML = SUGGESTED.map((c,i) =>
+    `<button class="sug-btn ${profile.companies.includes(c)?'added':''}" data-i="${i}">${c}</button>`
+  ).join('');
+  el.querySelectorAll('.sug-btn:not(.added)').forEach(btn => {
+    btn.addEventListener('click', () => addCompany(SUGGESTED[parseInt(btn.dataset.i)], btn));
+  });
+}
+
+function addCompany(name, btn) {
+  if (!name || profile.companies.includes(name) || profile.companies.length >= FREE_COMPANY_LIMIT) return;
+  profile.companies.push(name);
+  renderCompanyChips();
+  if (btn) btn.classList.add('added');
+}
+
+function renderCompanyChips() {
+  const el = document.getElementById('p-company-chips');
+  el.innerHTML = profile.companies.map((c,i) =>
+    `<div class="chip chip-purple">${c}<span class="chip-remove" data-i="${i}">×</span></div>`
+  ).join('');
+  el.querySelectorAll('.chip-remove').forEach(s => {
+    s.addEventListener('click', () => {
+      const name = profile.companies[parseInt(s.dataset.i)];
+      profile.companies.splice(parseInt(s.dataset.i), 1);
+      renderCompanyChips();
+      document.querySelectorAll('.sug-btn').forEach(b => {
+        if (SUGGESTED[parseInt(b.dataset.i)] === name) b.classList.remove('added');
+      });
+    });
+  });
+}
+
+// COUNTRIES
+function buildCountries() {
+  const g = document.getElementById('p-countries-grid');
+  g.innerHTML = COUNTRIES.map((c,i) =>
+    `<button class="country-btn ${profile.countries.includes(c.en)?'selected':''}" data-i="${i}">${c.flag} ${c.name}</button>`
+  ).join('');
+  g.querySelectorAll('.country-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const c = COUNTRIES[parseInt(btn.dataset.i)];
+      const idx = profile.countries.indexOf(c.en);
+      if (idx > -1) { profile.countries.splice(idx,1); btn.classList.remove('selected'); }
+      else if (profile.countries.length < FREE_COUNTRY_LIMIT) { profile.countries.push(c.en); btn.classList.add('selected'); }
+    });
+  });
+}
+
+// SCHEDULE
+function selectSch(val) {
+  profile.frequency = val;
+  document.getElementById('p-sch-daily').classList.toggle('selected', val === 'daily');
+  document.getElementById('p-sch-weekly').classList.toggle('selected', val === 'weekly');
+}
+
+// BIO counter
+function updateBioCount() {
+  const val = document.getElementById('p-bio').value;
+  const nums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  const len = val.length.toString().split('').map(d => nums[parseInt(d)]).join('');
+  document.getElementById('p-bio-count').textContent = len + ' حرف';
+}
+document.getElementById('p-bio').addEventListener('input', updateBioCount);
+
+// ── SAVE PROFILE ──────────────────────────────────────────────────
+async function saveProfile() {
+  const session = (await db.auth.getSession()).data.session;
+  if (!session) return;
+
+  const btn = document.getElementById('save-btn');
+  const txt = document.getElementById('save-text');
+  const spn = document.getElementById('save-spinner');
+  btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
+
+  const { error } = await db.from('profiles').upsert([{
+    email:     session.user.email,
+    name:      document.getElementById('p-name').value.trim(),
+    topics:    profile.topics,
+    companies: profile.companies,
+    countries: profile.countries,
+    frequency: profile.frequency,
+    bio:       document.getElementById('p-bio').value.trim() || null,
+    active:    true,
+  }], { onConflict: 'email' });
+
+  btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+
+  if (!error) {
+    const banner = document.getElementById('save-success');
+    banner.classList.add('show');
+    setTimeout(() => banner.classList.remove('show'), 4000);
+  } else {
+    alert('حدث خطأ أثناء الحفظ. يرجى المحاولة مرة أخرى.');
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────
+function show(id) {
+  ['screen-login','screen-sent','screen-profile'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+(async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
+    document.getElementById('signout-btn').style.display = 'block';
+    document.getElementById('user-email-display').textContent = session.user.email;
+    await loadProfile(session.user.email);
+    show('screen-profile');
+  } else {
+    show('screen-login');
+  }
+})();
+</script>
+</body>
+</html>
