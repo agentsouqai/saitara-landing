@@ -288,14 +288,15 @@ async function sendMagicLink() {
   const spn = document.getElementById('login-spinner');
   btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
 
-  const { error } = await db.auth.signInWithOtp({ email });
+  const redirectTo = window.location.origin + '/profile.html';
+  const { error } = await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
 
   btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
   if (!error) {
     localStorage.setItem('saitara_pending_email', email);
     show('screen-sent');
   } else {
-    alert('Error: ' + error.message);
+    alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
   }
 }
 
@@ -515,14 +516,37 @@ function show(id) {
 
 // ── INIT ──────────────────────────────────────────────────────────
 (async () => {
-  // If URL has access_token, Supabase is processing magic link
-  // Show loading state and let onAuthStateChange handle it
+  // Handle magic link token in URL hash
   if (window.location.hash && window.location.hash.includes('access_token')) {
     show('screen-sent');
     document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
     document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
+
+    // Extract token and set session manually
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken  = hashParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token');
+
+    if (accessToken && refreshToken) {
+      const { data, error } = await db.auth.setSession({
+        access_token:  accessToken,
+        refresh_token: refreshToken,
+      });
+      if (data?.session) {
+        document.getElementById('signout-btn').style.display = 'block';
+        document.getElementById('user-email-display').textContent = data.session.user.email;
+        await loadProfile(data.session.user.email);
+        // Clean URL
+        window.history.replaceState({}, document.title, '/profile.html');
+        show('screen-profile');
+        return;
+      }
+    }
+    // If token processing failed, show login
+    show('screen-login');
     return;
   }
+
   const { data: { session } } = await db.auth.getSession();
   if (session) {
     document.getElementById('signout-btn').style.display = 'block';
