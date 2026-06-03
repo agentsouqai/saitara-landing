@@ -467,18 +467,21 @@ async function goStep(n) {
       setTimeout(() => document.getElementById('inp-email').style.borderColor = '', 1500);
       return;
     }
-    // Check if email already has a profile
-const { data } = await db.from('profiles').select('email').eq('email', email.toLowerCase()).maybeSingle();
-    if (data) {
-      document.getElementById('inp-email').style.borderColor = '#F0C040';
-      const msg = document.createElement('p');
-      msg.id = 'existing-profile-msg';
-      msg.style.cssText = 'font-size:0.82rem;color:#F0C040;margin-top:10px;text-align:center;';
-      msg.innerHTML = 'هذا البريد مسجّل بالفعل. <a href="/profile.html" style="color:var(--accent);font-weight:700;">عدّل ملفك الحالي ←</a>';
-      const existing = document.getElementById('existing-profile-msg');
-      if (existing) existing.remove();
-      document.getElementById('inp-email').parentNode.appendChild(msg);
-      return;
+    try {
+      const { data } = await db.from('profiles').select('email').eq('email', email.toLowerCase()).maybeSingle();
+      if (data) {
+        document.getElementById('inp-email').style.borderColor = '#F0C040';
+        const existing = document.getElementById('existing-profile-msg');
+        if (existing) existing.remove();
+        const msg = document.createElement('p');
+        msg.id = 'existing-profile-msg';
+        msg.style.cssText = 'font-size:0.82rem;color:#F0C040;margin-top:10px;text-align:center;';
+        msg.innerHTML = 'هذا البريد مسجّل بالفعل. <a href="/profile.html" style="color:var(--accent);font-weight:700;">عدّل ملفك الحالي ←</a>';
+        document.getElementById('inp-email').parentNode.appendChild(msg);
+        return;
+      }
+    } catch(e) {
+      // check failed silently, proceed anyway
     }
     state.name  = name;
     state.email = email.toLowerCase();
