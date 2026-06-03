@@ -242,8 +242,9 @@ const FREE_COMPANY_LIMIT = 3;
 const FREE_COUNTRY_LIMIT = 3;
 
 const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_ANON);
-
+const db = createClient(SUPABASE_URL, SUPABASE_ANON, {
+  auth: { detectSessionInUrl: true, persistSession: true }
+});
 // ── STATE ─────────────────────────────────────────────────────────
 let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', bio:'' };
 let openCat = null;
@@ -330,7 +331,7 @@ if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
 
 // ── LOAD PROFILE ──────────────────────────────────────────────────
 async function loadProfile(email) {
-  const { data } = await db.from('profiles').select('*').eq('email', email).single();
+  const { data } = await db.from('profiles').select('*').eq('email', email).maybeSingle();
   if (data) {
     profile.topics    = data.topics    || [];
     profile.companies = data.companies || [];
@@ -521,37 +522,24 @@ function show(id) {
     document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
     document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
 
-    try {
-      const hash = window.location.hash.substring(1);
-      const params = {};
-      hash.split('&').forEach(part => {
-        const eqIdx = part.indexOf('=');
-        params[part.substring(0, eqIdx)] = part.substring(eqIdx + 1);
-      });
-
-      const accessToken  = params['access_token'];
-      const refreshToken = params['refresh_token'];
-
-      if (accessToken && refreshToken) {
-        const { data, error } = await db.auth.setSession({
-          access_token:  accessToken,
-          refresh_token: refreshToken,
-        });
-        if (data?.session) {
+    let attempts = 0;
+    const pollSession = async () => {
+      try {
+        const { data: { session } } = await db.auth.getSession();
+        if (session) {
           window.history.replaceState({}, document.title, '/profile.html');
           document.getElementById('signout-btn').style.display = 'block';
-          document.getElementById('user-email-display').textContent = data.session.user.email;
-          await loadProfile(data.session.user.email);
+          document.getElementById('user-email-display').textContent = session.user.email;
+          await loadProfile(session.user.email);
           show('screen-profile');
           return;
-        } else {
-          alert('Auth error: ' + (error?.message || 'unknown'));
         }
-      }
-    } catch(e) {
-      alert('Exception: ' + e.message);
-    }
-    show('screen-login');
+      } catch(e) {}
+      attempts++;
+      if (attempts < 20) setTimeout(pollSession, 500);
+      else show('screen-login');
+    };
+    setTimeout(pollSession, 500);
     return;
   }
 
