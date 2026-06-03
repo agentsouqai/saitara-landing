@@ -295,7 +295,7 @@ async function sendMagicLink() {
     localStorage.setItem('saitara_pending_email', email);
     show('screen-sent');
   } else {
-    alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+    alert('Error: ' + error.message);
   }
 }
 
