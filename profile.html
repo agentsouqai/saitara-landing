@@ -317,11 +317,14 @@ async function signOut() {
 
 // ── SESSION DETECTION ─────────────────────────────────────────────
 db.auth.onAuthStateChange(async (event, session) => {
-  if (session) {
+  if (event === 'SIGNED_IN' && session) {
     document.getElementById('signout-btn').style.display = 'block';
     document.getElementById('user-email-display').textContent = session.user.email;
     await loadProfile(session.user.email);
     show('screen-profile');
+  } else if (event === 'SIGNED_OUT') {
+    show('screen-login');
+    document.getElementById('signout-btn').style.display = 'none';
   }
 });
 
@@ -513,6 +516,14 @@ function show(id) {
 
 // ── INIT ──────────────────────────────────────────────────────────
 (async () => {
+  // If URL has access_token, Supabase is processing magic link
+  // Show loading state and let onAuthStateChange handle it
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    show('screen-sent');
+    document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
+    document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
+    return;
+  }
   const { data: { session } } = await db.auth.getSession();
   if (session) {
     document.getElementById('signout-btn').style.display = 'block';
