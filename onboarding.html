@@ -458,7 +458,7 @@ let state = {
 };
 
 // ── STEP NAVIGATION ──────────────────────────────────────────────
-async function goStep(n) {
+function goStep(n) {
   if (n === 2) {
     const name  = document.getElementById('inp-name').value.trim();
     const email = document.getElementById('inp-email').value.trim();
@@ -467,22 +467,6 @@ async function goStep(n) {
       setTimeout(() => document.getElementById('inp-email').style.borderColor = '', 1500);
       return;
     }
-    try {
-      const { data } = await db.from('profiles').select('email').eq('email', email.toLowerCase()).maybeSingle();
-      if (data) {
-        document.getElementById('inp-email').style.borderColor = '#F0C040';
-        const existing = document.getElementById('existing-profile-msg');
-        if (existing) existing.remove();
-        const msg = document.createElement('p');
-        msg.id = 'existing-profile-msg';
-        msg.style.cssText = 'font-size:0.82rem;color:#F0C040;margin-top:10px;text-align:center;';
-        msg.innerHTML = 'هذا البريد مسجّل بالفعل. <a href="/profile.html" style="color:var(--accent);font-weight:700;">عدّل ملفك الحالي ←</a>';
-        document.getElementById('inp-email').parentNode.appendChild(msg);
-        return;
-      }
-    } catch(e) {
-      // check failed silently, proceed anyway
-    }
     state.name  = name;
     state.email = email.toLowerCase();
   }
@@ -490,7 +474,6 @@ async function goStep(n) {
     state.bio = (document.getElementById('inp-bio').value || '').trim();
     buildSummary();
   }
-
   for (let i = 1; i <= 7; i++) {
     const el = document.getElementById('step-' + i);
     if (el) el.style.display = i === n ? 'block' : 'none';
