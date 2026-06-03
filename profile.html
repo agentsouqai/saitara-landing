@@ -241,14 +241,6 @@ const FREE_TOPIC_LIMIT   = 4;
 const FREE_COMPANY_LIMIT = 3;
 const FREE_COUNTRY_LIMIT = 3;
 
-const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_ANON, {
-  auth: { detectSessionInUrl: true, persistSession: true }
-});
-// ── STATE ─────────────────────────────────────────────────────────
-let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', bio:'' };
-let openCat = null;
-
 // ── DATA ──────────────────────────────────────────────────────────
 const CATEGORIES = [
   { id:'tech',     icon:'💻', label:'التقنية',        subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'] },
@@ -262,9 +254,7 @@ const CATEGORIES = [
   { id:'mideast',  icon:'🌍', label:'منطقة MENA',      subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'] },
   { id:'mental',   icon:'🧠', label:'الصحة النفسية',  subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'] },
 ];
-
 const SUGGESTED = ['Apple','Microsoft','Google','Nvidia','OpenAI','Anthropic','Amazon','Meta','Tesla','Saudi Aramco','stc','Palo Alto Networks','CrowdStrike','Accenture','McKinsey','BCG','IBM','Cisco','Oracle','SAP'];
-
 const COUNTRIES = [
   {flag:'🇸🇦',name:'السعودية',en:'Saudi Arabia'},{flag:'🇦🇪',name:'الإمارات',en:'UAE'},
   {flag:'🇶🇦',name:'قطر',en:'Qatar'},{flag:'🇰🇼',name:'الكويت',en:'Kuwait'},
@@ -275,6 +265,22 @@ const COUNTRIES = [
   {flag:'🇯🇵',name:'اليابان',en:'Japan'},{flag:'🇮🇳',name:'الهند',en:'India'},
   {flag:'🇸🇬',name:'سنغافورة',en:'Singapore'},{flag:'🇫🇷',name:'فرنسا',en:'France'},
 ];
+
+// ── STATE ─────────────────────────────────────────────────────────
+let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', bio:'' };
+let openCat  = null;
+
+// ── HELPERS ───────────────────────────────────────────────────────
+function show(id) {
+  ['screen-login','screen-sent','screen-profile'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+}
+
+function parseJwt(token) {
+  try { return JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))); }
+  catch(e) { return null; }
+}
 
 // ── AUTH ──────────────────────────────────────────────────────────
 async function sendMagicLink() {
@@ -288,82 +294,114 @@ async function sendMagicLink() {
   const txt = document.getElementById('login-btn-text');
   const spn = document.getElementById('login-spinner');
   btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
-
-  const redirectTo = window.location.origin + '/profile.html';
-  const { error } = await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
-
-  btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
-  if (!error) {
-    localStorage.setItem('saitara_pending_email', email);
-    show('screen-sent');
-  } else {
-    alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+      body: JSON.stringify({ email, create_user: true })
+    });
+    btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+    if (res.ok) { sessionStorage.setItem('saitara_pending_email', email); show('screen-sent'); }
+    else { const e = await res.json(); alert('Error: ' + (e.msg || e.message || res.status)); }
+  } catch(e) {
+    btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+    alert('Error: ' + e.message);
   }
 }
 
 async function resendLink() {
-  const email = localStorage.getItem('saitara_pending_email');
+  const email = sessionStorage.getItem('saitara_pending_email');
   if (email) {
-    const redirectTo = window.location.origin + '/profile.html';
-    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
+    await fetch(`${SUPABASE_URL}/auth/v1/otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+      body: JSON.stringify({ email, create_user: true })
+    });
     alert('تم إرسال الرابط مرة أخرى.');
   }
 }
 
-async function signOut() {
-  await db.auth.signOut();
+function signOut() {
+  sessionStorage.removeItem('saitara_token');
+  sessionStorage.removeItem('saitara_email');
   show('screen-login');
   document.getElementById('signout-btn').style.display = 'none';
 }
 
-// ── SESSION DETECTION ─────────────────────────────────────────────
-db.auth.onAuthStateChange(async (event, session) => {
-if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
-  document.getElementById('signout-btn').style.display = 'block';
-    document.getElementById('user-email-display').textContent = session.user.email;
-    await loadProfile(session.user.email);
-    show('screen-profile');
-  } else if (event === 'SIGNED_OUT') {
-    show('screen-login');
-    document.getElementById('signout-btn').style.display = 'none';
-  }
-});
-
 // ── LOAD PROFILE ──────────────────────────────────────────────────
-async function loadProfile(email) {
-  const { data } = await db.from('profiles').select('*').eq('email', email).maybeSingle();
-  if (data) {
-    profile.topics    = data.topics    || [];
-    profile.companies = data.companies || [];
-    profile.countries = data.countries || [];
-    profile.frequency = data.frequency || 'daily';
-    profile.bio       = data.bio       || '';
-    document.getElementById('p-name').value = data.name || '';
-    document.getElementById('p-bio').value  = data.bio  || '';
-    updateBioCount();
-  }
+async function loadProfile(email, token) {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?email=eq.${encodeURIComponent(email)}&select=*&limit=1`,
+      { headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${token}` } }
+    );
+    const rows = await res.json();
+    if (rows && rows[0]) {
+      const d = rows[0];
+      profile.topics    = d.topics    || [];
+      profile.companies = d.companies || [];
+      profile.countries = d.countries || [];
+      profile.frequency = d.frequency || 'daily';
+      profile.bio       = d.bio       || '';
+      document.getElementById('p-name').value = d.name || '';
+      document.getElementById('p-bio').value  = d.bio  || '';
+      updateBioCount();
+    }
+  } catch(e) { console.error('loadProfile:', e); }
   buildUI();
 }
 
-// ── BUILD UI ──────────────────────────────────────────────────────
-function buildUI() {
-  buildCategories();
-  buildSuggestedCompanies();
-  buildCountries();
-  renderTopicChips();
-  renderCompanyChips();
-  selectSch(profile.frequency);
+// ── SAVE PROFILE ──────────────────────────────────────────────────
+async function saveProfile() {
+  const token     = sessionStorage.getItem('saitara_token');
+  const userEmail = sessionStorage.getItem('saitara_email');
+  if (!token || !userEmail) { alert('انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.'); show('screen-login'); return; }
+  const btn = document.getElementById('save-btn');
+  const txt = document.getElementById('save-text');
+  const spn = document.getElementById('save-spinner');
+  btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${token}`,
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        name:  document.getElementById('p-name').value.trim(),
+        topics: profile.topics, companies: profile.companies,
+        countries: profile.countries, frequency: profile.frequency,
+        bio: document.getElementById('p-bio').value.trim() || null, active: true,
+      })
+    });
+    btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+    if (res.ok) {
+      const b = document.getElementById('save-success');
+      b.classList.add('show'); setTimeout(() => b.classList.remove('show'), 4000);
+    } else { const e = await res.json(); alert('Error: ' + (e.message || res.status)); }
+  } catch(e) {
+    btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
+    alert('Error: ' + e.message);
+  }
 }
 
-// CATEGORIES
+// ── UI: CATEGORIES ────────────────────────────────────────────────
+function buildUI() {
+  buildCategories(); buildSuggestedCompanies(); buildCountries();
+  renderTopicChips(); renderCompanyChips(); selectSch(profile.frequency);
+}
+
 function buildCategories() {
   const el = document.getElementById('p-cat-list');
   el.innerHTML = CATEGORIES.map(c =>
     `<button class="cat-btn" id="pcat-${c.id}" data-id="${c.id}">${c.icon} ${c.label}</button>`
   ).join('');
-  el.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => toggleCat(btn.dataset.id));
-  });
+  el.querySelectorAll('.cat-btn').forEach(btn =>
+    btn.addEventListener('click', () => toggleCat(btn.dataset.id))
+  );
 }
 
 function toggleCat(id) {
@@ -384,170 +422,126 @@ function renderSubtopics() {
       return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" data-sub="${s}">${s}</button>`;
     }).join('')
   }</div>`;
-  area.querySelectorAll('.sub-btn:not(.locked)').forEach(btn => {
+  area.querySelectorAll('.sub-btn:not(.locked)').forEach(btn =>
     btn.addEventListener('click', () => {
       const s = btn.dataset.sub;
       const idx = profile.topics.indexOf(s);
       if (idx > -1) profile.topics.splice(idx, 1);
       else if (profile.topics.length < FREE_TOPIC_LIMIT) profile.topics.push(s);
-      renderSubtopics();
-      renderTopicChips();
-    });
-  });
+      renderSubtopics(); renderTopicChips();
+    })
+  );
 }
 
 function renderTopicChips() {
   const el = document.getElementById('p-topics-display');
   el.innerHTML = profile.topics.map((t,i) =>
-    `<div class="chip">${t}<span class="chip-remove" data-i="${i}">×</span></div>`
+    `<div class="chip">${t}<span class="chip-remove" data-i="${i}">x</span></div>`
   ).join('');
-  el.querySelectorAll('.chip-remove').forEach(s => {
-    s.addEventListener('click', () => {
-      profile.topics.splice(parseInt(s.dataset.i), 1);
-      renderSubtopics(); renderTopicChips();
-    });
-  });
+  el.querySelectorAll('.chip-remove').forEach(s =>
+    s.addEventListener('click', () => { profile.topics.splice(parseInt(s.dataset.i),1); renderSubtopics(); renderTopicChips(); })
+  );
 }
 
-// COMPANIES
 function buildSuggestedCompanies() {
   const el = document.getElementById('p-sug-companies');
   el.innerHTML = SUGGESTED.map((c,i) =>
     `<button class="sug-btn ${profile.companies.includes(c)?'added':''}" data-i="${i}">${c}</button>`
   ).join('');
-  el.querySelectorAll('.sug-btn:not(.added)').forEach(btn => {
-    btn.addEventListener('click', () => addCompany(SUGGESTED[parseInt(btn.dataset.i)], btn));
-  });
+  el.querySelectorAll('.sug-btn:not(.added)').forEach(btn =>
+    btn.addEventListener('click', () => addCompany(SUGGESTED[parseInt(btn.dataset.i)], btn))
+  );
 }
 
 function addCompany(name, btn) {
   if (!name || profile.companies.includes(name) || profile.companies.length >= FREE_COMPANY_LIMIT) return;
-  profile.companies.push(name);
-  renderCompanyChips();
+  profile.companies.push(name); renderCompanyChips();
   if (btn) btn.classList.add('added');
 }
 
 function renderCompanyChips() {
   const el = document.getElementById('p-company-chips');
   el.innerHTML = profile.companies.map((c,i) =>
-    `<div class="chip chip-purple">${c}<span class="chip-remove" data-i="${i}">×</span></div>`
+    `<div class="chip chip-purple">${c}<span class="chip-remove" data-i="${i}">x</span></div>`
   ).join('');
-  el.querySelectorAll('.chip-remove').forEach(s => {
+  el.querySelectorAll('.chip-remove').forEach(s =>
     s.addEventListener('click', () => {
       const name = profile.companies[parseInt(s.dataset.i)];
-      profile.companies.splice(parseInt(s.dataset.i), 1);
+      profile.companies.splice(parseInt(s.dataset.i),1);
       renderCompanyChips();
       document.querySelectorAll('.sug-btn').forEach(b => {
         if (SUGGESTED[parseInt(b.dataset.i)] === name) b.classList.remove('added');
       });
-    });
-  });
+    })
+  );
 }
 
-// COUNTRIES
 function buildCountries() {
   const g = document.getElementById('p-countries-grid');
   g.innerHTML = COUNTRIES.map((c,i) =>
     `<button class="country-btn ${profile.countries.includes(c.en)?'selected':''}" data-i="${i}">${c.flag} ${c.name}</button>`
   ).join('');
-  g.querySelectorAll('.country-btn').forEach(btn => {
+  g.querySelectorAll('.country-btn').forEach(btn =>
     btn.addEventListener('click', () => {
       const c = COUNTRIES[parseInt(btn.dataset.i)];
       const idx = profile.countries.indexOf(c.en);
       if (idx > -1) { profile.countries.splice(idx,1); btn.classList.remove('selected'); }
       else if (profile.countries.length < FREE_COUNTRY_LIMIT) { profile.countries.push(c.en); btn.classList.add('selected'); }
-    });
-  });
+    })
+  );
 }
 
-// SCHEDULE
 function selectSch(val) {
   profile.frequency = val;
-  document.getElementById('p-sch-daily').classList.toggle('selected', val === 'daily');
-  document.getElementById('p-sch-weekly').classList.toggle('selected', val === 'weekly');
+  document.getElementById('p-sch-daily').classList.toggle('selected', val==='daily');
+  document.getElementById('p-sch-weekly').classList.toggle('selected', val==='weekly');
 }
 
-// BIO counter
 function updateBioCount() {
   const val = document.getElementById('p-bio').value;
   const nums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
   const len = val.length.toString().split('').map(d => nums[parseInt(d)]).join('');
   document.getElementById('p-bio-count').textContent = len + ' حرف';
 }
-document.getElementById('p-bio').addEventListener('input', updateBioCount);
-
-// ── SAVE PROFILE ──────────────────────────────────────────────────
-async function saveProfile() {
-  const session = (await db.auth.getSession()).data.session;
-  if (!session) return;
-
-  const btn = document.getElementById('save-btn');
-  const txt = document.getElementById('save-text');
-  const spn = document.getElementById('save-spinner');
-  btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
-
-  const { error } = await db.from('profiles').upsert([{
-    email:     session.user.email,
-    name:      document.getElementById('p-name').value.trim(),
-    topics:    profile.topics,
-    companies: profile.companies,
-    countries: profile.countries,
-    frequency: profile.frequency,
-    bio:       document.getElementById('p-bio').value.trim() || null,
-    active:    true,
-  }], { onConflict: 'email' });
-
-  btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
-
-  if (!error) {
-    const banner = document.getElementById('save-success');
-    banner.classList.add('show');
-    setTimeout(() => banner.classList.remove('show'), 4000);
-  } else {
-    alert('حدث خطأ أثناء الحفظ. يرجى المحاولة مرة أخرى.');
-  }
-}
-
-// ── HELPERS ───────────────────────────────────────────────────────
-function show(id) {
-  ['screen-login','screen-sent','screen-profile'].forEach(s => {
-    document.getElementById(s).style.display = s === id ? 'block' : 'none';
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('p-bio').addEventListener('input', updateBioCount);
+});
 
 // ── INIT ──────────────────────────────────────────────────────────
-(async () => {
+(async function init() {
   if (window.location.hash && window.location.hash.includes('access_token')) {
     show('screen-sent');
     document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
     document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
-
-    let attempts = 0;
-    const pollSession = async () => {
-      try {
-        const { data: { session } } = await db.auth.getSession();
-        if (session) {
-          window.history.replaceState({}, document.title, '/profile.html');
-          document.getElementById('signout-btn').style.display = 'block';
-          document.getElementById('user-email-display').textContent = session.user.email;
-          await loadProfile(session.user.email);
-          show('screen-profile');
-          return;
-        }
-      } catch(e) {}
-      attempts++;
-      if (attempts < 20) setTimeout(pollSession, 500);
-      else show('screen-login');
-    };
-    setTimeout(pollSession, 500);
+    const hash = window.location.hash.substring(1);
+    const params = {};
+    hash.split('&').forEach(part => {
+      const eqIdx = part.indexOf('=');
+      params[part.substring(0, eqIdx)] = part.substring(eqIdx + 1);
+    });
+    const accessToken = params['access_token'];
+    if (accessToken) {
+      const payload = parseJwt(accessToken);
+      if (payload && payload.email) {
+        sessionStorage.setItem('saitara_token', accessToken);
+        sessionStorage.setItem('saitara_email', payload.email);
+        window.history.replaceState({}, document.title, '/profile.html');
+        document.getElementById('signout-btn').style.display = 'block';
+        document.getElementById('user-email-display').textContent = payload.email;
+        await loadProfile(payload.email, accessToken);
+        show('screen-profile');
+        return;
+      }
+    }
+    show('screen-login');
     return;
   }
-
-  const { data: { session } } = await db.auth.getSession();
-  if (session) {
+  const token     = sessionStorage.getItem('saitara_token');
+  const userEmail = sessionStorage.getItem('saitara_email');
+  if (token && userEmail) {
     document.getElementById('signout-btn').style.display = 'block';
-    document.getElementById('user-email-display').textContent = session.user.email;
-    await loadProfile(session.user.email);
+    document.getElementById('user-email-display').textContent = userEmail;
+    await loadProfile(userEmail, token);
     show('screen-profile');
   } else {
     show('screen-login');
