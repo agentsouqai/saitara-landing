@@ -516,33 +516,41 @@ function show(id) {
 
 // ── INIT ──────────────────────────────────────────────────────────
 (async () => {
-  // Handle magic link token in URL hash
   if (window.location.hash && window.location.hash.includes('access_token')) {
     show('screen-sent');
     document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
     document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
 
-    // Extract token and set session manually
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const accessToken  = hashParams.get('access_token');
-    const refreshToken = hashParams.get('refresh_token');
-
-    if (accessToken && refreshToken) {
-      const { data, error } = await db.auth.setSession({
-        access_token:  accessToken,
-        refresh_token: refreshToken,
+    try {
+      const hash = window.location.hash.substring(1);
+      const params = {};
+      hash.split('&').forEach(part => {
+        const eqIdx = part.indexOf('=');
+        params[part.substring(0, eqIdx)] = part.substring(eqIdx + 1);
       });
-      if (data?.session) {
-        document.getElementById('signout-btn').style.display = 'block';
-        document.getElementById('user-email-display').textContent = data.session.user.email;
-        await loadProfile(data.session.user.email);
-        // Clean URL
-        window.history.replaceState({}, document.title, '/profile.html');
-        show('screen-profile');
-        return;
+
+      const accessToken  = params['access_token'];
+      const refreshToken = params['refresh_token'];
+
+      if (accessToken && refreshToken) {
+        const { data, error } = await db.auth.setSession({
+          access_token:  accessToken,
+          refresh_token: refreshToken,
+        });
+        if (data?.session) {
+          window.history.replaceState({}, document.title, '/profile.html');
+          document.getElementById('signout-btn').style.display = 'block';
+          document.getElementById('user-email-display').textContent = data.session.user.email;
+          await loadProfile(data.session.user.email);
+          show('screen-profile');
+          return;
+        } else {
+          alert('Auth error: ' + (error?.message || 'unknown'));
+        }
       }
+    } catch(e) {
+      alert('Exception: ' + e.message);
     }
-    // If token processing failed, show login
     show('screen-login');
     return;
   }
