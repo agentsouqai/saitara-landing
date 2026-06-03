@@ -697,7 +697,7 @@ async function submitProfile() {
   spin.classList.add('show');
 
   try {
-    const { error } = await db.from('profiles').upsert([{
+    const payload = {
       email:     state.email,
       name:      state.name,
       topics:    state.selectedTopics,
@@ -706,23 +706,37 @@ async function submitProfile() {
       active:    true,
       frequency: state.frequency,
       bio:       state.bio || null,
-    }], { onConflict: 'email' });
+    };
 
-    if (error) throw error;
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.message || response.statusText);
+    }
 
     for (let i = 1; i <= 7; i++) {
       const el = document.getElementById('step-' + i);
       if (el) el.style.display = 'none';
     }
     document.getElementById('step-success').style.display = 'block';
-    updateDots(7);
+    updateDots(8);
     window.scrollTo({top:0,behavior:'smooth'});
 
   } catch(e) {
     btn.disabled = false;
     text.style.display = 'inline';
     spin.classList.remove('show');
-    alert('حدث خطأ. يرجى المحاولة مرة أخرى.');
+    alert('Error: ' + e.message);
   }
 }
 
