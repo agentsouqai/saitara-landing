@@ -468,7 +468,7 @@ async function goStep(n) {
       return;
     }
     // Check if email already has a profile
-    const { data } = await db.from('profiles').select('email').eq('email', email.toLowerCase()).single();
+const { data } = await db.from('profiles').select('email').eq('email', email.toLowerCase()).maybeSingle();
     if (data) {
       document.getElementById('inp-email').style.borderColor = '#F0C040';
       const msg = document.createElement('p');
