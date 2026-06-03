@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <head>
   <script>
     if (window.location.hash && window.location.hash.includes('access_token')) {
       window.location.replace('/profile.html' + window.location.hash);
@@ -13,212 +12,52 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-
-  <!-- ═══════════════════════════════════════════════════════════
-       Supabase JS Client
-  ═══════════════════════════════════════════════════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #06080E;
-      --bg2:      #0C0F1C;
-      --bg3:      #111527;
-      --accent:   #00E5A0;
-      --accent2:  #00B87A;
-      --gold:     #F0C040;
-      --text:     #E8EDF5;
-      --muted:    #5A6A88;
-      --mid:      #8899BB;
-      --border:   rgba(0,229,160,0.12);
-      --border2:  rgba(255,255,255,0.06);
+      --bg:#06080E;--bg2:#0C0F1C;--bg3:#111527;
+      --accent:#00E5A0;--accent2:#00B87A;--gold:#F0C040;
+      --text:#E8EDF5;--muted:#5A6A88;--mid:#8899BB;
+      --border:rgba(0,229,160,0.12);--border2:rgba(255,255,255,0.06);
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Tajawal', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
-      background-size: 52px 52px;
-      pointer-events: none; z-index: 0;
-    }
-
+    body { background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;overflow-x:hidden; }
+    body::before { content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,0.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0; }
     .orb { position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0; }
     .orb-1 { width:600px;height:600px;background:rgba(0,229,160,0.055);top:-200px;right:-100px;animation:drift 14s ease-in-out infinite alternate; }
     .orb-2 { width:450px;height:450px;background:rgba(0,80,220,0.07);bottom:-100px;left:-80px;animation:drift 11s ease-in-out infinite alternate-reverse; }
     .orb-3 { width:300px;height:300px;background:rgba(240,192,64,0.04);top:50%;left:50%;animation:drift3 18s ease-in-out infinite alternate; }
-    @keyframes drift  { from{transform:translate(0,0)}to{transform:translate(40px,50px)} }
+    @keyframes drift { from{transform:translate(0,0)}to{transform:translate(40px,50px)} }
     @keyframes drift3 { from{transform:translate(-50%,-50%)}to{transform:translate(calc(-50% + 30px),calc(-50% + 20px))} }
-
     .wrap { position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 28px; }
-
-    /* NAV */
-    nav {
-      position:relative;z-index:10;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:26px 52px;border-bottom:1px solid var(--border2);
-    }
+    nav { position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:26px 52px;border-bottom:1px solid var(--border2); }
     .nav-logo { font-family:'Cairo',sans-serif;font-size:1.5rem;font-weight:900;color:var(--accent); }
-    .nav-center { font-size:0.72rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase; }
-    .nav-pill {
-      background:rgba(0,229,160,0.07);border:1px solid var(--border);
-      color:var(--accent);font-size:0.7rem;padding:5px 16px;border-radius:20px;font-weight:600;
-      display:flex;align-items:center;gap:6px;
-    }
-    .live-dot { width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse-dot 1.6s ease infinite; }
-    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.5)} }
-
-    /* HERO */
+    .nav-center { font-size:1rem;color:#ffffff;letter-spacing:3px;text-transform:uppercase;font-weight:600; }
     .hero { padding:90px 52px 70px;text-align:center; }
-
-    .hero-tag {
-      display:inline-flex;align-items:center;gap:10px;
-      background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.22);
-      color:var(--gold);font-size:0.78rem;font-weight:600;
-      padding:7px 20px;border-radius:30px;margin-bottom:44px;
-      animation:fadeUp 0.5s ease 0.1s both;
-    }
+    .hero-tag { display:inline-flex;align-items:center;gap:10px;background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.22);color:var(--gold);font-size:0.78rem;font-weight:600;padding:7px 20px;border-radius:30px;margin-bottom:44px;animation:fadeUp 0.5s ease 0.1s both; }
     .hero-tag-dot { width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse-dot 2s ease infinite; }
-
-    .hero-brand {
-      font-family:'Cairo',sans-serif;
-      font-size:clamp(5rem,15vw,9.5rem);
-      font-weight:900;line-height:0.9;letter-spacing:-3px;
-      background:linear-gradient(145deg,#fff 0%,var(--accent) 70%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      margin-bottom:6px;animation:fadeUp 0.6s ease 0.2s both;
-    }
+    .hero-brand { font-family:'Cairo',sans-serif;font-size:clamp(5rem,15vw,9.5rem);font-weight:900;line-height:0.9;letter-spacing:-3px;background:linear-gradient(145deg,#fff 0%,var(--accent) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;animation:fadeUp 0.6s ease 0.2s both; }
     .hero-en { font-size:0.78rem;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:32px;font-weight:300;animation:fadeUp 0.6s ease 0.3s both; }
-
-    .concept-badge {
-      display:inline-block;
-      background:linear-gradient(135deg,rgba(0,229,160,0.1),rgba(0,80,220,0.1));
-      border:1px solid rgba(0,229,160,0.25);border-radius:12px;padding:14px 32px;margin-bottom:44px;
-      animation:fadeUp 0.6s ease 0.35s both;
-    }
+    .concept-badge { display:inline-block;background:linear-gradient(135deg,rgba(0,229,160,0.1),rgba(0,80,220,0.1));border:1px solid rgba(0,229,160,0.25);border-radius:12px;padding:14px 32px;margin-bottom:44px;animation:fadeUp 0.6s ease 0.35s both; }
     .concept-badge-label { font-size:0.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px; }
-    .concept-badge-text {
-      font-family:'Cairo',sans-serif;font-size:1.15rem;font-weight:700;
-      background:linear-gradient(90deg,var(--accent),#60CFFF);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
-
-    .hero-desc {
-      font-size:1.15rem;line-height:2;color:#8899BB;
-      max-width:640px;margin:0 auto 56px;font-weight:300;
-      animation:fadeUp 0.6s ease 0.45s both;
-    }
+    .concept-badge-text { font-family:'Cairo',sans-serif;font-size:1.15rem;font-weight:700;background:linear-gradient(90deg,var(--accent),#60CFFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .hero-desc { font-size:1.15rem;line-height:2;color:#8899BB;max-width:640px;margin:0 auto 56px;font-weight:300;animation:fadeUp 0.6s ease 0.45s both; }
     .hero-desc strong { color:var(--text);font-weight:700; }
-    .hero-desc em { color:var(--accent);font-style:normal;font-weight:600; }
-
-    /* COUNTER */
-    .counter-row {
-      display:flex;align-items:center;justify-content:center;gap:16px;
-      margin-bottom:44px;animation:fadeUp 0.6s ease 0.55s both;
-    }
-    .counter-box {
-      background:var(--bg2);border:1px solid var(--border);border-radius:12px;
-      padding:14px 24px;display:flex;flex-direction:column;align-items:center;gap:2px;
-    }
-    .counter-num { font-family:'Cairo',sans-serif;font-size:1.7rem;font-weight:900;color:var(--accent); }
-    .counter-sub { font-size:0.72rem;color:var(--muted);white-space:nowrap; }
-    .counter-sep { width:1px;height:40px;background:var(--border2); }
-
-    /* FORM */
-    .form-section { animation:fadeUp 0.6s ease 0.65s both; }
-    .form-box {
-      display:flex;max-width:540px;margin:0 auto 14px;
-      background:var(--bg2);border:1px solid var(--border);border-radius:14px;
-      overflow:hidden;transition:border-color 0.3s,box-shadow 0.3s;
-    }
-    .form-box:focus-within { border-color:var(--accent);box-shadow:0 0 0 4px rgba(0,229,160,0.07); }
-    .form-box input {
-      flex:1;background:transparent;border:none;outline:none;
-      padding:18px 22px;font-family:'Tajawal',sans-serif;font-size:1rem;
-      color:var(--text);direction:ltr;text-align:right;
-    }
-    .form-box input::placeholder { color:var(--muted); }
-    .form-box input:disabled { opacity:0.5; }
-
-    /* BUTTON STATES */
-    .submit-btn {
-      background:var(--accent);color:#06080E;border:none;
-      padding:18px 28px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;
-      cursor:pointer;white-space:nowrap;transition:background 0.2s,transform 0.1s;
-      flex-shrink:0;min-width:160px;display:flex;align-items:center;justify-content:center;gap:8px;
-    }
-    .submit-btn:hover:not(:disabled) { background:#00ffb3; }
-    .submit-btn:active:not(:disabled) { transform:scale(0.97); }
-    .submit-btn:disabled { opacity:0.7;cursor:not-allowed; }
-
-    /* SPINNER */
-    .spinner {
-      width:16px;height:16px;border:2px solid rgba(6,8,14,0.3);
-      border-top-color:#06080E;border-radius:50%;
-      animation:spin 0.7s linear infinite;display:none;
-    }
-    .spinner.show { display:block; }
-    @keyframes spin { to{transform:rotate(360deg)} }
-
-    .form-note { font-size:0.75rem;color:var(--muted);text-align:center; }
-
-    /* STATE MESSAGES */
-    .state-msg {
-      display:none;align-items:center;justify-content:center;gap:12px;
-      border-radius:12px;padding:18px 28px;max-width:540px;margin:16px auto 0;
-      font-weight:600;font-size:0.95rem;
-    }
-    .state-msg.success {
-      background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.22);
-      color:var(--accent);
-    }
-    .state-msg.duplicate {
-      background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.22);
-      color:var(--gold);
-    }
-    .state-msg.error {
-      background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.22);
-      color:#FF4D6D;
-    }
-    .state-msg.show { display:flex;animation:fadeUp 0.4s ease both; }
-
-    /* SECTIONS */
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.5)} }
     .section { padding:90px 52px; }
-    .section-label {
-      font-size:0.7rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;
-      font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px;
-    }
+    .section-label { font-size:0.7rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px; }
     .section-label::after { content:'';flex:1;height:1px;background:var(--border); }
     .section-title { font-family:'Cairo',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.4;margin-bottom:20px; }
     .section-title span { color:var(--accent); }
     .section-body { font-size:1rem;color:var(--mid);line-height:2;font-weight:300;max-width:620px; }
-
-    /* INTEL CARDS */
     .intel-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:52px; }
-    .intel-card {
-      background:var(--bg2);border:1px solid var(--border2);border-radius:18px;
-      padding:32px 28px;transition:all 0.3s;
-    }
+    .intel-card { background:var(--bg2);border:1px solid var(--border2);border-radius:18px;padding:32px 28px;transition:all 0.3s; }
     .intel-card:hover { border-color:rgba(0,229,160,0.3);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,229,160,0.05); }
     .intel-card-num { font-family:'Cairo',sans-serif;font-size:2.5rem;font-weight:900;color:rgba(0,229,160,0.15);line-height:1;margin-bottom:12px; }
     .intel-card-title { font-family:'Cairo',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px; }
     .intel-card-body { font-size:0.85rem;color:var(--muted);line-height:1.9;font-weight:300; }
     .intel-card-tag { display:inline-block;margin-top:14px;background:rgba(0,229,160,0.07);border:1px solid var(--border);color:var(--accent);font-size:0.68rem;padding:3px 12px;border-radius:10px;font-weight:600; }
-
-    /* COMPARISON */
     .compare-section { background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:80px 52px; }
     .compare-grid { display:grid;grid-template-columns:1fr auto 1fr;gap:0;margin-top:52px;align-items:start; }
     .compare-col { padding:0 24px; }
@@ -230,8 +69,6 @@
     .compare-item.old { color:var(--muted); }
     .compare-item.new { color:var(--text);font-weight:500; }
     .compare-icon { flex-shrink:0;margin-top:2px; }
-
-    /* STEPS */
     .steps { display:flex;flex-direction:column;gap:0;margin-top:52px;position:relative; }
     .steps::before { content:'';position:absolute;right:23px;top:24px;bottom:24px;width:1px;background:linear-gradient(to bottom,var(--accent),transparent); }
     .step { display:flex;gap:28px;padding-bottom:44px;position:relative; }
@@ -240,8 +77,6 @@
     .step-content { padding-top:10px; }
     .step-title { font-family:'Cairo',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:6px; }
     .step-body { font-size:0.87rem;color:var(--muted);line-height:1.9;font-weight:300; }
-
-    /* EMAIL PREVIEW */
     .preview-section { padding:90px 52px; }
     .email-mockup { background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:600px;margin:48px auto 0;box-shadow:0 40px 100px rgba(0,0,0,0.4); }
     .email-header { background:var(--bg3);border-bottom:1px solid var(--border2);padding:20px 28px;display:flex;align-items:center;justify-content:space-between; }
@@ -261,8 +96,6 @@
     .email-footer-bar { background:var(--bg3);border-top:1px solid var(--border2);padding:14px 28px;display:flex;justify-content:space-between;align-items:center; }
     .email-footer-logo { font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.9rem; }
     .email-footer-note { font-size:0.68rem;color:var(--muted); }
-
-    /* PLANS */
     .plans-section { padding:0 52px 90px; }
     .plans-grid { display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px;max-width:680px;margin-left:auto;margin-right:auto; }
     .plan-card { border-radius:20px;padding:36px 32px;border:1px solid var(--border2);background:var(--bg2);position:relative;overflow:hidden; }
@@ -276,26 +109,19 @@
     .plan-feature { display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--mid); }
     .plan-check { color:var(--accent);flex-shrink:0; }
     .plan-x { color:var(--muted);flex-shrink:0; }
-
-    /* PHILOSOPHY */
     .philosophy { margin:0 52px 90px;background:linear-gradient(135deg,rgba(0,229,160,0.06),rgba(0,60,180,0.06));border:1px solid rgba(0,229,160,0.15);border-radius:24px;padding:64px 56px;text-align:center; }
     .philosophy-quote { font-family:'Cairo',sans-serif;font-size:clamp(1.2rem,3vw,1.75rem);font-weight:700;line-height:1.8;color:var(--text);margin-bottom:16px; }
     .philosophy-quote em { color:var(--accent);font-style:normal; }
     .philosophy-sub { font-size:0.88rem;color:var(--muted);margin-bottom:40px; }
-    .philosophy-cta-btn { display:inline-block;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:1rem;padding:16px 44px;border-radius:12px;border:none;cursor:pointer;transition:background 0.2s,transform 0.1s; }
+    .philosophy-cta-btn { display:inline-block;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:1rem;padding:16px 44px;border-radius:12px;border:none;cursor:pointer;transition:background 0.2s,transform 0.1s;text-decoration:none; }
     .philosophy-cta-btn:hover { background:#00ffb3;transform:translateY(-2px); }
-
-    /* FOOTER */
     footer { border-top:1px solid var(--border2);padding:32px 52px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1; }
     .footer-logo { font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:1.1rem; }
     .footer-tagline { font-size:0.75rem;color:var(--muted); }
-    .footer-domain { font-size:0.75rem;color:var(--muted);direction:ltr; }
-
     @keyframes fadeIn { from{opacity:0}to{opacity:1} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)} }
-
     @media(max-width:680px){
-      nav{padding:18px 20px}.nav-center{display:none}
+      nav{padding:18px 20px}.nav-center{font-size:0.8rem}
       .hero{padding:60px 20px 50px}
       .section,.compare-section,.preview-section,.plans-section{padding-left:20px;padding-right:20px}
       .philosophy{margin:0 20px 60px;padding:40px 24px}
@@ -303,14 +129,10 @@
       .intel-grid{grid-template-columns:1fr}
       .compare-grid{grid-template-columns:1fr;gap:32px}.compare-div{display:none}
       .plans-grid{grid-template-columns:1fr}
-      .form-box{flex-direction:column}
-      .submit-btn{border-radius:0 0 13px 13px;padding:16px}
-      .form-box input{text-align:center}
     }
   </style>
 </head>
 <body>
-
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
@@ -318,7 +140,7 @@
   <nav>
     <div class="nav-logo">سيطرة</div>
     <div class="nav-center">SAITARA · AI</div>
-    <div class="nav-pill"><span class="live-dot"></span> الإطلاق قريباً</div>
+    <div style="width:120px"></div>
   </nav>
 
   <section class="hero">
@@ -326,43 +148,28 @@
       <span class="hero-tag-dot"></span>
       وكيل ذكاء اصطناعي شخصي · النسخة التجريبية
     </div>
-
     <h1 class="hero-brand">سيطرة</h1>
     <p class="hero-en">saitara.ai</p>
-
     <div class="concept-badge">
       <div class="concept-badge-label">المفهوم الجوهري</div>
       <div class="concept-badge-text">الاستخبارات الشخصية الاستباقية</div>
     </div>
 
-    <p style="
-      font-family:'Cairo',sans-serif;
-      font-size:clamp(1.05rem,2.8vw,1.45rem);
-      font-weight:700;
-      line-height:2;
-      color:var(--text);
-      max-width:640px;
-      margin:0 auto 18px;
-      animation:fadeUp 0.6s ease 0.4s both;
-    ">
-      سيطرة يعرفك، يلفّ العالم كل يوم، يتذكر ما أخبرك إياه بالأمس،<br/>ويرجعلك بأحدث وأهم ما يخصك أنت تحديداً، من الزاوية التي تهمك،<br/>
-      <span style="color:var(--accent);font-size:0.9em;font-weight:600;">مباشرة على بريدك.</span>
+    <p style="font-family:'Cairo',sans-serif;font-size:clamp(1.05rem,2.8vw,1.45rem);font-weight:700;line-height:2;color:var(--text);max-width:660px;margin:0 auto 18px;animation:fadeUp 0.6s ease 0.4s both;">
+      العالم لا ينتظر. كل ليلة تنام، تتغيّر مجالات، تُطلق منتجات، تُغلق فرص.<br/>
+      الذي يصحى أولاً يكسب.<br/>
+      <span style="color:var(--accent);font-size:0.95em;font-weight:700;">سيطرة يصحى بدلاً عنك.</span>
     </p>
 
     <p class="hero-desc">
-      ليس نشرة إخبارية. ليس محرك بحث. بل <strong>وكيلك الاستخباراتي الشخصي</strong> الذي يعرف من أنت، ماذا تريد أن تحقق، يراقب العالم نيابةً عنك، يتذكر، يربط الأحداث ببعضها، ويخبرك بما يعنيه كل خبر لك أنت تحديداً، لا لأي شخص آخر. مباشرة على بريدك.
+      يلفّ العالم كل يوم، يتذكر ما أخبرك إياه بالأمس، يربط الأحداث ببعضها، ويرجعلك بأهم ما يخصك أنت تحديداً، من الزاوية التي تهمك. مباشرة على بريدك.
     </p>
 
-    <!-- CTA BUTTONS -->
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.65s both;margin-bottom:16px;">
-      <a href="/onboarding.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;"
-        onmouseover="this.style.background='#00ffb3';this.style.transform='translateY(-2px)'"
-        onmouseout="this.style.background='var(--accent)';this.style.transform='translateY(0)'">
+      <a href="/onboarding.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#00ffb3';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent)';this.style.transform='translateY(0)'">
         ابدأ إعداد ملفك الآن ←
       </a>
-      <a href="/profile.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.35);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;"
-        onmouseover="this.style.background='rgba(0,229,160,0.2)';this.style.transform='translateY(-2px)'"
-        onmouseout="this.style.background='rgba(0,229,160,0.12)';this.style.transform='translateY(0)'">
+      <a href="/profile.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.35);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,229,160,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(0,229,160,0.12)';this.style.transform='translateY(0)'">
         عدّل ملفك الحالي
       </a>
     </div>
@@ -402,9 +209,7 @@
         <div class="intel-card" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(0,229,160,0.07),rgba(0,80,220,0.05));border-color:rgba(0,229,160,0.2);">
           <div class="intel-card-num">٠٥</div>
           <div class="intel-card-title">إنذار مبكر وتتبع دقيق</div>
-          <p class="intel-card-body">
-            سيطرة يكتشف الاتجاهات الناشئة قبل أن تصل الإعلام الرئيسي بـ ٧٢ ساعة على الأقل. ويتتبع شركاتك وبلدانك المختارة بدقة، يرصد كل جديد عنها ويقرأ الأحداث من الزاوية التي تخصك أنت.
-          </p>
+          <p class="intel-card-body">سيطرة يكتشف الاتجاهات الناشئة قبل أن تصل الإعلام الرئيسي بـ ٧٢ ساعة على الأقل. ويتتبع شركاتك وبلدانك المختارة بدقة، يرصد كل جديد عنها ويقرأ الأحداث من الزاوية التي تخصك أنت.</p>
           <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
             <span style="font-size:0.75rem;color:var(--muted);margin-left:4px;">شركات:</span>
             <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Apple</span>
@@ -417,7 +222,6 @@
             <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الإمارات</span>
             <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">السعودية</span>
             <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الولايات المتحدة</span>
-            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الصين</span>
             <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">+ أي بلد تختاره</span>
           </div>
           <span class="intel-card-tag" style="margin-top:18px;">Company & Country Tracking · تتبع الشركات والبلدان</span>
@@ -491,425 +295,72 @@
     </div>
   </section>
 
-  <!-- USE CASE EXAMPLE -->
+  <!-- TABS EXAMPLE -->
   <section class="section" style="padding-bottom:0;">
     <div class="wrap">
       <div class="section-label">أمثلة حية</div>
       <h2 class="section-title">سيطرة لكل شخص<br/><span>بطريقته الخاصة</span></h2>
-      <p class="section-body">
-        مهما كان مجالك أو هدفك، سيطرة يقرأ ملفك الشخصي، يتذكر ما أخبرك إياه سابقاً، ويبني لك تجربة مختلفة تماماً عن أي شخص آخر.
-      </p>
-
-      <div style="margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-
-        <!-- SETUP CARD -->
-        <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
-          <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد د. خالد في سيطرة</div>
-
-          <div style="margin-bottom:20px;">
-            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">أمراض القلب</span>
-              <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الذكاء الاصطناعي في الطب</span>
-              <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأدوية القلبية</span>
-              <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">التدخلات الجراحية</span>
-            </div>
-          </div>
-
-          <div style="margin-bottom:20px;">
-            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة التي يراقبها سيطرة</div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEJM</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">The Lancet</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">AHA Journals</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ESC</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cleveland Clinic</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span>
-              <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ACC</span>
-            </div>
-          </div>
-
-          <div style="margin-bottom:20px;">
-            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">البلدان التي يتابعها</div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الولايات المتحدة</span>
-              <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">المملكة المتحدة</span>
-              <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ألمانيا</span>
-              <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">اليابان</span>
-            </div>
-          </div>
-
-          <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:0.78rem;color:var(--muted);">التكرار</span>
-            <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--accent);font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">كل أسبوع · الجمعة صباحاً</span>
-          </div>
-        </div>
-
-        <!-- WHAT HE GETS -->
-        <div style="background:var(--bg2);border:1px solid rgba(0,229,160,0.2);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-          <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يصل د. خالد هذا الأسبوع</div>
-
-          <div style="background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.12);border-radius:14px;padding:18px 20px;">
-            <div style="font-size:0.68rem;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div>
-            <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">
-              نشر NEJM هذا الأسبوع دراسة على ٤٨٠٠ مريض تثبت أن دمج نماذج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. في المقابل، أصدر ESC إرشادات محدّثة لتدبير قصور القلب. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج الحالي في عيادتك.
-            </p>
-          </div>
-
-          <div style="font-size:0.72rem;color:var(--muted);font-weight:500;margin-bottom:0;">أبرز ١٠ أبحاث هذا الأسبوع</div>
-
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-              <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">١</span>
-              <div>
-                <div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">AI-Guided ECG Analysis Outperforms Cardiologists in AF Detection — NEJM</div>
-                <div style="font-size:0.73rem;color:var(--muted);">يمكن تطبيقه فورياً في تحليل مرضاك الحاليين</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-              <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">٢</span>
-              <div>
-                <div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">ESC 2025 Heart Failure Guidelines: Key Protocol Changes — ESC</div>
-                <div style="font-size:0.73rem;color:var(--muted);">تغييرات جوهرية في جرعات الأدوية تخص بروتوكولك المعتاد</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-              <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">٣</span>
-              <div>
-                <div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">GLP-1 Receptors and Cardiac Outcomes: 3-Year Data — The Lancet</div>
-                <div style="font-size:0.73rem;color:var(--muted);">نتائج مهمة لمرضاك الذين يأخذون هذه الأدوية للسكري</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-              <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">٤</span>
-              <div>
-                <div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Minimally Invasive TAVR: 5-Year Outcomes — Cleveland Clinic</div>
-                <div style="font-size:0.73rem;color:var(--muted);">بيانات طويلة الأمد تدعم التوسع في استخدام TAVR للمرضى الأصغر</div>
-              </div>
-            </div>
-          </div>
-
-          <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;">
-            <span style="font-size:1rem;flex-shrink:0;">⚡</span>
-            <div>
-              <div style="font-size:0.72rem;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:4px;">إنذار مبكر هذا الأسبوع</div>
-              <div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">اتجاه ناشئ في ٣ مجلات متزامنة: ربط إيقاع النوم بالإصابة بالرجفان الأذيني. لم ينتشر بعد، لكن سيكون محوراً في المؤتمرات القادمة.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- BOTTOM LINE -->
-      <div style="margin-top:28px;background:linear-gradient(135deg,rgba(0,229,160,0.05),rgba(0,80,220,0.05));border:1px solid var(--border);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;">
-        <span style="font-size:2rem;flex-shrink:0;">🫀</span>
-        <p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">
-          د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً قبل أن يبدأ عياداته.
-          يدخل إلى مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه.
-          <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- USE CASE EXAMPLE -->
-  <section class="section" style="padding-bottom:0;">
-    <div class="wrap">
-      <div class="section-label">أمثلة حية</div>
-      <h2 class="section-title">سيطرة لكل شخص<br/><span>بطريقته الخاصة</span></h2>
-      <p class="section-body">مهما كان مجالك أو اهتمامك، سيطرة يبني لك تجربة مختلفة تماماً عن غيرك.</p>
-
-      <!-- TABS -->
+      <p class="section-body">مهما كان مجالك أو هدفك، سيطرة يقرأ ملفك الشخصي، يتذكر ما أخبرك إياه سابقاً، ويبني لك تجربة مختلفة تماماً عن أي شخص آخر.</p>
       <div style="display:flex;gap:12px;margin-top:44px;margin-bottom:32px;flex-wrap:wrap;">
-        <button onclick="switchTab('khalid')" id="tab-khalid"
-          style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;
-                 padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;
-                 background:var(--accent);color:#06080E;border:none;">
-          🫀 د. خالد · طبيب القلب
-        </button>
-        <button onclick="switchTab('Tala')" id="tab-Tala"
-          style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;
-                 padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;
-                 background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">
-          🌿 تالا · الصحة واللياقة
-        </button>
-        <button onclick="switchTab('ahmed')" id="tab-ahmed"
-          style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;
-                 padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;
-                 background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">
-          🛡️ أحمد · مبيعات الأمن السيبراني
-        </button>
+        <button onclick="switchTab('khalid')" id="tab-khalid" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--accent);color:#06080E;border:none;">🫀 د. خالد · طبيب القلب</button>
+        <button onclick="switchTab('tala')" id="tab-tala" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🌿 تالا · الصحة واللياقة</button>
+        <button onclick="switchTab('ahmed')" id="tab-ahmed" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🛡️ أحمد · مبيعات الأمن السيبراني</button>
       </div>
 
-      <!-- KHALID EXAMPLE -->
       <div id="example-khalid">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
             <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد د. خالد في سيطرة</div>
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">أمراض القلب</span>
-                <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الذكاء الاصطناعي في الطب</span>
-                <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأدوية القلبية</span>
-                <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">التدخلات الجراحية</span>
-              </div>
-            </div>
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة التي يراقبها سيطرة</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEJM</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">The Lancet</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">AHA Journals</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ESC</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cleveland Clinic</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ACC</span>
-              </div>
-            </div>
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">البلدان التي يتابعها</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الولايات المتحدة</span>
-                <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">المملكة المتحدة</span>
-                <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ألمانيا</span>
-                <span style="background:rgba(240,192,64,0.08);border:1px solid rgba(240,192,64,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">اليابان</span>
-              </div>
-            </div>
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-size:0.78rem;color:var(--muted);">التكرار</span>
-              <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--accent);font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">كل أسبوع · الجمعة صباحاً</span>
-            </div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">أمراض القلب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الذكاء الاصطناعي في الطب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأدوية القلبية</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEJM</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">The Lancet</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ESC</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--accent);font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">أسبوعي · الجمعة</span></div>
           </div>
-
           <div style="background:var(--bg2);border:1px solid rgba(0,229,160,0.2);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يصل د. خالد هذا الأسبوع</div>
+            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يصل د. خالد</div>
             <div style="background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.12);border-radius:14px;padding:18px 20px;">
               <div style="font-size:0.68rem;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div>
-              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشر NEJM دراسة على ٤٨٠٠ مريض تثبت أن دمج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. وأصدر ESC إرشادات محدّثة لتدبير قصور القلب. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج في عيادتك.</p>
+              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشر NEJM دراسة على ٤٨٠٠ مريض تثبت أن دمج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج في عيادتك.</p>
             </div>
-            <div style="font-size:0.72rem;color:var(--muted);font-weight:500;">أبرز الأبحاث هذا الأسبوع</div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">١</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">AI-Guided ECG Analysis Outperforms Cardiologists in AF Detection — NEJM</div><div style="font-size:0.73rem;color:var(--muted);">قابل للتطبيق فوراً في تحليل مرضاك الحاليين</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">٢</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">ESC 2025 Heart Failure Guidelines: Key Protocol Changes</div><div style="font-size:0.73rem;color:var(--muted);">تغييرات جوهرية في جرعات الأدوية تخص بروتوكولك المعتاد</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:var(--accent);font-size:0.82rem;flex-shrink:0;">٣</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">GLP-1 Receptors and Cardiac Outcomes: 3-Year Data — The Lancet</div><div style="font-size:0.73rem;color:var(--muted);">نتائج مهمة لمرضاك الذين يأخذون هذه الأدوية للسكري</div></div>
-              </div>
-            </div>
-            <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;">
-              <span style="font-size:1rem;flex-shrink:0;">⚡</span>
-              <div>
-                <div style="font-size:0.72rem;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:4px;">إنذار مبكر</div>
-                <div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">اتجاه ناشئ في ٣ مجلات: ربط إيقاع النوم بالرجفان الأذيني. لم ينتشر بعد لكنه سيكون محوراً في المؤتمرات القادمة.</div>
-              </div>
-            </div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك عن دراسة أولية حول AI في قراءة الـ ECG. هذا الأسبوع نُشرت النتائج الكاملة رسمياً في NEJM.</div></div></div>
+            <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">⚡</span><div><div style="font-size:0.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">إنذار مبكر · ٧٢ ساعة قبل الإعلام الرئيسي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">اتجاه ناشئ في ٣ مجلات: ربط إيقاع النوم بالرجفان الأذيني. لم ينتشر بعد لكنه سيكون محوراً في المؤتمرات القادمة.</div></div></div>
           </div>
         </div>
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(0,229,160,0.05),rgba(0,80,220,0.05));border:1px solid var(--border);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;">
-          <span style="font-size:2rem;flex-shrink:0;">🫀</span>
-          <p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً. يدخل على مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه. <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong></p>
-        </div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(0,229,160,0.05),rgba(0,80,220,0.05));border:1px solid var(--border);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🫀</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً. يدخل على مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه. <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong></p></div>
       </div>
 
-      <!-- Tala EXAMPLE -->
-      <div id="example-Tala" style="display:none;">
+      <div id="example-tala" style="display:none;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
             <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد تالا في سيطرة</div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">اللياقة البدنية</span>
-                <span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">التغذية والرشاقة</span>
-                <span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الصحة النفسية</span>
-                <span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الهرمونات وصحة المرأة</span>
-                <span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">النوم والتعافي</span>
-              </div>
-            </div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة فقط</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NIH</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">WHO</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Harvard Health</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ACSM</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cell Metabolism</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Nature Medicine</span>
-              </div>
-            </div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">ما تريد تالا تصفيته تحديداً</div>
-              <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:12px;padding:14px 16px;">
-                <p style="font-size:0.82rem;color:var(--mid);line-height:1.8;">أبحاث علمية محكّمة فقط، لا توصيات مؤثرين ولا مقالات تسويقية. سيطرة يتحقق من مصداقية المصدر قبل أن يُدرج أي معلومة.</p>
-              </div>
-            </div>
-
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-size:0.78rem;color:var(--muted);">التكرار</span>
-              <span style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#A78BFA;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">مرتين أسبوعياً · الأحد والأربعاء</span>
-            </div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">اللياقة البدنية</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">التغذية والرشاقة</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">النوم والتعافي</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة فقط</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Harvard Health</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cell Metabolism</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#A78BFA;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">مرتين أسبوعياً</span></div>
           </div>
-
           <div style="background:var(--bg2);border:1px solid rgba(167,139,250,0.25);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما تستلمه تالا هذا الأسبوع</div>
-
-            <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:14px;padding:18px 20px;">
-              <div style="font-size:0.68rem;color:#A78BFA;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div>
-              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشرت Cell Metabolism دراسة جديدة تثبت أن تمارين المقاومة ثلاث مرات أسبوعياً تُحسّن حساسية الأنسولين بنسبة ٢٨٪ لدى النساء في الثلاثينيات أكثر من الكارديو وحده. وكشفت دراسة Harvard أن النوم أقل من ٧ ساعات يرفع هرمون الجوع بنسبة تؤثر مباشرة على قرارات الأكل اليومية. <strong style="color:var(--text);">ما يعنيك:</strong> إعادة النظر في توازن خطة تمرينك قد يكون أسرع طريق لهدفك.</p>
-            </div>
-
-            <div style="font-size:0.72rem;color:var(--muted);font-weight:500;">أبرز الأبحاث هذا الأسبوع</div>
-
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#A78BFA;font-size:0.82rem;flex-shrink:0;">١</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Resistance Training vs Cardio for Women's Fat Loss: A Meta-Analysis — Cell Metabolism</div><div style="font-size:0.73rem;color:var(--muted);">يقلب فهمك لأفضل نوع تمرين لهدفك تحديداً</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#A78BFA;font-size:0.82rem;flex-shrink:0;">٢</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Sleep Deprivation and Appetite Hormones in Women — Harvard Health</div><div style="font-size:0.73rem;color:var(--muted);">يفسر لك لماذا أيام قلة النوم تزيد الشهية بشكل ملحوظ</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#A78BFA;font-size:0.82rem;flex-shrink:0;">٣</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Protein Timing and Muscle Synthesis: What the Latest Data Shows — ACSM</div><div style="font-size:0.73rem;color:var(--muted);">وقت تناول البروتين بعد التمرين أهم مما ظننتِ</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#A78BFA;font-size:0.82rem;flex-shrink:0;">٤</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Gut Microbiome and Mental Health in Women: New Findings — Nature Medicine</div><div style="font-size:0.73rem;color:var(--muted);">العلاقة بين الأمعاء والمزاج أعمق مما هو شائع</div></div>
-              </div>
-            </div>
-
-            <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;">
-              <span style="font-size:1rem;flex-shrink:0;">⚡</span>
-              <div>
-                <div style="font-size:0.72rem;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:4px;">إنذار مبكر</div>
-                <div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">اتجاه بحثي ناشئ: دراستان جديدتان تربطان مستوى المغنيسيوم بجودة النوم وتقليل القلق لدى النساء. لم تنتشر بعد لكنها ستكون في كل مكان قريباً.</div>
-              </div>
-            </div>
+            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما تستلمه تالا</div>
+            <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#A78BFA;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشرت Cell Metabolism دراسة تثبت أن تمارين المقاومة ثلاث مرات أسبوعياً تُحسّن حساسية الأنسولين بنسبة ٢٨٪ لدى النساء في الثلاثينيات أكثر من الكارديو وحده. <strong style="color:var(--text);">ما يعنيك:</strong> إعادة النظر في خطة تمرينك قد يكون أسرع طريق لهدفك.</p></div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك عن دراسة تربط البروتين بعد التمرين ببناء العضلات. هذا الأسبوع نشرت ACSM بيانات تحدّد التوقيت الأمثل بدقة أكبر.</div></div></div>
           </div>
         </div>
-
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(0,80,220,0.05));border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;">
-          <span style="font-size:2rem;flex-shrink:0;">🌿</span>
-          <p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">تالا لم تعد تصدّق كل ما يقوله المؤثرون عن الصحة واللياقة. قراراتها الآن مبنية على أبحاث حقيقية محكّمة، لا على موضة أو إعلان. <strong style="color:var(--text);">سيطرة يُحوّل الضوضاء إلى علم، ويضعه بين يديها مباشرة.</strong></p>
-        </div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(0,80,220,0.05));border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🌿</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">تالا لم تعد تصدّق كل ما يقوله المؤثرون. قراراتها الآن مبنية على أبحاث حقيقية محكّمة. <strong style="color:var(--text);">سيطرة يُحوّل الضوضاء إلى علم، ويضعه بين يديها مباشرة.</strong></p></div>
       </div>
 
-      <!-- AHMED EXAMPLE -->
       <div id="example-ahmed" style="display:none;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
             <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد أحمد في سيطرة</div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأمن السيبراني</span>
-                <span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الحوسبة السحابية</span>
-                <span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الاختراقات والهجمات</span>
-                <span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">لوائح هيئة الاتصالات</span>
-                <span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">رؤية 2030 التقنية</span>
-              </div>
-            </div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">الشركات التي يتابعها أحمد</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">stc</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Palo Alto Networks</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">CrowdStrike</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Fortinet</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Aramco Digital</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEOM Tech</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Microsoft KSA</span>
-                <span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cisco KSA</span>
-              </div>
-            </div>
-
-            <div style="margin-bottom:20px;">
-              <div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر التي يراقبها سيطرة</div>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NCA السعودية</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Gartner</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Krebs on Security</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Dark Reading</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">IDC MEA</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">CISA</span>
-                <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Forbes Middle East</span>
-              </div>
-            </div>
-
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-size:0.78rem;color:var(--muted);">التكرار</span>
-              <span style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:#F97316;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">يومي · كل صباح ٧:٠٠</span>
-            </div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأمن السيبراني</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الحوسبة السحابية</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">رؤية 2030 التقنية</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">الشركات</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">stc</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Palo Alto Networks</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">CrowdStrike</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:#F97316;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">يومي · ٧:٠٠ صباحاً</span></div>
           </div>
-
           <div style="background:var(--bg2);border:1px solid rgba(249,115,22,0.25);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
             <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يستلمه أحمد كل صباح</div>
-
-            <div style="background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:14px;padding:18px 20px;">
-              <div style="font-size:0.68rem;color:#F97316;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div>
-              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">أعلنت الهيئة الوطنية للأمن السيبراني عن اشتراطات جديدة لحماية البنية التحتية الحيوية تدخل حيز التنفيذ خلال ٩٠ يوماً. في المقابل، رصدت CrowdStrike حملة تجسس موجّهة ضد شركات الطاقة في الخليج تستخدم ثغرات zero-day. وأعلنت Palo Alto Networks عن شراكة استراتيجية مع stc لتوسيع خدمات MSSP في المملكة. <strong style="color:var(--text);">ما يعنيك:</strong> اللائحة الجديدة تفتح نافذة مبيعات واسعة قبل انتهاء الـ ٩٠ يوماً.</p>
-            </div>
-
-            <div style="font-size:0.72rem;color:var(--muted);font-weight:500;">أبرز الأخبار والتطورات اليوم</div>
-
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#F97316;font-size:0.82rem;flex-shrink:0;">١</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">NCA تُصدر اشتراطات حماية البنية التحتية الحيوية 2025 — الهيئة الوطنية للأمن السيبراني</div><div style="font-size:0.73rem;color:var(--muted);">فرصة مبيعات مباشرة: كل شركة مشمولة بالقرار تحتاج تقييماً وحلاً خلال ٩٠ يوماً</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#F97316;font-size:0.82rem;flex-shrink:0;">٢</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Gulf Energy Sector Targeted by State-Sponsored APT Group Using Zero-Day Exploits — CrowdStrike</div><div style="font-size:0.73rem;color:var(--muted);">يُعزز محادثات المبيعات مع عملاء قطاع الطاقة الذين ما زالوا مترددين</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#F97316;font-size:0.82rem;flex-shrink:0;">٣</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Palo Alto Networks x stc: Expanding MSSP Services Across KSA — Forbes ME</div><div style="font-size:0.73rem;color:var(--muted);">منافس مباشر يقوّي حضوره في السوق، راجع استراتيجيتك معهم</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#F97316;font-size:0.82rem;flex-shrink:0;">٤</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">Saudi Cloud Market to Reach $4.2B by 2027: Hyperscaler Race Intensifies — IDC MEA</div><div style="font-size:0.73rem;color:var(--muted);">كل صفقة سحابة جديدة تحتاج طبقة أمن، وهذا ملعبك</div></div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px 14px;">
-                <span style="font-family:'Cairo',sans-serif;font-weight:900;color:#F97316;font-size:0.82rem;flex-shrink:0;">٥</span>
-                <div><div style="font-size:0.83rem;color:var(--text);font-weight:600;margin-bottom:3px;">NEOM Tech Division Issues RFP for Integrated Security Operations Center — NEOM</div><div style="font-size:0.73rem;color:var(--muted);">طلب عروض مفتوح، تاريخ التقديم بعد ٢١ يوماً</div></div>
-              </div>
-            </div>
-
-            <div style="background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;">
-              <span style="font-size:1rem;flex-shrink:0;">🚨</span>
-              <div>
-                <div style="font-size:0.72rem;color:#FF4D6D;font-weight:600;letter-spacing:1px;margin-bottom:4px;">إنذار فوري</div>
-                <div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">تسرّب بيانات يُرجّح تورط جهة خارجية استهدف أحد البنوك السعودية الكبرى. الخبر لم يُؤكَّد رسمياً بعد لكنه يتداول في منتديات الأمن المتخصصة منذ ساعتين. قد تكون مكالمة استباقية مع عملائك في القطاع المصرفي خطوة ذكية اليوم.</div>
-              </div>
-            </div>
+            <div style="background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#F97316;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">أعلنت هيئة الأمن السيبراني عن اشتراطات جديدة تدخل حيز التنفيذ خلال ٩٠ يوماً. رصدت CrowdStrike حملة تجسس ضد شركات الطاقة الخليجية. <strong style="color:var(--text);">ما يعنيك:</strong> نافذة مبيعات واسعة تفتح الآن.</p></div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك أن NCA تدرس اشتراطات جديدة. اليوم صدرت رسمياً. نافذة المبيعات التي توقعناها فُتحت الآن.</div></div></div>
           </div>
         </div>
-
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(0,0,0,0));border:1px solid rgba(249,115,22,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;">
-          <span style="font-size:2rem;flex-shrink:0;">🛡️</span>
-          <p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">أحمد يبدأ كل يوم بملخص سيطرة قبل أن يفتح أي اجتماع. يعرف من هو المنافس، ما هي اللائحة الجديدة، وأي عميل يحتاج مكالمة اليوم. <strong style="color:var(--text);">سيطرة لا يجعله مجرد مندوب مبيعات، بل مستشاراً يملك معلومات أكثر من العميل نفسه.</strong></p>
-        </div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(0,0,0,0));border:1px solid rgba(249,115,22,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🛡️</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">أحمد يبدأ كل يوم بملخص سيطرة قبل أن يفتح أي اجتماع. <strong style="color:var(--text);">سيطرة لا يجعله مجرد مندوب مبيعات، بل مستشاراً يملك معلومات أكثر من العميل نفسه.</strong></p></div>
       </div>
-
     </div>
   </section>
 
@@ -919,45 +370,24 @@
       <div class="section-label">نموذج ما ستستلمه</div>
       <h2 class="section-title">هكذا تبدو <span>استخباراتك الشخصية</span></h2>
       <div class="email-mockup">
-        <div class="email-header">
-          <div class="email-from">من: <strong>سيطرة Intelligence</strong> &lt;brief@saitara.ai&gt;</div>
-          <div class="email-date">السبت · ٨:٠٠ صباحاً</div>
-        </div>
-        <div style="padding:0 28px">
-          <div class="email-subject">⚡ استخباراتك هذا الأسبوع · الذكاء الاصطناعي · الشرق الأوسط</div>
-        </div>
+        <div class="email-header"><div class="email-from">من: <strong>سيطرة Intelligence</strong> &lt;brief@saitara.ai&gt;</div><div class="email-date">السبت · ٨:٠٠ صباحاً</div></div>
+        <div style="padding:0 28px"><div class="email-subject">⚡ استخباراتك هذا الأسبوع · الذكاء الاصطناعي · الشرق الأوسط</div></div>
         <div class="email-body">
           <div class="email-section-title">الملخص الاستخباراتي</div>
-          <p class="email-summary">شهد هذا الأسبوع تسارعاً ملحوظاً في تبني نماذج الذكاء الاصطناعي على مستوى المؤسسات في منطقة الخليج، مع إعلان ثلاث شركات سعودية كبرى عن شراكات استراتيجية مع مزودي خدمات AI عالميين. في المقابل، بدأت موجة جديدة من تشريعات حوكمة الذكاء الاصطناعي تُشكّل ملامحها في أوروبا بشكل سيؤثر مباشرة على الشركات العاملة في المنطقة. <strong style="color:var(--text)">ما يعنيك:</strong> نافذة استثمار مفتوحة لمن يتحرك الآن.</p>
-          <div class="email-section-title">الروابط الأكثر أهمية لك هذا الأسبوع</div>
+          <p class="email-summary">شهد هذا الأسبوع تسارعاً في تبني AI على مستوى المؤسسات في الخليج، مع إعلان ثلاث شركات سعودية عن شراكات استراتيجية مع مزودي خدمات AI عالميين.</p>
+          <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.18);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:0.9rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.65rem;color:#A78BFA;font-weight:600;letter-spacing:1px;margin-bottom:3px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.78rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أشرنا إلى أن Saudi Vision 2030 تُسرّع في تبني AI. هذا الأسبوع تحوّلت الخطط إلى إعلانات رسمية وشراكات موقّعة.</div></div></div>
+          <div class="email-section-title">أبرز الأخبار مع تحليل تأثيرها عليك</div>
           <div class="email-links">
-            <div class="email-link-item">
-              <div class="email-link-rank">١</div>
-              <div class="email-link-text">
-                <div class="email-link-title">Saudi Arabia's $40B AI Fund: What it means for regional talent</div>
-                <div class="email-link-why">يؤثر مباشرة على سوق العمل في مجالك خلال ١٢ شهراً</div>
-              </div>
-            </div>
-            <div class="email-link-item">
-              <div class="email-link-rank">٢</div>
-              <div class="email-link-text">
-                <div class="email-link-title">EU AI Act: Compliance deadlines that apply to MENA businesses</div>
-                <div class="email-link-why">قد يتطلب إجراءات من شركتك قبل Q2 2026</div>
-              </div>
-            </div>
-            <div class="email-link-item">
-              <div class="email-link-rank">٣</div>
-              <div class="email-link-text">
-                <div class="email-link-title">اتجاه ناشئ: أدوات AI الصوتية العربية: من يقود السباق؟</div>
-                <div class="email-link-why">فرصة غير مشبعة في السوق، اكتشفتها سيطرة قبل ٣ أسابيع من انتشارها</div>
+            <div class="email-link-item" style="flex-direction:column;gap:8px;">
+              <div style="font-size:0.85rem;font-weight:600;color:var(--text);">Saudi Arabia's $40B AI Fund: What it means for regional talent</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;">لماذا يهمك</div><div style="font-size:0.73rem;color:var(--muted);">يؤثر على سوق العمل في مجالك</div></div>
+                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;">اقتراح</div><div style="font-size:0.73rem;color:var(--muted);">راجع فرص الشراكة قبل نهاية الربع</div></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="email-footer-bar">
-          <div class="email-footer-logo">سيطرة</div>
-          <div class="email-footer-note">استخباراتك الشخصية · saitara.ai</div>
-        </div>
+        <div class="email-footer-bar"><div class="email-footer-logo">سيطرة</div><div class="email-footer-note">استخباراتك الشخصية · saitara.ai</div></div>
       </div>
     </div>
   </section>
@@ -973,11 +403,10 @@
           <div class="plan-price">٠<span> / شهرياً</span></div>
           <div class="plan-sub">للأفراد الذين يريدون البداية</div>
           <ul class="plan-features">
-            <li class="plan-feature"><span class="plan-check">✓</span> تتبع ٣ شركات وبلدان بالاسم</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> موضوعان مختاران</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ملخص أسبوعي</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ٥ روابط مختارة</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> منطقة جغرافية واحدة</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> حتى ٤ مواضيع و٣ شركات و٣ بلدان</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> ملخص أسبوعي أو يومي</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> ذاكرة وربط الأحداث</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> ملف شخصي وبيو</li>
             <li class="plan-feature"><span class="plan-x">·</span> إنذار مبكر</li>
             <li class="plan-feature"><span class="plan-x">·</span> ملخص صوتي</li>
           </ul>
@@ -988,13 +417,11 @@
           <div class="plan-price">١٥<span> دولار / شهر</span></div>
           <div class="plan-sub">للمحترفين الذين يريدون أكثر</div>
           <ul class="plan-features">
-            <li class="plan-feature"><span class="plan-check">✓</span> تتبع حتى ٥٠ شركة وبلداً بالاسم</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ١٠ مواضيع مختارة</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> مواضيع وشركات وبلدان غير محدودة</li>
             <li class="plan-feature"><span class="plan-check">✓</span> يومي أو كل يومين</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ١٠ روابط + أرشيف</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ٣ مناطق جغرافية</li>
             <li class="plan-feature"><span class="plan-check">✓</span> إنذار مبكر فوري</li>
             <li class="plan-feature"><span class="plan-check">✓</span> ملخص صوتي ٣ دقائق</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> أرشيف كامل</li>
           </ul>
         </div>
       </div>
@@ -1009,73 +436,57 @@
       يعطيك فهماً أعمق لما يحدث، وما يعنيه لك أنت بناءً على من أنت وما تريد أن تحقق. مباشرة على بريدك.
     </p>
     <p class="philosophy-sub">هذا ليس مجرد منتج. هذا كيف يبدو أن يكون لك عقل ثانٍ يعمل لصالحك على مدار الساعة.</p>
-    <button class="philosophy-cta-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.getElementById('emailInput').focus(),600)">
-      انضم إلى القائمة المبكرة
-    </button>
+    <a href="/onboarding.html" class="philosophy-cta-btn">ابدأ إعداد ملفك الآن ←</a>
   </div>
 
   <footer>
     <div class="footer-logo">سيطرة</div>
-<div class="footer-tagline">الاستخبارات الشخصية الاستباقية</div>
-<a href="https://www.agentsouq.ai" target="_blank" style="font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Powered by: Agent Souq AI</a>    <div class="footer-domain">saitara.ai · 2026</div>
+    <div class="footer-tagline">الاستخبارات الشخصية الاستباقية</div>
+    <a href="https://www.agentsouq.ai" target="_blank" style="font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Powered by: Agent Souq AI</a>
+    <div style="font-size:0.75rem;color:var(--muted);direction:ltr;">saitara.ai · 2026</div>
   </footer>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       SUPABASE INTEGRATION
-       ضع هنا مفاتيح مشروعك من Supabase → Settings → API
-  ═══════════════════════════════════════════════════════════ -->
   <script>
-    // ┌─────────────────────────────────────────────────────────┐
-    // │  ضع قيمتيك هنا من Supabase → Settings → API            │
-    // └─────────────────────────────────────────────────────────┘
-    const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';  // ← غيّر هذا
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';                  // ← غيّر هذا
-
+    const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';
     const { createClient } = supabase;
     const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-
-    // Tab switching
-    const tabColors = { khalid: "var(--accent)", Tala: "#A78BFA", ahmed: "#F97316" };
+    const tabColors = { khalid:'var(--accent)', tala:'#A78BFA', ahmed:'#F97316' };
     function switchTab(name) {
-      ["khalid", "Tala", "ahmed"].forEach(id => {
-        const ex  = document.getElementById("example-" + id);
-        const tab = document.getElementById("tab-" + id);
+      ['khalid','tala','ahmed'].forEach(id => {
+        const ex  = document.getElementById('example-' + id);
+        const tab = document.getElementById('tab-' + id);
         if (!ex || !tab) return;
         if (id === name) {
-          ex.style.display     = "block";
+          ex.style.display = 'block';
           tab.style.background = tabColors[id];
-          tab.style.color      = "#06080E";
-          tab.style.border     = "none";
+          tab.style.color = '#06080E';
+          tab.style.border = 'none';
         } else {
-          ex.style.display     = "none";
-          tab.style.background = "var(--bg2)";
-          tab.style.color      = "var(--muted)";
-          tab.style.border     = "1px solid var(--border2)";
+          ex.style.display = 'none';
+          tab.style.background = 'var(--bg2)';
+          tab.style.color = 'var(--muted)';
+          tab.style.border = '1px solid var(--border2)';
         }
       });
     }
 
-    // ─── Scroll reveal ───────────────────────────────────────
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.style.opacity   = '1';
+          e.target.style.opacity = '1';
           e.target.style.transform = 'translateY(0)';
           observer.unobserve(e.target);
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.intel-card,.step,.plan-card').forEach(el => {
-      el.style.opacity    = '0';
-      el.style.transform  = 'translateY(20px)';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       observer.observe(el);
     });
-
-    // ─── Init ────────────────────────────────────────────────
-    // ready
   </script>
 </body>
 </html>
