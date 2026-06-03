@@ -288,8 +288,7 @@ async function sendMagicLink() {
   const spn = document.getElementById('login-spinner');
   btn.disabled = true; txt.style.display = 'none'; spn.classList.add('show');
 
-  const redirectTo = window.location.origin + '/profile.html';
-  const { error } = await db.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
+  const { error } = await db.auth.signInWithOtp({ email });
 
   btn.disabled = false; txt.style.display = 'inline'; spn.classList.remove('show');
   if (!error) {
