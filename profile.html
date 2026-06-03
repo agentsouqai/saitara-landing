@@ -317,8 +317,8 @@ async function signOut() {
 
 // ── SESSION DETECTION ─────────────────────────────────────────────
 db.auth.onAuthStateChange(async (event, session) => {
-  if (event === 'SIGNED_IN' && session) {
-    document.getElementById('signout-btn').style.display = 'block';
+if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
+  document.getElementById('signout-btn').style.display = 'block';
     document.getElementById('user-email-display').textContent = session.user.email;
     await loadProfile(session.user.email);
     show('screen-profile');
