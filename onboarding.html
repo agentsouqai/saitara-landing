@@ -222,7 +222,7 @@
 
       <div class="tier-banner">
         <span class="tier-free">✦ الخطة المجانية</span>
-        <span class="tier-limit" id="topic-limit-text">متبقي لك ٤ مواضيع</span>
+        <span class="tier-limit" id="topic-limit-text">متبقي لك ٣ مواضيع</span>
         <span class="tier-upgrade">ترقية للمزيد</span>
       </div>
 
@@ -231,12 +231,11 @@
 
       <div class="selected-topics" id="selected-topics-display"></div>
       <div class="limit-bar">
-        <span class="limit-count" id="topic-count">٠ / ٤ مواضيع</span>
+        <span class="limit-count" id="topic-count">٠ / ٣ مواضيع</span>
         <div class="limit-dots" id="topic-dots">
           <div class="limit-dot" id="td1"></div>
           <div class="limit-dot" id="td2"></div>
           <div class="limit-dot" id="td3"></div>
-          <div class="limit-dot" id="td4"></div>
         </div>
       </div>
 
@@ -254,7 +253,7 @@
 
       <div class="tier-banner">
         <span class="tier-free">✦ الخطة المجانية</span>
-        <span class="tier-limit" id="company-limit-text">حتى ٣ شركات</span>
+        <span class="tier-limit" id="company-limit-text">حتى شركة واحدة</span>
         <span class="tier-upgrade">ترقية للمزيد</span>
       </div>
 
@@ -282,7 +281,7 @@
 
       <div class="tier-banner">
         <span class="tier-free">✦ الخطة المجانية</span>
-        <span class="tier-limit" id="country-limit-text">حتى ٣ بلدان</span>
+        <span class="tier-limit" id="country-limit-text">حتى دولة واحدة</span>
         <span class="tier-upgrade">ترقية للمزيد</span>
       </div>
 
@@ -310,6 +309,34 @@
           <div class="schedule-icon">📅</div>
           <div class="schedule-name">أسبوعي</div>
           <div class="schedule-desc">ملخص شامل كل أسبوع</div>
+        </div>
+      </div>
+
+      <div class="card-eyebrow" style="margin-bottom:14px">لغة الملخص</div>
+      <div class="schedule-options">
+        <div class="schedule-card selected" id="lang-arabic" onclick="selectLanguage('arabic')">
+          <div class="schedule-icon">🇸🇦</div>
+          <div class="schedule-name">العربية</div>
+          <div class="schedule-desc">يصلك ملخصك بالكامل بالعربية</div>
+        </div>
+        <div class="schedule-card" id="lang-english" onclick="selectLanguage('english')">
+          <div class="schedule-icon">🇬🇧</div>
+          <div class="schedule-name">English</div>
+          <div class="schedule-desc">Receive your digest fully in English</div>
+        </div>
+      </div>
+
+      <div class="card-eyebrow" style="margin-bottom:14px">طول الملخص</div>
+      <div class="schedule-options">
+        <div class="schedule-card selected" id="len-detailed" onclick="selectLength('detailed')">
+          <div class="schedule-icon">📖</div>
+          <div class="schedule-name">مفصّل</div>
+          <div class="schedule-desc">تحليل كامل ومعمّق لكل خبر</div>
+        </div>
+        <div class="schedule-card" id="len-brief" onclick="selectLength('brief')">
+          <div class="schedule-icon">⚡</div>
+          <div class="schedule-name">مختصر</div>
+          <div class="schedule-desc">نقاط سريعة فقط، أقل من ٣٠٠ كلمة</div>
         </div>
       </div>
 
@@ -389,9 +416,9 @@
 // ── CONFIG ──────────────────────────────────────────────────────
 const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';
-const FREE_TOPIC_LIMIT   = 4;
-const FREE_COMPANY_LIMIT = 3;
-const FREE_COUNTRY_LIMIT = 3;
+const FREE_TOPIC_LIMIT   = 3;
+const FREE_COMPANY_LIMIT = 1;
+const FREE_COUNTRY_LIMIT = 1;
 
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
@@ -455,6 +482,8 @@ let state = {
   companies: [],
   countries: [],
   frequency: 'daily',
+  language: 'arabic',
+  digest_length: 'detailed',
 };
 
 // ── STEP NAVIGATION ──────────────────────────────────────────────
@@ -567,10 +596,10 @@ function renderSelectedTopics() {
 
 function updateTopicCounter() {
   const n = state.selectedTopics.length;
-  const arabicNums = ['٠','١','٢','٣','٤'];
-  document.getElementById('topic-count').textContent = `${arabicNums[n]} / ٤ مواضيع`;
+  const arabicNums = ['٠','١','٢','٣'];
+  document.getElementById('topic-count').textContent = `${arabicNums[n]} / ٣ مواضيع`;
   document.getElementById('topic-limit-text').textContent = `متبقي لك ${arabicNums[FREE_TOPIC_LIMIT - n]} مواضيع`;
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= FREE_TOPIC_LIMIT; i++) {
     const d = document.getElementById('td' + i);
     d.className = 'limit-dot' + (i <= n ? (n >= FREE_TOPIC_LIMIT ? ' max' : ' filled') : '');
   }
@@ -599,9 +628,9 @@ function addCompany(name, btn) {
   state.companies.push(name);
   renderCompanyChips();
   if (btn) btn.classList.add('added');
-  const arabicNums = ['٠','١','٢','٣'];
+  const arabicNums = ['٠','١'];
   document.getElementById('company-limit-text').textContent =
-    `${arabicNums[state.companies.length]} / ٣ شركات`;
+    `${arabicNums[state.companies.length]} / ١ شركة`;
 }
 
 function removeCompany(idx) {
@@ -613,9 +642,9 @@ function removeCompany(idx) {
     if (SUGGESTED_COMPANIES[parseInt(btn.dataset.index)] === name)
       btn.classList.remove('added');
   });
-  const arabicNums = ['٠','١','٢','٣'];
+  const arabicNums = ['٠','١'];
   document.getElementById('company-limit-text').textContent =
-    `${arabicNums[state.companies.length]} / ٣ شركات`;
+    `${arabicNums[state.companies.length]} / ١ شركة`;
 }
 
 function renderCompanyChips() {
@@ -653,9 +682,9 @@ function toggleCountry(idx) {
     state.countries.push(en);
     btn.classList.add('selected');
   }
-  const arabicNums = ['٠','١','٢','٣'];
+  const arabicNums = ['٠','١'];
   document.getElementById('country-limit-text').textContent =
-    `${arabicNums[state.countries.length]} / ٣ بلدان`;
+    `${arabicNums[state.countries.length]} / ١ دولة`;
 }
 
 // ── STEP 5: SCHEDULE ─────────────────────────────────────────────
@@ -663,6 +692,18 @@ function selectSchedule(val) {
   state.frequency = val;
   document.getElementById('sch-daily').classList.toggle('selected', val === 'daily');
   document.getElementById('sch-weekly').classList.toggle('selected', val === 'weekly');
+}
+
+function selectLanguage(val) {
+  state.language = val;
+  document.getElementById('lang-arabic').classList.toggle('selected', val === 'arabic');
+  document.getElementById('lang-english').classList.toggle('selected', val === 'english');
+}
+
+function selectLength(val) {
+  state.digest_length = val;
+  document.getElementById('len-detailed').classList.toggle('selected', val === 'detailed');
+  document.getElementById('len-brief').classList.toggle('selected', val === 'brief');
 }
 
 // ── STEP 6: SUMMARY ──────────────────────────────────────────────
@@ -673,6 +714,8 @@ function buildSummary() {
     { icon:'🏢', label:'الشركات', value: state.companies.length ? state.companies.join(' · ') : 'لم تختر شركات' },
     { icon:'🌍', label:'البلدان', value: state.countries.length ? state.countries.join(' · ') : 'عالمي (بدون تقييد جغرافي)' },
     { icon:'📅', label:'التكرار', value: state.frequency === 'daily' ? '⚡ يومي' : '📅 أسبوعي' },
+    { icon:'🌐', label:'اللغة', value: state.language === 'arabic' ? '🇸🇦 العربية' : '🇬🇧 English' },
+    { icon:'📖', label:'طول الملخص', value: state.digest_length === 'detailed' ? 'مفصّل' : 'مختصر' },
     { icon:'🧠', label:'ملفك الشخصي', value: state.bio || 'لم تضف وصفاً شخصياً' },
   ];
   document.getElementById('summary-grid').innerHTML = rows.map(r => `
@@ -705,6 +748,8 @@ async function submitProfile() {
       countries: state.countries,
       active:    true,
       frequency: state.frequency,
+      language:  state.language,
+      digest_length: state.digest_length,
       bio:       state.bio || null,
     };
 
