@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>سيطرة — ابدأ الآن</title>
+  <title data-i18n="_title">سيطرة — ابدأ الآن</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
@@ -162,6 +162,13 @@
     .spinner.show{display:block}
     @keyframes spin{to{transform:rotate(360deg)}}
 
+    /* ── I18N ── */
+    #lang-toggle{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.78rem;padding:6px 14px;border-radius:20px;cursor:pointer;min-width:80px;transition:all 0.2s}
+    #lang-toggle:hover{background:rgba(0,229,160,0.2)}
+    [dir="ltr"] .field input{direction:ltr;text-align:left}
+    [dir="ltr"] .step-dot::before{right:auto;left:50%}
+    [dir="ltr"] .card-sub,[dir="ltr"] .card-title{text-align:left}
+
     @media(max-width:640px){
       nav{padding:18px 20px}
       .progress-wrap{padding:24px 20px 0}
@@ -178,19 +185,22 @@
 
 <div class="page">
   <nav>
-    <a href="/" class="nav-logo">سيطرة</a>
-    <a href="/" class="nav-back">← العودة للرئيسية</a>
+    <a href="/" class="nav-logo" data-i18n="brand" data-keep-lang data-base="/">سيطرة</a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button id="lang-toggle" onclick="toggleLang()">EN</button>
+      <a href="/" class="nav-back" data-i18n="nav_back" data-keep-lang data-base="/">← العودة للرئيسية</a>
+    </div>
   </nav>
 
   <div class="progress-wrap">
     <div class="steps-row">
-      <div class="step-dot active" id="dot-1"><div class="step-num">١</div><div class="step-label">البداية</div></div>
-      <div class="step-dot" id="dot-2"><div class="step-num">٢</div><div class="step-label">المواضيع</div></div>
-      <div class="step-dot" id="dot-3"><div class="step-num">٣</div><div class="step-label">الشركات</div></div>
-      <div class="step-dot" id="dot-4"><div class="step-num">٤</div><div class="step-label">البلدان</div></div>
-      <div class="step-dot" id="dot-5"><div class="step-num">٥</div><div class="step-label">الجدول</div></div>
-      <div class="step-dot" id="dot-6"><div class="step-num">٦</div><div class="step-label">عن نفسك</div></div>
-      <div class="step-dot" id="dot-7"><div class="step-num">٧</div><div class="step-label">تأكيد</div></div>
+      <div class="step-dot active" id="dot-1"><div class="step-num">١</div><div class="step-label" data-i18n="dot1">البداية</div></div>
+      <div class="step-dot" id="dot-2"><div class="step-num">٢</div><div class="step-label" data-i18n="dot2">المواضيع</div></div>
+      <div class="step-dot" id="dot-3"><div class="step-num">٣</div><div class="step-label" data-i18n="dot3">الشركات</div></div>
+      <div class="step-dot" id="dot-4"><div class="step-num">٤</div><div class="step-label" data-i18n="dot4">البلدان</div></div>
+      <div class="step-dot" id="dot-5"><div class="step-num">٥</div><div class="step-label" data-i18n="dot5">الجدول</div></div>
+      <div class="step-dot" id="dot-6"><div class="step-num">٦</div><div class="step-label" data-i18n="dot6">عن نفسك</div></div>
+      <div class="step-dot" id="dot-7"><div class="step-num">٧</div><div class="step-label" data-i18n="dot7">تأكيد</div></div>
     </div>
   </div>
 
@@ -198,32 +208,32 @@
 
     <!-- ══ STEP 1 ══ -->
     <div class="card" id="step-1">
-      <div class="card-eyebrow">الخطوة الأولى</div>
-      <h2 class="card-title">أهلاً بك في <span>سيطرة</span></h2>
-      <p class="card-sub">وكيلك الاستخباراتي الشخصي جاهز ليبدأ. كلما عرف عنك أكثر، كانت استخباراتك أدق وأعمق.</p>
+      <div class="card-eyebrow" data-i18n="s1_eyebrow">الخطوة الأولى</div>
+      <h2 class="card-title" data-i18n="s1_title">أهلاً بك في <span>سيطرة</span></h2>
+      <p class="card-sub" data-i18n="s1_sub">وكيلك الاستخباراتي الشخصي جاهز ليبدأ. كلما عرف عنك أكثر، كانت استخباراتك أدق وأعمق.</p>
       <div class="field">
-        <label>اسمك</label>
-        <input type="text" id="inp-name" placeholder="مثال: خالد" autocomplete="name"/>
+        <label data-i18n="lbl_name">اسمك</label>
+        <input type="text" id="inp-name" placeholder="مثال: خالد" data-i18n-ph="ph_name" autocomplete="name"/>
       </div>
       <div class="field">
-        <label>بريدك الإلكتروني</label>
+        <label data-i18n="lbl_email">بريدك الإلكتروني</label>
         <input type="email" id="inp-email" placeholder="name@example.com" autocomplete="email" style="direction:ltr;text-align:right"/>
       </div>
       <div class="btn-row">
-        <button class="btn-primary" onclick="goStep(2)">التالي ←</button>
+        <button class="btn-primary" onclick="goStep(2)" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 2 ══ -->
     <div class="card" id="step-2" style="display:none">
-      <div class="card-eyebrow">الخطوة الثانية</div>
-      <h2 class="card-title">اختر <span>مواضيعك</span></h2>
-      <p class="card-sub">اختر الفئة ثم حدد المواضيع الفرعية التي تهمك. سيطرة يراقبها لك كل يوم ويتذكر كل ما يخصها.</p>
+      <div class="card-eyebrow" data-i18n="s2_eyebrow">الخطوة الثانية</div>
+      <h2 class="card-title" data-i18n="s2_title">اختر <span>مواضيعك</span></h2>
+      <p class="card-sub" data-i18n="s2_sub">اختر الفئة ثم حدد المواضيع الفرعية التي تهمك. سيطرة يراقبها لك كل يوم ويتذكر كل ما يخصها.</p>
 
       <div class="tier-banner">
-        <span class="tier-free">✦ الخطة المجانية</span>
+        <span class="tier-free" data-i18n="tier_free">✦ الخطة المجانية</span>
         <span class="tier-limit" id="topic-limit-text">متبقي لك ٣ مواضيع</span>
-        <span class="tier-upgrade">ترقية للمزيد</span>
+        <span class="tier-upgrade" data-i18n="tier_upgrade">ترقية للمزيد</span>
       </div>
 
       <div class="categories" id="cat-list"></div>
@@ -240,160 +250,161 @@
       </div>
 
       <div class="btn-row" style="margin-top:24px">
-        <button class="btn-secondary" onclick="goStep(1)">← رجوع</button>
-        <button class="btn-primary" onclick="goStep(3)" id="btn-step2">التالي ←</button>
+        <button class="btn-secondary" onclick="goStep(1)" data-i18n="btn_back">← رجوع</button>
+        <button class="btn-primary" onclick="goStep(3)" id="btn-step2" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 3 ══ -->
     <div class="card" id="step-3" style="display:none">
-      <div class="card-eyebrow">الخطوة الثالثة</div>
-      <h2 class="card-title">تابع <span>الشركات</span></h2>
-      <p class="card-sub">أضف الشركات التي تريد مراقبتها. سيطرة يرصد كل جديد عنها ويخبرك بما يعنيه لك أنت تحديداً.</p>
+      <div class="card-eyebrow" data-i18n="s3_eyebrow">الخطوة الثالثة</div>
+      <h2 class="card-title" data-i18n="s3_title">تابع <span>الشركات</span></h2>
+      <p class="card-sub" data-i18n="s3_sub">أضف الشركات التي تريد مراقبتها. سيطرة يرصد كل جديد عنها ويخبرك بما يعنيه لك أنت تحديداً.</p>
 
       <div class="tier-banner">
-        <span class="tier-free">✦ الخطة المجانية</span>
+        <span class="tier-free" data-i18n="tier_free">✦ الخطة المجانية</span>
         <span class="tier-limit" id="company-limit-text">حتى شركة واحدة</span>
-        <span class="tier-upgrade">ترقية للمزيد</span>
+        <span class="tier-upgrade" data-i18n="tier_upgrade">ترقية للمزيد</span>
       </div>
 
       <div class="company-search">
         <span class="search-icon">🔍</span>
-        <input type="text" id="company-input" placeholder="اكتب اسم الشركة واضغط Enter" onkeydown="addCompanyFromInput(event)"/>
+        <input type="text" id="company-input" placeholder="اكتب اسم الشركة واضغط Enter" data-i18n-ph="ph_company" onkeydown="addCompanyFromInput(event)"/>
       </div>
       <div class="company-chips" id="company-chips"></div>
 
-      <div style="font-size:0.72rem;color:var(--muted);margin:16px 0 10px;letter-spacing:1px;text-transform:uppercase">اقتراحات شائعة</div>
+      <div style="font-size:0.72rem;color:var(--muted);margin:16px 0 10px;letter-spacing:1px;text-transform:uppercase" data-i18n="popular_suggestions">اقتراحات شائعة</div>
       <div class="suggested-companies" id="suggested-companies"></div>
 
       <div class="btn-row" style="margin-top:24px">
-        <button class="btn-secondary" onclick="goStep(2)">← رجوع</button>
-        <button class="btn-primary" onclick="goStep(4)">التالي ←</button>
+        <button class="btn-secondary" onclick="goStep(2)" data-i18n="btn_back">← رجوع</button>
+        <button class="btn-primary" onclick="goStep(4)" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 4 ══ -->
     <div class="card" id="step-4" style="display:none">
-      <div class="card-eyebrow">الخطوة الرابعة</div>
-      <h2 class="card-title">اختر <span>البلدان</span></h2>
-      <p class="card-sub">حدد البلدان التي تريد متابعة أحداثها. سيطرة يقرأ الأخبار من زاوية تأثيرها عليك أنت.</p>
-      <span class="optional-badge">اختياري · يمكنك تخطي هذه الخطوة</span>
+      <div class="card-eyebrow" data-i18n="s4_eyebrow">الخطوة الرابعة</div>
+      <h2 class="card-title" data-i18n="s4_title">اختر <span>البلدان</span></h2>
+      <p class="card-sub" data-i18n="s4_sub">حدد البلدان التي تريد متابعة أحداثها. سيطرة يقرأ الأخبار من زاوية تأثيرها عليك أنت.</p>
+      <span class="optional-badge" data-i18n="optional_skip">اختياري · يمكنك تخطي هذه الخطوة</span>
 
       <div class="tier-banner">
-        <span class="tier-free">✦ الخطة المجانية</span>
+        <span class="tier-free" data-i18n="tier_free">✦ الخطة المجانية</span>
         <span class="tier-limit" id="country-limit-text">حتى دولة واحدة</span>
-        <span class="tier-upgrade">ترقية للمزيد</span>
+        <span class="tier-upgrade" data-i18n="tier_upgrade">ترقية للمزيد</span>
       </div>
 
       <div class="countries-grid" id="countries-grid"></div>
 
       <div class="btn-row" style="margin-top:8px">
-        <button class="btn-secondary" onclick="goStep(3)">← رجوع</button>
-        <button class="btn-primary" onclick="goStep(5)">التالي ←</button>
+        <button class="btn-secondary" onclick="goStep(3)" data-i18n="btn_back">← رجوع</button>
+        <button class="btn-primary" onclick="goStep(5)" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 5 ══ -->
     <div class="card" id="step-5" style="display:none">
-      <div class="card-eyebrow">الخطوة الخامسة</div>
-      <h2 class="card-title">متى تريد <span>استخباراتك</span>؟</h2>
-      <p class="card-sub">اختر متى تصلك استخباراتك الشخصية. يمكنك تغيير هذا في أي وقت لاحقاً.</p>
+      <div class="card-eyebrow" data-i18n="s5_eyebrow">الخطوة الخامسة</div>
+      <h2 class="card-title" data-i18n="s5_title">متى تريد <span>استخباراتك</span>؟</h2>
+      <p class="card-sub" data-i18n="s5_sub">اختر متى تصلك استخباراتك الشخصية. يمكنك تغيير هذا في أي وقت لاحقاً.</p>
 
       <div class="schedule-options">
         <div class="schedule-card selected" id="sch-daily" onclick="selectSchedule('daily')">
           <div class="schedule-icon">⚡</div>
-          <div class="schedule-name">يومي</div>
-          <div class="schedule-desc">ملخص كل صباح في بريدك</div>
+          <div class="schedule-name" data-i18n="sch_daily_name">يومي</div>
+          <div class="schedule-desc" data-i18n="sch_daily_desc">ملخص كل صباح في بريدك</div>
         </div>
         <div class="schedule-card" id="sch-weekly" onclick="selectSchedule('weekly')">
           <div class="schedule-icon">📅</div>
-          <div class="schedule-name">أسبوعي</div>
-          <div class="schedule-desc">ملخص شامل كل أسبوع</div>
+          <div class="schedule-name" data-i18n="sch_weekly_name">أسبوعي</div>
+          <div class="schedule-desc" data-i18n="sch_weekly_desc">ملخص شامل كل أسبوع</div>
         </div>
       </div>
 
-      <div class="card-eyebrow" style="margin-bottom:14px">لغة الملخص</div>
+      <div class="card-eyebrow" style="margin-bottom:14px" data-i18n="digest_lang_label">لغة الملخص</div>
       <div class="schedule-options">
         <div class="schedule-card selected" id="lang-arabic" onclick="selectLanguage('arabic')">
           <div class="schedule-icon">🇸🇦</div>
-          <div class="schedule-name">العربية</div>
-          <div class="schedule-desc">يصلك ملخصك بالكامل بالعربية</div>
+          <div class="schedule-name" data-i18n="lang_ar_name">العربية</div>
+          <div class="schedule-desc" data-i18n="lang_ar_desc">يصلك ملخصك بالكامل بالعربية</div>
         </div>
         <div class="schedule-card" id="lang-english" onclick="selectLanguage('english')">
           <div class="schedule-icon">🇬🇧</div>
-          <div class="schedule-name">English</div>
-          <div class="schedule-desc">Receive your digest fully in English</div>
+          <div class="schedule-name" data-i18n="lang_en_name">English</div>
+          <div class="schedule-desc" data-i18n="lang_en_desc">Receive your digest fully in English</div>
         </div>
       </div>
 
-      <div class="card-eyebrow" style="margin-bottom:14px">طول الملخص</div>
+      <div class="card-eyebrow" style="margin-bottom:14px" data-i18n="digest_len_label">طول الملخص</div>
       <div class="schedule-options">
         <div class="schedule-card selected" id="len-detailed" onclick="selectLength('detailed')">
           <div class="schedule-icon">📖</div>
-          <div class="schedule-name">مفصّل</div>
-          <div class="schedule-desc">تحليل كامل ومعمّق لكل خبر</div>
+          <div class="schedule-name" data-i18n="len_detailed_name">مفصّل</div>
+          <div class="schedule-desc" data-i18n="len_detailed_desc">تحليل كامل ومعمّق لكل خبر</div>
         </div>
         <div class="schedule-card" id="len-brief" onclick="selectLength('brief')">
           <div class="schedule-icon">⚡</div>
-          <div class="schedule-name">مختصر</div>
-          <div class="schedule-desc">نقاط سريعة فقط، أقل من ٣٠٠ كلمة</div>
+          <div class="schedule-name" data-i18n="len_brief_name">مختصر</div>
+          <div class="schedule-desc" data-i18n="len_brief_desc">نقاط سريعة فقط، أقل من ٣٠٠ كلمة</div>
         </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn-secondary" onclick="goStep(4)">← رجوع</button>
-        <button class="btn-primary" onclick="goStep(6)">التالي ←</button>
+        <button class="btn-secondary" onclick="goStep(4)" data-i18n="btn_back">← رجوع</button>
+        <button class="btn-primary" onclick="goStep(6)" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 6: BIO ══ -->
     <div class="card" id="step-6" style="display:none">
-      <div class="card-eyebrow">الخطوة السادسة</div>
-      <h2 class="card-title">أخبرنا <span>عن نفسك</span></h2>
-      <p class="card-sub">هذه الخطوة هي سر سيطرة الحقيقي. كلما أخبرته عن نفسك أكثر، كلما فهمك أعمق وكانت استخباراتك أدق.</p>
+      <div class="card-eyebrow" data-i18n="s6_eyebrow">الخطوة السادسة</div>
+      <h2 class="card-title" data-i18n="s6_title">أخبرنا <span>عن نفسك</span></h2>
+      <p class="card-sub" data-i18n="s6_sub">هذه الخطوة هي سر سيطرة الحقيقي. كلما أخبرته عن نفسك أكثر، كلما فهمك أعمق وكانت استخباراتك أدق.</p>
 
       <div class="field">
-        <label style="font-size:0.8rem;color:var(--mid);margin-bottom:12px;display:block;">اكتب بحرية — لا يوجد إجابة خاطئة</label>
+        <label style="font-size:0.8rem;color:var(--mid);margin-bottom:12px;display:block;" data-i18n="bio_label">اكتب بحرية — لا يوجد إجابة خاطئة</label>
         <textarea id="inp-bio"
           placeholder="مثال: أنا مدير مبيعات في شركة تقنية، أعمل على توسيع أعمالنا في السوق السعودي. هدفي خلال ٦ أشهر أن أغلق ٣ صفقات كبرى مع جهات حكومية. أريد أن أبقى في الصورة دائماً عن آخر التطورات في مجال الأمن السيبراني والحوسبة السحابية في المنطقة."
+          data-i18n-ph="ph_bio"
           style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:16px 18px;font-family:'Tajawal',sans-serif;font-size:0.95rem;color:var(--text);outline:none;resize:vertical;min-height:160px;line-height:1.8;transition:border-color 0.2s;"
           oninput="updateBioCount()"
           onfocus="this.style.borderColor='var(--accent)'"
           onblur="this.style.borderColor='var(--border2)'"></textarea>
         <div style="display:flex;justify-content:space-between;margin-top:8px;align-items:center;">
           <span style="font-size:0.72rem;color:var(--muted);" id="bio-count">٠ حرف</span>
-          <span class="optional-badge" style="margin:0;">اختياري · يمكنك تخطيها</span>
+          <span class="optional-badge" style="margin:0;" data-i18n="optional_skip2">اختياري · يمكنك تخطيها</span>
         </div>
       </div>
 
       <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:16px 20px;margin-top:8px;">
-        <div style="font-size:0.7rem;color:var(--accent);letter-spacing:1.5px;font-weight:600;margin-bottom:10px;">أمثلة على ما يمكنك ذكره</div>
+        <div style="font-size:0.7rem;color:var(--accent);letter-spacing:1.5px;font-weight:600;margin-bottom:10px;" data-i18n="bio_ex_title">أمثلة على ما يمكنك ذكره</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> ماذا تعمل وما هو دورك المهني</div>
-          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> ما الذي تريد تحقيقه خلال الأشهر القادمة</div>
-          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> ما التحديات التي تواجهها في مجالك</div>
-          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> من هم عملاؤك أو جمهورك المستهدف</div>
+          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> <span data-i18n="bio_ex1">ماذا تعمل وما هو دورك المهني</span></div>
+          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> <span data-i18n="bio_ex2">ما الذي تريد تحقيقه خلال الأشهر القادمة</span></div>
+          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> <span data-i18n="bio_ex3">ما التحديات التي تواجهها في مجالك</span></div>
+          <div style="font-size:0.8rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">·</span> <span data-i18n="bio_ex4">من هم عملاؤك أو جمهورك المستهدف</span></div>
         </div>
       </div>
 
       <div class="btn-row" style="margin-top:24px">
-        <button class="btn-secondary" onclick="goStep(5)">← رجوع</button>
-        <button class="btn-primary" onclick="goStep(7)">التالي ←</button>
+        <button class="btn-secondary" onclick="goStep(5)" data-i18n="btn_back">← رجوع</button>
+        <button class="btn-primary" onclick="goStep(7)" data-i18n="btn_next">التالي ←</button>
       </div>
     </div>
 
     <!-- ══ STEP 7: CONFIRM ══ -->
     <div class="card" id="step-7" style="display:none">
-      <div class="card-eyebrow">المرحلة الأخيرة</div>
-      <h2 class="card-title">كل شيء <span>جاهز</span></h2>
-      <p class="card-sub">راجع ملفك الاستخباراتي قبل الإطلاق.</p>
+      <div class="card-eyebrow" data-i18n="s7_eyebrow">المرحلة الأخيرة</div>
+      <h2 class="card-title" data-i18n="s7_title">كل شيء <span>جاهز</span></h2>
+      <p class="card-sub" data-i18n="s7_sub">راجع ملفك الاستخباراتي قبل الإطلاق.</p>
 
       <div class="summary-grid" id="summary-grid"></div>
 
       <div class="btn-row">
-        <button class="btn-secondary" onclick="goStep(6)">← تعديل</button>
+        <button class="btn-secondary" onclick="goStep(6)" data-i18n="btn_edit">← تعديل</button>
         <button class="btn-primary" id="btn-submit" onclick="submitProfile()">
-          <span id="submit-text">ابدأ سيطرة 🚀</span>
+          <span id="submit-text" data-i18n="submit_text">ابدأ سيطرة 🚀</span>
           <span class="spinner" id="submit-spinner"></span>
         </button>
       </div>
@@ -403,9 +414,9 @@
     <div class="card" id="step-success" style="display:none">
       <div class="success-screen">
         <span class="success-icon">✦</span>
-        <h2 class="success-title">مرحباً في <span>سيطرة</span></h2>
-        <p class="success-sub">ملفك الاستخباراتي جاهز. سيطرة يعرفك الآن، وبدأ يراقب العالم لصالحك. ستصلك أول استخباراتك الشخصية قريباً مباشرة على بريدك.</p>
-        <a href="/" style="display:inline-block;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;padding:14px 36px;border-radius:12px;text-decoration:none;font-size:0.95rem">العودة للرئيسية</a>
+        <h2 class="success-title" data-i18n="success_title">مرحباً في <span>سيطرة</span></h2>
+        <p class="success-sub" data-i18n="success_sub">ملفك الاستخباراتي جاهز. سيطرة يعرفك الآن، وبدأ يراقب العالم لصالحك. ستصلك أول استخباراتك الشخصية قريباً مباشرة على بريدك.</p>
+        <a href="/" data-i18n="success_home" style="display:inline-block;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;padding:14px 36px;border-radius:12px;text-decoration:none;font-size:0.95rem">العودة للرئيسية</a>
       </div>
     </div>
 
@@ -425,27 +436,43 @@ const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // ── DATA ─────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id:'tech',    icon:'💻', label:'التقنية',
-    subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'] },
-  { id:'biz',     icon:'💼', label:'الأعمال',
-    subs:['ريادة الأعمال','الاستثمار والتمويل','الاستراتيجية والقيادة','التسويق','المبيعات','التجارة الإلكترونية','الموارد البشرية'] },
-  { id:'medical', icon:'🏥', label:'الطب والصحة',
-    subs:['أمراض القلب','الأورام','طب الأعصاب','السكري والغدد','الصحة العامة','الطب النفسي','طب الأطفال','الجراحة'] },
-  { id:'fitness', icon:'🏋️', label:'اللياقة والرياضة',
-    subs:['تمارين المقاومة','الكارديو والجري','علم الرياضة','التعافي والنوم','رياضات المنافسة','اليوغا والتمدد'] },
-  { id:'beauty',  icon:'✨', label:'الجمال والعافية',
-    subs:['العناية بالبشرة','العناية بالشعر','التجميل والمكياج','العافية الشاملة','مكافحة الشيخوخة','البيوهاكينج'] },
-  { id:'nutrition',icon:'🥗',label:'التغذية',
-    subs:['الحمية والرشاقة','التغذية الرياضية','الأطعمة الوظيفية','الصيام المتقطع','المكملات الغذائية','الميكروبيوم'] },
-  { id:'finance', icon:'📈', label:'المال والاستثمار',
-    subs:['الأسهم والبورصة','العملات الرقمية','العقارات','صناديق الاستثمار','الاقتصاد الكلي','المصرفية الإسلامية'] },
-  { id:'science', icon:'🔬', label:'العلوم',
-    subs:['الذكاء الاصطناعي البحثي','الفضاء والفلك','الفيزياء والكيمياء','علم الأحياء','البيئة والمناخ','علم الجينات'] },
-  { id:'mideast', icon:'🌍', label:'منطقة MENA',
-    subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'] },
-  { id:'mental',  icon:'🧠', label:'الصحة النفسية',
-    subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'] },
+  { id:'tech',    icon:'💻', label:'التقنية', label_en:'Technology',
+    subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'],
+    subs_en:['Artificial Intelligence','Cybersecurity','Cloud Computing','Software Development','Data Science','Blockchain','Internet of Things','Robotics'] },
+  { id:'biz',     icon:'💼', label:'الأعمال', label_en:'Business',
+    subs:['ريادة الأعمال','الاستثمار والتمويل','الاستراتيجية والقيادة','التسويق','المبيعات','التجارة الإلكترونية','الموارد البشرية'],
+    subs_en:['Entrepreneurship','Investment & Finance','Strategy & Leadership','Marketing','Sales','E-commerce','Human Resources'] },
+  { id:'medical', icon:'🏥', label:'الطب والصحة', label_en:'Medicine & Health',
+    subs:['أمراض القلب','الأورام','طب الأعصاب','السكري والغدد','الصحة العامة','الطب النفسي','طب الأطفال','الجراحة'],
+    subs_en:['Cardiology','Oncology','Neurology','Diabetes & Endocrinology','Public Health','Psychiatry','Pediatrics','Surgery'] },
+  { id:'fitness', icon:'🏋️', label:'اللياقة والرياضة', label_en:'Fitness & Sports',
+    subs:['تمارين المقاومة','الكارديو والجري','علم الرياضة','التعافي والنوم','رياضات المنافسة','اليوغا والتمدد'],
+    subs_en:['Strength Training','Cardio & Running','Sports Science','Recovery & Sleep','Competitive Sports','Yoga & Stretching'] },
+  { id:'beauty',  icon:'✨', label:'الجمال والعافية', label_en:'Beauty & Wellness',
+    subs:['العناية بالبشرة','العناية بالشعر','التجميل والمكياج','العافية الشاملة','مكافحة الشيخوخة','البيوهاكينج'],
+    subs_en:['Skincare','Haircare','Makeup & Cosmetics','Holistic Wellness','Anti-aging','Biohacking'] },
+  { id:'nutrition',icon:'🥗',label:'التغذية', label_en:'Nutrition',
+    subs:['الحمية والرشاقة','التغذية الرياضية','الأطعمة الوظيفية','الصيام المتقطع','المكملات الغذائية','الميكروبيوم'],
+    subs_en:['Diet & Weight Loss','Sports Nutrition','Functional Foods','Intermittent Fasting','Supplements','Microbiome'] },
+  { id:'finance', icon:'📈', label:'المال والاستثمار', label_en:'Money & Investing',
+    subs:['الأسهم والبورصة','العملات الرقمية','العقارات','صناديق الاستثمار','الاقتصاد الكلي','المصرفية الإسلامية'],
+    subs_en:['Stocks & Markets','Cryptocurrency','Real Estate','Investment Funds','Macroeconomics','Islamic Banking'] },
+  { id:'science', icon:'🔬', label:'العلوم', label_en:'Science',
+    subs:['الذكاء الاصطناعي البحثي','الفضاء والفلك','الفيزياء والكيمياء','علم الأحياء','البيئة والمناخ','علم الجينات'],
+    subs_en:['AI Research','Space & Astronomy','Physics & Chemistry','Biology','Environment & Climate','Genetics'] },
+  { id:'mideast', icon:'🌍', label:'منطقة MENA', label_en:'MENA Region',
+    subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'],
+    subs_en:['Saudi Market','UAE & Qatar','Gulf Economy','Vision 2030','Politics','Energy & Oil'] },
+  { id:'mental',  icon:'🧠', label:'الصحة النفسية', label_en:'Mental Health',
+    subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'],
+    subs_en:['General Mental Health','Stress & Anxiety','Sleep & Relaxation','Relationships & Communication','Self-development','Mindfulness & Meditation'] },
 ];
+
+// ── AR↔EN topic lookup (canonical state stays Arabic) ─────────────
+const TOPIC_AR2EN = {};
+const TOPIC_EN2AR = {};
+CATEGORIES.forEach(c => c.subs.forEach((s, i) => { TOPIC_AR2EN[s] = c.subs_en[i]; TOPIC_EN2AR[c.subs_en[i]] = s; }));
+function topicDisplay(arTopic){ return LANG === 'ar' ? arTopic : (TOPIC_AR2EN[arTopic] || arTopic); }
 
 const SUGGESTED_COMPANIES = [
   'Apple','Microsoft','Google','Amazon','Meta','Nvidia',
@@ -521,9 +548,7 @@ function updateDots(active) {
 
 function updateBioCount() {
   const val = document.getElementById('inp-bio').value;
-  const nums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-  const len = val.length.toString().split('').map(d => nums[parseInt(d)]).join('');
-  document.getElementById('bio-count').textContent = len + ' حرف';
+  document.getElementById('bio-count').textContent = t('bio_char', { n: num(val.length) });
 }
 
 // ── STEP 2: TOPICS ───────────────────────────────────────────────
@@ -534,11 +559,12 @@ function buildCategories() {
     const btn = document.createElement('button');
     btn.className = 'cat-btn';
     btn.id = 'cat-' + cat.id;
-    btn.innerHTML = `<span class="cat-icon">${cat.icon}</span>${cat.label}`;
+    btn.innerHTML = `<span class="cat-icon">${cat.icon}</span>${LANG === 'ar' ? cat.label : cat.label_en}`;
+    if (state.openCategory === cat.id) btn.classList.add('active');
     btn.onclick = () => toggleCategory(cat.id);
     catList.appendChild(btn);
   });
-  renderSubtopics(null);
+  renderSubtopics(state.openCategory);
 }
 
 function toggleCategory(id) {
@@ -554,10 +580,11 @@ function renderSubtopics(catId) {
   const cat = CATEGORIES.find(c => c.id === catId);
   const atLimit = state.selectedTopics.length >= FREE_TOPIC_LIMIT;
   area.innerHTML = `<div class="subtopics show" id="subs-${catId}">
-    ${cat.subs.map(s => {
+    ${cat.subs.map((s, i) => {
       const sel = state.selectedTopics.includes(s);
       const locked = !sel && atLimit;
-      return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" onclick="toggleTopic('${s}')">${s}</button>`;
+      const label = LANG === 'ar' ? s : cat.subs_en[i];
+      return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" onclick="toggleTopic('${s}')">${label}</button>`;
     }).join('')}
   </div>`;
 }
@@ -584,8 +611,8 @@ function removeTopic(topic) {
 
 function renderSelectedTopics() {
   const d = document.getElementById('selected-topics-display');
-  d.innerHTML = state.selectedTopics.map((t, i) =>
-    `<div class="topic-chip">${t}<span class="chip-remove" data-idx="${i}">×</span></div>`
+  d.innerHTML = state.selectedTopics.map((tp, i) =>
+    `<div class="topic-chip">${topicDisplay(tp)}<span class="chip-remove" data-idx="${i}">×</span></div>`
   ).join('');
   d.querySelectorAll('.chip-remove').forEach(span => {
     span.addEventListener('click', () => {
@@ -596,9 +623,8 @@ function renderSelectedTopics() {
 
 function updateTopicCounter() {
   const n = state.selectedTopics.length;
-  const arabicNums = ['٠','١','٢','٣'];
-  document.getElementById('topic-count').textContent = `${arabicNums[n]} / ٣ مواضيع`;
-  document.getElementById('topic-limit-text').textContent = `متبقي لك ${arabicNums[FREE_TOPIC_LIMIT - n]} مواضيع`;
+  document.getElementById('topic-count').textContent = t('topic_count', { n: num(n), max: num(FREE_TOPIC_LIMIT) });
+  document.getElementById('topic-limit-text').textContent = t('topic_remaining', { n: num(FREE_TOPIC_LIMIT - n) });
   for (let i = 1; i <= FREE_TOPIC_LIMIT; i++) {
     const d = document.getElementById('td' + i);
     d.className = 'limit-dot' + (i <= n ? (n >= FREE_TOPIC_LIMIT ? ' max' : ' filled') : '');
@@ -628,9 +654,12 @@ function addCompany(name, btn) {
   state.companies.push(name);
   renderCompanyChips();
   if (btn) btn.classList.add('added');
-  const arabicNums = ['٠','١'];
+  updateCompanyCounter();
+}
+
+function updateCompanyCounter() {
   document.getElementById('company-limit-text').textContent =
-    `${arabicNums[state.companies.length]} / ١ شركة`;
+    t('company_count', { n: num(state.companies.length), max: num(FREE_COMPANY_LIMIT) });
 }
 
 function removeCompany(idx) {
@@ -642,9 +671,7 @@ function removeCompany(idx) {
     if (SUGGESTED_COMPANIES[parseInt(btn.dataset.index)] === name)
       btn.classList.remove('added');
   });
-  const arabicNums = ['٠','١'];
-  document.getElementById('company-limit-text').textContent =
-    `${arabicNums[state.companies.length]} / ١ شركة`;
+  updateCompanyCounter();
 }
 
 function renderCompanyChips() {
@@ -659,14 +686,20 @@ function renderCompanyChips() {
 // ── STEP 4: COUNTRIES ────────────────────────────────────────────
 function buildCountries() {
   const g = document.getElementById('countries-grid');
-  g.innerHTML = COUNTRIES.map((c, i) =>
-    `<button class="country-btn" id="cnt-${i}" data-index="${i}">
-      <span class="country-flag">${c.flag}</span>${c.name}
-    </button>`
-  ).join('');
+  g.innerHTML = COUNTRIES.map((c, i) => {
+    const sel = state.countries.includes(c.en);
+    return `<button class="country-btn ${sel?'selected':''}" id="cnt-${i}" data-index="${i}">
+      <span class="country-flag">${c.flag}</span>${LANG === 'ar' ? c.name : c.en}
+    </button>`;
+  }).join('');
   g.querySelectorAll('.country-btn').forEach(btn => {
     btn.addEventListener('click', () => toggleCountry(parseInt(btn.dataset.index)));
   });
+}
+
+function updateCountryCounter() {
+  document.getElementById('country-limit-text').textContent =
+    t('country_count', { n: num(state.countries.length), max: num(FREE_COUNTRY_LIMIT) });
 }
 
 function toggleCountry(idx) {
@@ -682,9 +715,7 @@ function toggleCountry(idx) {
     state.countries.push(en);
     btn.classList.add('selected');
   }
-  const arabicNums = ['٠','١'];
-  document.getElementById('country-limit-text').textContent =
-    `${arabicNums[state.countries.length]} / ١ دولة`;
+  updateCountryCounter();
 }
 
 // ── STEP 5: SCHEDULE ─────────────────────────────────────────────
@@ -709,14 +740,14 @@ function selectLength(val) {
 // ── STEP 6: SUMMARY ──────────────────────────────────────────────
 function buildSummary() {
   const rows = [
-    { icon:'👤', label:'الاسم والبريد', value: `${state.name} · ${state.email}` },
-    { icon:'🎯', label:'المواضيع', tags: state.selectedTopics },
-    { icon:'🏢', label:'الشركات', value: state.companies.length ? state.companies.join(' · ') : 'لم تختر شركات' },
-    { icon:'🌍', label:'البلدان', value: state.countries.length ? state.countries.join(' · ') : 'عالمي (بدون تقييد جغرافي)' },
-    { icon:'📅', label:'التكرار', value: state.frequency === 'daily' ? '⚡ يومي' : '📅 أسبوعي' },
-    { icon:'🌐', label:'اللغة', value: state.language === 'arabic' ? '🇸🇦 العربية' : '🇬🇧 English' },
-    { icon:'📖', label:'طول الملخص', value: state.digest_length === 'detailed' ? 'مفصّل' : 'مختصر' },
-    { icon:'🧠', label:'ملفك الشخصي', value: state.bio || 'لم تضف وصفاً شخصياً' },
+    { icon:'👤', label:t('sum_name'), value: `${state.name} · ${state.email}` },
+    { icon:'🎯', label:t('sum_topics'), tags: state.selectedTopics.map(topicDisplay) },
+    { icon:'🏢', label:t('sum_companies'), value: state.companies.length ? state.companies.join(' · ') : t('no_companies') },
+    { icon:'🌍', label:t('sum_countries'), value: state.countries.length ? state.countries.join(' · ') : t('global_countries') },
+    { icon:'📅', label:t('sum_freq'), value: state.frequency === 'daily' ? t('freq_daily') : t('freq_weekly') },
+    { icon:'🌐', label:t('sum_lang'), value: state.language === 'arabic' ? '🇸🇦 العربية' : '🇬🇧 English' },
+    { icon:'📖', label:t('sum_length'), value: state.digest_length === 'detailed' ? t('len_detailed_name') : t('len_brief_name') },
+    { icon:'🧠', label:t('sum_bio'), value: state.bio || t('no_bio') },
   ];
   document.getElementById('summary-grid').innerHTML = rows.map(r => `
     <div class="summary-row">
@@ -785,10 +816,115 @@ async function submitProfile() {
   }
 }
 
+// ── I18N ──────────────────────────────────────────────────────────
+const I18N = {
+  ar: {
+    _title:'سيطرة — ابدأ الآن', brand:'سيطرة', nav_back:'← العودة للرئيسية',
+    dot1:'البداية', dot2:'المواضيع', dot3:'الشركات', dot4:'البلدان', dot5:'الجدول', dot6:'عن نفسك', dot7:'تأكيد',
+    btn_next:'التالي ←', btn_back:'← رجوع', btn_edit:'← تعديل',
+    tier_free:'✦ الخطة المجانية', tier_upgrade:'ترقية للمزيد', optional_skip:'اختياري · يمكنك تخطي هذه الخطوة',
+    s1_eyebrow:'الخطوة الأولى', s1_title:'أهلاً بك في <span>سيطرة</span>', s1_sub:'وكيلك الاستخباراتي الشخصي جاهز ليبدأ. كلما عرف عنك أكثر، كانت استخباراتك أدق وأعمق.',
+    lbl_name:'اسمك', ph_name:'مثال: خالد', lbl_email:'بريدك الإلكتروني',
+    s2_eyebrow:'الخطوة الثانية', s2_title:'اختر <span>مواضيعك</span>', s2_sub:'اختر الفئة ثم حدد المواضيع الفرعية التي تهمك. سيطرة يراقبها لك كل يوم ويتذكر كل ما يخصها.',
+    s3_eyebrow:'الخطوة الثالثة', s3_title:'تابع <span>الشركات</span>', s3_sub:'أضف الشركات التي تريد مراقبتها. سيطرة يرصد كل جديد عنها ويخبرك بما يعنيه لك أنت تحديداً.', ph_company:'اكتب اسم الشركة واضغط Enter', popular_suggestions:'اقتراحات شائعة',
+    s4_eyebrow:'الخطوة الرابعة', s4_title:'اختر <span>البلدان</span>', s4_sub:'حدد البلدان التي تريد متابعة أحداثها. سيطرة يقرأ الأخبار من زاوية تأثيرها عليك أنت.',
+    s5_eyebrow:'الخطوة الخامسة', s5_title:'متى تريد <span>استخباراتك</span>؟', s5_sub:'اختر متى تصلك استخباراتك الشخصية. يمكنك تغيير هذا في أي وقت لاحقاً.',
+    sch_daily_name:'يومي', sch_daily_desc:'ملخص كل صباح في بريدك', sch_weekly_name:'أسبوعي', sch_weekly_desc:'ملخص شامل كل أسبوع',
+    digest_lang_label:'لغة الملخص', lang_ar_name:'العربية', lang_ar_desc:'يصلك ملخصك بالكامل بالعربية', lang_en_name:'English', lang_en_desc:'Receive your digest fully in English',
+    digest_len_label:'طول الملخص', len_detailed_name:'مفصّل', len_detailed_desc:'تحليل كامل ومعمّق لكل خبر', len_brief_name:'مختصر', len_brief_desc:'نقاط سريعة فقط، أقل من ٣٠٠ كلمة',
+    s6_eyebrow:'الخطوة السادسة', s6_title:'أخبرنا <span>عن نفسك</span>', s6_sub:'هذه الخطوة هي سر سيطرة الحقيقي. كلما أخبرته عن نفسك أكثر، كلما فهمك أعمق وكانت استخباراتك أدق.',
+    bio_label:'اكتب بحرية — لا يوجد إجابة خاطئة', ph_bio:'مثال: أنا مدير مبيعات في شركة تقنية، أعمل على توسيع أعمالنا في السوق السعودي. هدفي خلال ٦ أشهر أن أغلق ٣ صفقات كبرى مع جهات حكومية. أريد أن أبقى في الصورة دائماً عن آخر التطورات في مجال الأمن السيبراني والحوسبة السحابية في المنطقة.',
+    optional_skip2:'اختياري · يمكنك تخطيها', bio_ex_title:'أمثلة على ما يمكنك ذكره',
+    bio_ex1:'ماذا تعمل وما هو دورك المهني', bio_ex2:'ما الذي تريد تحقيقه خلال الأشهر القادمة', bio_ex3:'ما التحديات التي تواجهها في مجالك', bio_ex4:'من هم عملاؤك أو جمهورك المستهدف',
+    s7_eyebrow:'المرحلة الأخيرة', s7_title:'كل شيء <span>جاهز</span>', s7_sub:'راجع ملفك الاستخباراتي قبل الإطلاق.', submit_text:'ابدأ سيطرة 🚀',
+    success_title:'مرحباً في <span>سيطرة</span>', success_sub:'ملفك الاستخباراتي جاهز. سيطرة يعرفك الآن، وبدأ يراقب العالم لصالحك. ستصلك أول استخباراتك الشخصية قريباً مباشرة على بريدك.', success_home:'العودة للرئيسية',
+    bio_char:'{n} حرف', topic_count:'{n} / {max} مواضيع', topic_remaining:'متبقي لك {n} مواضيع', company_count:'{n} / {max} شركة', country_count:'{n} / {max} دولة',
+    sum_name:'الاسم والبريد', sum_topics:'المواضيع', sum_companies:'الشركات', sum_countries:'البلدان', sum_freq:'التكرار', sum_lang:'اللغة', sum_length:'طول الملخص', sum_bio:'ملفك الشخصي',
+    no_companies:'لم تختر شركات', global_countries:'عالمي (بدون تقييد جغرافي)', freq_daily:'⚡ يومي', freq_weekly:'📅 أسبوعي', no_bio:'لم تضف وصفاً شخصياً',
+  },
+  en: {
+    _title:'Saitara — Get Started', brand:'Saitara', nav_back:'Back to Home →',
+    dot1:'Start', dot2:'Topics', dot3:'Companies', dot4:'Countries', dot5:'Schedule', dot6:'About You', dot7:'Confirm',
+    btn_next:'Next →', btn_back:'← Back', btn_edit:'← Edit',
+    tier_free:'✦ Free Plan', tier_upgrade:'Upgrade for more', optional_skip:'Optional · you can skip this step',
+    s1_eyebrow:'Step One', s1_title:'Welcome to <span>Saitara</span>', s1_sub:'Your personal intelligence agent is ready to begin. The more it knows about you, the sharper and deeper your intelligence becomes.',
+    lbl_name:'Your name', ph_name:'e.g. Khalid', lbl_email:'Your email',
+    s2_eyebrow:'Step Two', s2_title:'Choose your <span>topics</span>', s2_sub:'Pick a category, then select the subtopics that matter to you. Saitara monitors them daily and remembers everything relevant.',
+    s3_eyebrow:'Step Three', s3_title:'Follow <span>companies</span>', s3_sub:'Add the companies you want to monitor. Saitara tracks every development and tells you what it means for you specifically.', ph_company:'Type a company name and press Enter', popular_suggestions:'Popular suggestions',
+    s4_eyebrow:'Step Four', s4_title:'Choose <span>countries</span>', s4_sub:'Select the countries whose events you want to follow. Saitara reads the news through the lens of how it affects you.',
+    s5_eyebrow:'Step Five', s5_title:'When do you want your <span>intelligence</span>?', s5_sub:'Choose when your personal intelligence arrives. You can change this anytime later.',
+    sch_daily_name:'Daily', sch_daily_desc:'A digest every morning in your inbox', sch_weekly_name:'Weekly', sch_weekly_desc:'A comprehensive digest every week',
+    digest_lang_label:'Digest language', lang_ar_name:'العربية', lang_ar_desc:'يصلك ملخصك بالكامل بالعربية', lang_en_name:'English', lang_en_desc:'Receive your digest fully in English',
+    digest_len_label:'Digest length', len_detailed_name:'Detailed', len_detailed_desc:'A full, in-depth analysis of every story', len_brief_name:'Brief', len_brief_desc:'Quick bullet points only, under 300 words',
+    s6_eyebrow:'Step Six', s6_title:'Tell us <span>about yourself</span>', s6_sub:"This step is Saitara's real secret. The more you tell it about yourself, the deeper it understands you and the sharper your intelligence becomes.",
+    bio_label:'Write freely — there is no wrong answer', ph_bio:'e.g. I am a sales manager at a tech company, working to expand our business in the Saudi market. My goal over the next 6 months is to close 3 major deals with government entities. I want to stay constantly informed about the latest developments in cybersecurity and cloud computing in the region.',
+    optional_skip2:'Optional · you can skip it', bio_ex_title:'Examples of what you can mention',
+    bio_ex1:'What you do and your professional role', bio_ex2:'What you want to achieve in the coming months', bio_ex3:'The challenges you face in your field', bio_ex4:'Who your clients or target audience are',
+    s7_eyebrow:'Final Stage', s7_title:'Everything is <span>ready</span>', s7_sub:'Review your intelligence profile before launch.', submit_text:'Launch Saitara 🚀',
+    success_title:'Welcome to <span>Saitara</span>', success_sub:'Your intelligence profile is ready. Saitara knows you now and has begun watching the world on your behalf. Your first personal intelligence will arrive soon, straight to your inbox.', success_home:'Back to Home',
+    bio_char:'{n} chars', topic_count:'{n} / {max} topics', topic_remaining:'{n} remaining', company_count:'{n} / {max} company', country_count:'{n} / {max} country',
+    sum_name:'Name & email', sum_topics:'Topics', sum_companies:'Companies', sum_countries:'Countries', sum_freq:'Frequency', sum_lang:'Language', sum_length:'Digest length', sum_bio:'Your profile',
+    no_companies:'No companies selected', global_countries:'Global (no geographic restriction)', freq_daily:'⚡ Daily', freq_weekly:'📅 Weekly', no_bio:'No personal description added',
+  },
+};
+
+let LANG = 'ar';
+const AR_DIGITS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function num(n){ return LANG === 'ar' ? String(n).split('').map(d => /[0-9]/.test(d) ? AR_DIGITS[+d] : d).join('') : String(n); }
+function t(key, vars){
+  let s = (I18N[LANG] && I18N[LANG][key] != null) ? I18N[LANG][key] : key;
+  if (vars) for (const k in vars) s = s.replace(new RegExp('\\{'+k+'\\}','g'), vars[k]);
+  return s;
+}
+
+function applyLangLinks(){
+  document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+    const base = a.getAttribute('data-base') || a.getAttribute('href') || '/';
+    a.setAttribute('href', base + (base.includes('?') ? '&' : '?') + 'lang=' + LANG);
+  });
+}
+
+function setLang(lang){
+  LANG = (lang === 'en') ? 'en' : 'ar';
+  document.documentElement.lang = LANG;
+  document.documentElement.dir  = LANG === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[LANG][k] != null) el.innerHTML = I18N[LANG][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if (I18N[LANG][k] != null) el.setAttribute('placeholder', I18N[LANG][k]);
+  });
+  const tg = document.getElementById('lang-toggle');
+  if (tg) tg.textContent = LANG === 'ar' ? 'EN' : 'العربية';
+  try { localStorage.setItem('saitara_lang', LANG); } catch(e){}
+  applyLangLinks();
+  // re-render dynamic content
+  buildCategories();
+  renderSelectedTopics();
+  updateTopicCounter();
+  updateCompanyCounter();
+  buildCountries();
+  updateCountryCounter();
+  updateBioCount();
+  if (document.getElementById('step-7').style.display !== 'none') buildSummary();
+}
+
+function toggleLang(){ setLang(LANG === 'ar' ? 'en' : 'ar'); }
+
 // ── INIT ──────────────────────────────────────────────────────────
 buildCategories();
 buildSuggestedCompanies();
 buildCountries();
+(function initLang(){
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  let stored = null;
+  try { stored = localStorage.getItem('saitara_lang'); } catch(e){}
+  const initial = (urlLang === 'en' || urlLang === 'ar') ? urlLang : (stored === 'en' || stored === 'ar' ? stored : 'ar');
+  selectLanguage(initial === 'en' ? 'english' : 'arabic');
+  setLang(initial);
+})();
 </script>
 </body>
 </html>
