@@ -179,7 +179,7 @@
       <div class="cat-grid" id="p-cat-list"></div>
       <div id="p-subtopic-area"></div>
       <div class="chips-row" id="p-topics-display"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>٤ مواضيع</span></p>
+      <p class="limit-note">الخطة المجانية: حتى <span>٣ مواضيع</span></p>
 
       <!-- COMPANIES -->
       <div class="section-label">الشركات</div>
@@ -189,12 +189,12 @@
       </div>
       <div class="chips-row" id="p-company-chips"></div>
       <div class="sug-grid" id="p-sug-companies"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>٣ شركات</span></p>
+      <p class="limit-note">الخطة المجانية: حتى <span>شركة واحدة</span></p>
 
       <!-- COUNTRIES -->
       <div class="section-label">البلدان <span style="font-size:0.65rem;color:var(--muted);font-weight:400;letter-spacing:0">(اختياري)</span></div>
       <div class="countries-grid" id="p-countries-grid"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>٣ بلدان</span></p>
+      <p class="limit-note">الخطة المجانية: حتى <span>دولة واحدة</span></p>
 
       <!-- SCHEDULE -->
       <div class="section-label">تكرار الإرسال</div>
@@ -208,6 +208,36 @@
           <div class="sch-icon">📅</div>
           <div class="sch-name">أسبوعي</div>
           <div class="sch-desc">ملخص شامل كل أسبوع</div>
+        </div>
+      </div>
+
+      <!-- LANGUAGE -->
+      <div class="section-label">لغة الملخص</div>
+      <div class="schedule-row">
+        <div class="sch-card selected" id="p-lang-arabic" onclick="selectLang('arabic')">
+          <div class="sch-icon">🇸🇦</div>
+          <div class="sch-name">العربية</div>
+          <div class="sch-desc">ملخصك بالكامل بالعربية</div>
+        </div>
+        <div class="sch-card" id="p-lang-english" onclick="selectLang('english')">
+          <div class="sch-icon">🇬🇧</div>
+          <div class="sch-name">English</div>
+          <div class="sch-desc">Your digest fully in English</div>
+        </div>
+      </div>
+
+      <!-- DIGEST LENGTH -->
+      <div class="section-label">طول الملخص</div>
+      <div class="schedule-row">
+        <div class="sch-card selected" id="p-len-detailed" onclick="selectLen('detailed')">
+          <div class="sch-icon">📖</div>
+          <div class="sch-name">مفصّل</div>
+          <div class="sch-desc">تحليل كامل لكل خبر</div>
+        </div>
+        <div class="sch-card" id="p-len-brief" onclick="selectLen('brief')">
+          <div class="sch-icon">⚡</div>
+          <div class="sch-name">مختصر</div>
+          <div class="sch-desc">نقاط سريعة فقط</div>
         </div>
       </div>
 
@@ -237,9 +267,9 @@
 // ── CONFIG ────────────────────────────────────────────────────────
 const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';
-const FREE_TOPIC_LIMIT   = 4;
-const FREE_COMPANY_LIMIT = 3;
-const FREE_COUNTRY_LIMIT = 3;
+const FREE_TOPIC_LIMIT   = 3;
+const FREE_COMPANY_LIMIT = 1;
+const FREE_COUNTRY_LIMIT = 1;
 
 // ── DATA ──────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -267,7 +297,7 @@ const COUNTRIES = [
 ];
 
 // ── STATE ─────────────────────────────────────────────────────────
-let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', bio:'' };
+let profile = { name:'', topics:[], companies:[], countries:[], frequency:'daily', language:'arabic', digest_length:'detailed', bio:'' };
 let openCat  = null;
 
 // ── HELPERS ───────────────────────────────────────────────────────
@@ -342,6 +372,8 @@ async function loadProfile(email, token) {
       profile.companies = d.companies || [];
       profile.countries = d.countries || [];
       profile.frequency = d.frequency || 'daily';
+      profile.language  = d.language  || 'arabic';
+      profile.digest_length = d.digest_length || 'detailed';
       profile.bio       = d.bio       || '';
       document.getElementById('p-name').value = d.name || '';
       document.getElementById('p-bio').value  = d.bio  || '';
@@ -374,6 +406,7 @@ const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?on_conflict=email`, {
         name:  document.getElementById('p-name').value.trim(),
         topics: profile.topics, companies: profile.companies,
         countries: profile.countries, frequency: profile.frequency,
+        language: profile.language, digest_length: profile.digest_length,
         bio: document.getElementById('p-bio').value.trim() || null, active: true,
       })
     });
@@ -392,6 +425,7 @@ const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?on_conflict=email`, {
 function buildUI() {
   buildCategories(); buildSuggestedCompanies(); buildCountries();
   renderTopicChips(); renderCompanyChips(); selectSch(profile.frequency);
+  selectLang(profile.language); selectLen(profile.digest_length);
 }
 
 function buildCategories() {
@@ -495,6 +529,18 @@ function selectSch(val) {
   profile.frequency = val;
   document.getElementById('p-sch-daily').classList.toggle('selected', val==='daily');
   document.getElementById('p-sch-weekly').classList.toggle('selected', val==='weekly');
+}
+
+function selectLang(val) {
+  profile.language = val;
+  document.getElementById('p-lang-arabic').classList.toggle('selected', val==='arabic');
+  document.getElementById('p-lang-english').classList.toggle('selected', val==='english');
+}
+
+function selectLen(val) {
+  profile.digest_length = val;
+  document.getElementById('p-len-detailed').classList.toggle('selected', val==='detailed');
+  document.getElementById('p-len-brief').classList.toggle('selected', val==='brief');
 }
 
 function updateBioCount() {
