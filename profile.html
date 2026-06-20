@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>سيطرة · ملفك الشخصي</title>
+  <title data-i18n="_title">سيطرة · ملفك الشخصي</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
@@ -112,6 +112,13 @@
 
     .email-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.06);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:0.82rem;color:var(--accent);margin-bottom:20px;font-weight:500}
 
+    #lang-toggle{background:rgba(0,229,160,0.1);border:1px solid var(--border);color:var(--accent);font-family:'Tajawal',sans-serif;font-size:0.78rem;font-weight:600;padding:6px 16px;border-radius:20px;cursor:pointer;transition:all 0.2s;min-width:78px}
+    #lang-toggle:hover{background:rgba(0,229,160,0.2)}
+    [dir="ltr"] .company-search input{direction:ltr;text-align:left;padding:13px 42px 13px 18px}
+    [dir="ltr"] .company-search .search-icon{left:auto;right:14px}
+    [dir="ltr"] #login-email{direction:ltr;text-align:left}
+    [dir="ltr"] .section-label{text-align:left}
+
     @media(max-width:640px){
       nav{padding:18px 20px}
       .card{padding:28px 20px}
@@ -127,25 +134,28 @@
 
 <div class="page">
   <nav>
-    <a href="/" class="nav-logo">سيطرة</a>
-    <a href="/" class="nav-back">← الرئيسية</a>
-    <button class="nav-signout" id="signout-btn" onclick="signOut()">تسجيل الخروج</button>
+    <a href="/" class="nav-logo" data-i18n="brand" data-keep-lang data-base="/">سيطرة</a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button id="lang-toggle" onclick="toggleLang()">EN</button>
+      <a href="/" class="nav-back" data-i18n="nav_back" data-keep-lang data-base="/">← الرئيسية</a>
+      <button class="nav-signout" id="signout-btn" onclick="signOut()" data-i18n="signout">تسجيل الخروج</button>
+    </div>
   </nav>
 
   <main>
 
     <!-- ══ STATE 1: LOGIN ══ -->
     <div class="card" id="screen-login">
-      <div class="card-eyebrow">الوصول إلى ملفك</div>
-      <h2 class="card-title">أدخل بريدك<br/><span>لنرسل لك رابط الدخول</span></h2>
-      <p class="card-sub">سيطرة يرسل لك رابطاً مؤقتاً على بريدك. اضغط عليه وستدخل مباشرة بدون كلمة مرور.</p>
+      <div class="card-eyebrow" data-i18n="login_eyebrow">الوصول إلى ملفك</div>
+      <h2 class="card-title" data-i18n="login_title">أدخل بريدك<br/><span>لنرسل لك رابط الدخول</span></h2>
+      <p class="card-sub" data-i18n="login_sub">سيطرة يرسل لك رابطاً مؤقتاً على بريدك. اضغط عليه وستدخل مباشرة بدون كلمة مرور.</p>
       <div class="field">
-        <label>بريدك الإلكتروني المسجّل</label>
+        <label data-i18n="login_email_label">بريدك الإلكتروني المسجّل</label>
         <input type="email" id="login-email" placeholder="name@example.com" style="direction:ltr;text-align:right" onkeydown="if(event.key==='Enter') sendMagicLink()"/>
       </div>
       <div class="btn-row">
         <button class="btn-primary" onclick="sendMagicLink()" id="login-btn">
-          <span id="login-btn-text">أرسل لي رابط الدخول ✦</span>
+          <span id="login-btn-text" data-i18n="login_btn">أرسل لي رابط الدخول ✦</span>
           <span class="spinner" id="login-spinner"></span>
         </button>
       </div>
@@ -154,109 +164,109 @@
     <!-- ══ STATE 2: CHECK EMAIL ══ -->
     <div class="card" id="screen-sent" style="display:none;text-align:center">
       <div style="font-size:3.5rem;margin-bottom:20px">📬</div>
-      <div class="card-eyebrow" style="justify-content:center">تم الإرسال</div>
-      <h2 class="card-title" style="text-align:center">تحقق من <span>بريدك</span></h2>
-      <p class="card-sub" style="text-align:center;max-width:360px;margin:0 auto 24px">أرسلنا لك رابط دخول مؤقت. افتح بريدك واضغط على الرابط للدخول مباشرة.</p>
-      <p style="font-size:0.78rem;color:var(--muted);text-align:center">لم يصلك؟ <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="resendLink()">أرسل مرة أخرى</span></p>
+      <div class="card-eyebrow" style="justify-content:center" data-i18n="sent_eyebrow">تم الإرسال</div>
+      <h2 class="card-title" style="text-align:center" data-i18n="sent_title">تحقق من <span>بريدك</span></h2>
+      <p class="card-sub" style="text-align:center;max-width:360px;margin:0 auto 24px" data-i18n="sent_sub">أرسلنا لك رابط دخول مؤقت. افتح بريدك واضغط على الرابط للدخول مباشرة.</p>
+      <p style="font-size:0.78rem;color:var(--muted);text-align:center"><span data-i18n="sent_resend_q">لم يصلك؟</span> <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="resendLink()" data-i18n="sent_resend_link">أرسل مرة أخرى</span></p>
     </div>
 
     <!-- ══ STATE 3: PROFILE EDITOR ══ -->
     <div class="card" id="screen-profile" style="display:none;max-width:680px">
-      <div class="card-eyebrow">ملفك الاستخباراتي</div>
-      <h2 class="card-title">عدّل <span>إعداداتك</span></h2>
-      <p class="card-sub">كل تعديل يجعل استخباراتك أدق وأكثر صلة بما تحتاجه.</p>
+      <div class="card-eyebrow" data-i18n="prof_eyebrow">ملفك الاستخباراتي</div>
+      <h2 class="card-title" data-i18n="prof_title">عدّل <span>إعداداتك</span></h2>
+      <p class="card-sub" data-i18n="prof_sub">كل تعديل يجعل استخباراتك أدق وأكثر صلة بما تحتاجه.</p>
 
       <div id="user-email-badge" class="email-badge">📧 <span id="user-email-display"></span></div>
 
       <!-- NAME -->
       <div class="field">
-        <label>اسمك</label>
-        <input type="text" id="p-name" placeholder="اسمك الكريم"/>
+        <label data-i18n="prof_name_label">اسمك</label>
+        <input type="text" id="p-name" placeholder="اسمك الكريم" data-i18n-ph="prof_name_ph"/>
       </div>
 
       <!-- TOPICS -->
-      <div class="section-label">المواضيع</div>
+      <div class="section-label" data-i18n="sec_topics">المواضيع</div>
       <div class="cat-grid" id="p-cat-list"></div>
       <div id="p-subtopic-area"></div>
       <div class="chips-row" id="p-topics-display"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>٣ مواضيع</span></p>
+      <p class="limit-note" id="topic-limit-note"></p>
 
       <!-- COMPANIES -->
-      <div class="section-label">الشركات</div>
+      <div class="section-label" data-i18n="sec_companies">الشركات</div>
       <div class="company-search">
         <span class="search-icon">🔍</span>
-        <input type="text" id="p-company-input" placeholder="اكتب اسم الشركة واضغط Enter" onkeydown="if(event.key==='Enter'){addCompany(this.value.trim(),null);this.value=''}"/>
+        <input type="text" id="p-company-input" placeholder="اكتب اسم الشركة واضغط Enter" data-i18n-ph="prof_company_ph" onkeydown="if(event.key==='Enter'){addCompany(this.value.trim(),null);this.value=''}"/>
       </div>
       <div class="chips-row" id="p-company-chips"></div>
       <div class="sug-grid" id="p-sug-companies"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>شركة واحدة</span></p>
+      <p class="limit-note" id="company-limit-note"></p>
 
       <!-- COUNTRIES -->
-      <div class="section-label">البلدان <span style="font-size:0.65rem;color:var(--muted);font-weight:400;letter-spacing:0">(اختياري)</span></div>
+      <div class="section-label"><span data-i18n="sec_countries">البلدان</span> <span style="font-size:0.65rem;color:var(--muted);font-weight:400;letter-spacing:0" data-i18n="optional_tag">(اختياري)</span></div>
       <div class="countries-grid" id="p-countries-grid"></div>
-      <p class="limit-note">الخطة المجانية: حتى <span>دولة واحدة</span></p>
+      <p class="limit-note" id="country-limit-note"></p>
 
       <!-- SCHEDULE -->
-      <div class="section-label">تكرار الإرسال</div>
+      <div class="section-label" data-i18n="sec_schedule">تكرار الإرسال</div>
       <div class="schedule-row">
         <div class="sch-card selected" id="p-sch-daily" onclick="selectSch('daily')">
           <div class="sch-icon">⚡</div>
-          <div class="sch-name">يومي</div>
-          <div class="sch-desc">كل صباح على بريدك</div>
+          <div class="sch-name" data-i18n="sch_daily_name">يومي</div>
+          <div class="sch-desc" data-i18n="sch_daily_desc">كل صباح على بريدك</div>
         </div>
         <div class="sch-card" id="p-sch-weekly" onclick="selectSch('weekly')">
           <div class="sch-icon">📅</div>
-          <div class="sch-name">أسبوعي</div>
-          <div class="sch-desc">ملخص شامل كل أسبوع</div>
+          <div class="sch-name" data-i18n="sch_weekly_name">أسبوعي</div>
+          <div class="sch-desc" data-i18n="sch_weekly_desc">ملخص شامل كل أسبوع</div>
         </div>
       </div>
 
       <!-- LANGUAGE -->
-      <div class="section-label">لغة الملخص</div>
+      <div class="section-label" data-i18n="sec_language">لغة الملخص</div>
       <div class="schedule-row">
         <div class="sch-card selected" id="p-lang-arabic" onclick="selectLang('arabic')">
           <div class="sch-icon">🇸🇦</div>
-          <div class="sch-name">العربية</div>
-          <div class="sch-desc">ملخصك بالكامل بالعربية</div>
+          <div class="sch-name" data-i18n="lang_ar_name">العربية</div>
+          <div class="sch-desc" data-i18n="lang_ar_desc">ملخصك بالكامل بالعربية</div>
         </div>
         <div class="sch-card" id="p-lang-english" onclick="selectLang('english')">
           <div class="sch-icon">🇬🇧</div>
-          <div class="sch-name">English</div>
-          <div class="sch-desc">Your digest fully in English</div>
+          <div class="sch-name" data-i18n="lang_en_name">English</div>
+          <div class="sch-desc" data-i18n="lang_en_desc">Your digest fully in English</div>
         </div>
       </div>
 
       <!-- DIGEST LENGTH -->
-      <div class="section-label">طول الملخص</div>
+      <div class="section-label" data-i18n="sec_length">طول الملخص</div>
       <div class="schedule-row">
         <div class="sch-card selected" id="p-len-detailed" onclick="selectLen('detailed')">
           <div class="sch-icon">📖</div>
-          <div class="sch-name">مفصّل</div>
-          <div class="sch-desc">تحليل كامل لكل خبر</div>
+          <div class="sch-name" data-i18n="len_detailed_name">مفصّل</div>
+          <div class="sch-desc" data-i18n="len_detailed_desc">تحليل كامل لكل خبر</div>
         </div>
         <div class="sch-card" id="p-len-brief" onclick="selectLen('brief')">
           <div class="sch-icon">⚡</div>
-          <div class="sch-name">مختصر</div>
-          <div class="sch-desc">نقاط سريعة فقط</div>
+          <div class="sch-name" data-i18n="len_brief_name">مختصر</div>
+          <div class="sch-desc" data-i18n="len_brief_desc">نقاط سريعة فقط</div>
         </div>
       </div>
 
       <!-- BIO -->
-      <div class="section-label">ملفك الشخصي</div>
+      <div class="section-label" data-i18n="sec_bio">ملفك الشخصي</div>
       <div class="field">
-        <textarea id="p-bio" placeholder="أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. كلما أخبرته أكثر، كانت استخباراتك أدق..." style="min-height:140px"></textarea>
+        <textarea id="p-bio" placeholder="أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. كلما أخبرته أكثر، كانت استخباراتك أدق..." data-i18n-ph="prof_bio_ph" style="min-height:140px"></textarea>
         <div style="font-size:0.72rem;color:var(--muted);margin-top:6px;" id="p-bio-count">٠ حرف</div>
       </div>
 
       <div class="btn-row">
         <button class="btn-primary" onclick="saveProfile()" id="save-btn">
-          <span id="save-text">حفظ التغييرات ✦</span>
+          <span id="save-text" data-i18n="save_btn">حفظ التغييرات ✦</span>
           <span class="spinner" id="save-spinner"></span>
         </button>
       </div>
 
       <div class="success-banner" id="save-success">
-        <span>✦</span><span>تم حفظ ملفك بنجاح. سيطرة يعرفك أكثر الآن.</span>
+        <span>✦</span><span data-i18n="save_success">تم حفظ ملفك بنجاح. سيطرة يعرفك أكثر الآن.</span>
       </div>
     </div>
 
@@ -273,17 +283,20 @@ const FREE_COUNTRY_LIMIT = 1;
 
 // ── DATA ──────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id:'tech',     icon:'💻', label:'التقنية',        subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'] },
-  { id:'biz',      icon:'💼', label:'الأعمال',         subs:['ريادة الأعمال','الاستثمار والتمويل','الاستراتيجية والقيادة','التسويق','المبيعات','التجارة الإلكترونية','الموارد البشرية'] },
-  { id:'medical',  icon:'🏥', label:'الطب والصحة',    subs:['أمراض القلب','الأورام','طب الأعصاب','السكري والغدد','الصحة العامة','الطب النفسي','طب الأطفال','الجراحة'] },
-  { id:'fitness',  icon:'🏋️', label:'اللياقة',        subs:['تمارين المقاومة','الكارديو والجري','علم الرياضة','التعافي والنوم','رياضات المنافسة','اليوغا والتمدد'] },
-  { id:'beauty',   icon:'✨', label:'الجمال والعافية', subs:['العناية بالبشرة','العناية بالشعر','التجميل والمكياج','العافية الشاملة','مكافحة الشيخوخة','البيوهاكينج'] },
-  { id:'nutrition',icon:'🥗', label:'التغذية',         subs:['الحمية والرشاقة','التغذية الرياضية','الأطعمة الوظيفية','الصيام المتقطع','المكملات الغذائية','الميكروبيوم'] },
-  { id:'finance',  icon:'📈', label:'المال والاستثمار',subs:['الأسهم والبورصة','العملات الرقمية','العقارات','صناديق الاستثمار','الاقتصاد الكلي','المصرفية الإسلامية'] },
-  { id:'science',  icon:'🔬', label:'العلوم',           subs:['الذكاء الاصطناعي البحثي','الفضاء والفلك','الفيزياء والكيمياء','علم الأحياء','البيئة والمناخ','علم الجينات'] },
-  { id:'mideast',  icon:'🌍', label:'منطقة MENA',      subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'] },
-  { id:'mental',   icon:'🧠', label:'الصحة النفسية',  subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'] },
+  { id:'tech',     icon:'💻', label:'التقنية', label_en:'Technology',        subs:['الذكاء الاصطناعي','الأمن السيبراني','الحوسبة السحابية','تطوير البرمجيات','علم البيانات','البلوكشين','إنترنت الأشياء','الروبوتات'], subs_en:['Artificial Intelligence','Cybersecurity','Cloud Computing','Software Development','Data Science','Blockchain','Internet of Things','Robotics'] },
+  { id:'biz',      icon:'💼', label:'الأعمال', label_en:'Business',         subs:['ريادة الأعمال','الاستثمار والتمويل','الاستراتيجية والقيادة','التسويق','المبيعات','التجارة الإلكترونية','الموارد البشرية'], subs_en:['Entrepreneurship','Investment & Finance','Strategy & Leadership','Marketing','Sales','E-commerce','Human Resources'] },
+  { id:'medical',  icon:'🏥', label:'الطب والصحة', label_en:'Medicine & Health',    subs:['أمراض القلب','الأورام','طب الأعصاب','السكري والغدد','الصحة العامة','الطب النفسي','طب الأطفال','الجراحة'], subs_en:['Cardiology','Oncology','Neurology','Diabetes & Endocrinology','Public Health','Psychiatry','Pediatrics','Surgery'] },
+  { id:'fitness',  icon:'🏋️', label:'اللياقة', label_en:'Fitness',        subs:['تمارين المقاومة','الكارديو والجري','علم الرياضة','التعافي والنوم','رياضات المنافسة','اليوغا والتمدد'], subs_en:['Strength Training','Cardio & Running','Sports Science','Recovery & Sleep','Competitive Sports','Yoga & Stretching'] },
+  { id:'beauty',   icon:'✨', label:'الجمال والعافية', label_en:'Beauty & Wellness', subs:['العناية بالبشرة','العناية بالشعر','التجميل والمكياج','العافية الشاملة','مكافحة الشيخوخة','البيوهاكينج'], subs_en:['Skincare','Haircare','Makeup & Cosmetics','Holistic Wellness','Anti-aging','Biohacking'] },
+  { id:'nutrition',icon:'🥗', label:'التغذية', label_en:'Nutrition',         subs:['الحمية والرشاقة','التغذية الرياضية','الأطعمة الوظيفية','الصيام المتقطع','المكملات الغذائية','الميكروبيوم'], subs_en:['Diet & Weight Loss','Sports Nutrition','Functional Foods','Intermittent Fasting','Supplements','Microbiome'] },
+  { id:'finance',  icon:'📈', label:'المال والاستثمار', label_en:'Money & Investing',subs:['الأسهم والبورصة','العملات الرقمية','العقارات','صناديق الاستثمار','الاقتصاد الكلي','المصرفية الإسلامية'], subs_en:['Stocks & Markets','Cryptocurrency','Real Estate','Investment Funds','Macroeconomics','Islamic Banking'] },
+  { id:'science',  icon:'🔬', label:'العلوم', label_en:'Science',           subs:['الذكاء الاصطناعي البحثي','الفضاء والفلك','الفيزياء والكيمياء','علم الأحياء','البيئة والمناخ','علم الجينات'], subs_en:['AI Research','Space & Astronomy','Physics & Chemistry','Biology','Environment & Climate','Genetics'] },
+  { id:'mideast',  icon:'🌍', label:'منطقة MENA', label_en:'MENA Region',      subs:['السوق السعودي','الإمارات وقطر','الاقتصاد الخليجي','رؤية 2030','النظام السياسي','الطاقة والنفط'], subs_en:['Saudi Market','UAE & Qatar','Gulf Economy','Vision 2030','Politics','Energy & Oil'] },
+  { id:'mental',   icon:'🧠', label:'الصحة النفسية', label_en:'Mental Health',  subs:['الصحة النفسية العامة','التوتر والقلق','النوم والاسترخاء','العلاقات والتواصل','التنمية الذاتية','اليقظة والتأمل'], subs_en:['General Mental Health','Stress & Anxiety','Sleep & Relaxation','Relationships & Communication','Self-development','Mindfulness & Meditation'] },
 ];
+const TOPIC_AR2EN = {};
+CATEGORIES.forEach(c => c.subs.forEach((s,i) => { TOPIC_AR2EN[s] = c.subs_en[i]; }));
+function topicDisplay(arTopic){ return LANG === 'ar' ? arTopic : (TOPIC_AR2EN[arTopic] || arTopic); }
 const SUGGESTED = ['Apple','Microsoft','Google','Nvidia','OpenAI','Anthropic','Amazon','Meta','Tesla','Saudi Aramco','stc','Palo Alto Networks','CrowdStrike','Accenture','McKinsey','BCG','IBM','Cisco','Oracle','SAP'];
 const COUNTRIES = [
   {flag:'🇸🇦',name:'السعودية',en:'Saudi Arabia'},{flag:'🇦🇪',name:'الإمارات',en:'UAE'},
@@ -347,7 +360,7 @@ async function resendLink() {
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
       body: JSON.stringify({ email, create_user: true })
     });
-    alert('تم إرسال الرابط مرة أخرى.');
+    alert(t('alert_resent'));
   }
 }
 
@@ -387,7 +400,7 @@ async function loadProfile(email, token) {
 async function saveProfile() {
   const token     = sessionStorage.getItem('saitara_token');
   const userEmail = sessionStorage.getItem('saitara_email');
-  if (!token || !userEmail) { alert('انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.'); show('screen-login'); return; }
+  if (!token || !userEmail) { alert(t('alert_session_expired')); show('screen-login'); return; }
   const btn = document.getElementById('save-btn');
   const txt = document.getElementById('save-text');
   const spn = document.getElementById('save-spinner');
@@ -426,12 +439,13 @@ function buildUI() {
   buildCategories(); buildSuggestedCompanies(); buildCountries();
   renderTopicChips(); renderCompanyChips(); selectSch(profile.frequency);
   selectLang(profile.language); selectLen(profile.digest_length);
+  updateLimitNotes();
 }
 
 function buildCategories() {
   const el = document.getElementById('p-cat-list');
   el.innerHTML = CATEGORIES.map(c =>
-    `<button class="cat-btn" id="pcat-${c.id}" data-id="${c.id}">${c.icon} ${c.label}</button>`
+    `<button class="cat-btn ${openCat===c.id?'active':''}" id="pcat-${c.id}" data-id="${c.id}">${c.icon} ${LANG==='ar'?c.label:c.label_en}</button>`
   ).join('');
   el.querySelectorAll('.cat-btn').forEach(btn =>
     btn.addEventListener('click', () => toggleCat(btn.dataset.id))
@@ -450,10 +464,11 @@ function renderSubtopics() {
   const cat = CATEGORIES.find(c => c.id === openCat);
   const atMax = profile.topics.length >= FREE_TOPIC_LIMIT;
   area.innerHTML = `<div class="subtopics show">${
-    cat.subs.map(s => {
+    cat.subs.map((s,i) => {
       const sel = profile.topics.includes(s);
       const locked = !sel && atMax;
-      return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" data-sub="${s}">${s}</button>`;
+      const label = LANG==='ar' ? s : cat.subs_en[i];
+      return `<button class="sub-btn ${sel?'selected':''} ${locked?'locked':''}" data-sub="${s}">${label}</button>`;
     }).join('')
   }</div>`;
   area.querySelectorAll('.sub-btn:not(.locked)').forEach(btn =>
@@ -469,8 +484,8 @@ function renderSubtopics() {
 
 function renderTopicChips() {
   const el = document.getElementById('p-topics-display');
-  el.innerHTML = profile.topics.map((t,i) =>
-    `<div class="chip">${t}<span class="chip-remove" data-i="${i}">x</span></div>`
+  el.innerHTML = profile.topics.map((tp,i) =>
+    `<div class="chip">${topicDisplay(tp)}<span class="chip-remove" data-i="${i}">x</span></div>`
   ).join('');
   el.querySelectorAll('.chip-remove').forEach(s =>
     s.addEventListener('click', () => { profile.topics.splice(parseInt(s.dataset.i),1); renderSubtopics(); renderTopicChips(); })
@@ -513,7 +528,7 @@ function renderCompanyChips() {
 function buildCountries() {
   const g = document.getElementById('p-countries-grid');
   g.innerHTML = COUNTRIES.map((c,i) =>
-    `<button class="country-btn ${profile.countries.includes(c.en)?'selected':''}" data-i="${i}">${c.flag} ${c.name}</button>`
+    `<button class="country-btn ${profile.countries.includes(c.en)?'selected':''}" data-i="${i}">${c.flag} ${LANG==='ar'?c.name:c.en}</button>`
   ).join('');
   g.querySelectorAll('.country-btn').forEach(btn =>
     btn.addEventListener('click', () => {
@@ -545,20 +560,99 @@ function selectLen(val) {
 
 function updateBioCount() {
   const val = document.getElementById('p-bio').value;
-  const nums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-  const len = val.length.toString().split('').map(d => nums[parseInt(d)]).join('');
-  document.getElementById('p-bio-count').textContent = len + ' حرف';
+  document.getElementById('p-bio-count').textContent = t('bio_char', { n: num(val.length) });
+}
+
+function updateLimitNotes() {
+  document.getElementById('topic-limit-note').innerHTML   = t('limit_topics',   { n: num(FREE_TOPIC_LIMIT) });
+  document.getElementById('company-limit-note').innerHTML = t('limit_companies',{ n: num(FREE_COMPANY_LIMIT) });
+  document.getElementById('country-limit-note').innerHTML = t('limit_countries',{ n: num(FREE_COUNTRY_LIMIT) });
 }
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('p-bio').addEventListener('input', updateBioCount);
 });
 
+// ── I18N ──────────────────────────────────────────────────────────
+const I18N = {
+  ar: {
+    _title:'سيطرة · ملفك الشخصي', brand:'سيطرة', nav_back:'← الرئيسية', signout:'تسجيل الخروج',
+    login_eyebrow:'الوصول إلى ملفك', login_title:'أدخل بريدك<br/><span>لنرسل لك رابط الدخول</span>', login_sub:'سيطرة يرسل لك رابطاً مؤقتاً على بريدك. اضغط عليه وستدخل مباشرة بدون كلمة مرور.', login_email_label:'بريدك الإلكتروني المسجّل', login_btn:'أرسل لي رابط الدخول ✦',
+    sent_eyebrow:'تم الإرسال', sent_title:'تحقق من <span>بريدك</span>', sent_sub:'أرسلنا لك رابط دخول مؤقت. افتح بريدك واضغط على الرابط للدخول مباشرة.', sent_resend_q:'لم يصلك؟', sent_resend_link:'أرسل مرة أخرى',
+    prof_eyebrow:'ملفك الاستخباراتي', prof_title:'عدّل <span>إعداداتك</span>', prof_sub:'كل تعديل يجعل استخباراتك أدق وأكثر صلة بما تحتاجه.', prof_name_label:'اسمك', prof_name_ph:'اسمك الكريم',
+    sec_topics:'المواضيع', sec_companies:'الشركات', sec_countries:'البلدان', optional_tag:'(اختياري)', sec_schedule:'تكرار الإرسال', sec_language:'لغة الملخص', sec_length:'طول الملخص', sec_bio:'ملفك الشخصي',
+    prof_company_ph:'اكتب اسم الشركة واضغط Enter', prof_bio_ph:'أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. كلما أخبرته أكثر، كانت استخباراتك أدق...',
+    sch_daily_name:'يومي', sch_daily_desc:'كل صباح على بريدك', sch_weekly_name:'أسبوعي', sch_weekly_desc:'ملخص شامل كل أسبوع',
+    lang_ar_name:'العربية', lang_ar_desc:'ملخصك بالكامل بالعربية', lang_en_name:'English', lang_en_desc:'Your digest fully in English',
+    len_detailed_name:'مفصّل', len_detailed_desc:'تحليل كامل لكل خبر', len_brief_name:'مختصر', len_brief_desc:'نقاط سريعة فقط',
+    save_btn:'حفظ التغييرات ✦', save_success:'تم حفظ ملفك بنجاح. سيطرة يعرفك أكثر الآن.',
+    bio_char:'{n} حرف', limit_topics:'الخطة المجانية: حتى <span>{n} مواضيع</span>', limit_companies:'الخطة المجانية: حتى <span>{n} شركة</span>', limit_countries:'الخطة المجانية: حتى <span>{n} دولة</span>',
+    alert_resent:'تم إرسال الرابط مرة أخرى.', alert_session_expired:'انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.', signing_in_title:'جارٍ <span>تسجيل دخولك</span>', signing_in_sub:'لحظة واحدة، يتم التحقق من هويتك...',
+  },
+  en: {
+    _title:'Saitara · Your Profile', brand:'Saitara', nav_back:'Home →', signout:'Sign out',
+    login_eyebrow:'Access your profile', login_title:'Enter your email<br/><span>and we will send you a login link</span>', login_sub:'Saitara sends you a temporary link to your email. Click it and you are in instantly — no password.', login_email_label:'Your registered email', login_btn:'Send me a login link ✦',
+    sent_eyebrow:'Sent', sent_title:'Check your <span>email</span>', sent_sub:'We sent you a temporary login link. Open your inbox and click the link to sign in instantly.', sent_resend_q:"Didn't get it?", sent_resend_link:'Send again',
+    prof_eyebrow:'Your intelligence profile', prof_title:'Edit <span>your settings</span>', prof_sub:'Every edit makes your intelligence sharper and more relevant to what you need.', prof_name_label:'Your name', prof_name_ph:'Your name',
+    sec_topics:'Topics', sec_companies:'Companies', sec_countries:'Countries', optional_tag:'(optional)', sec_schedule:'Delivery frequency', sec_language:'Digest language', sec_length:'Digest length', sec_bio:'Your profile',
+    prof_company_ph:'Type a company name and press Enter', prof_bio_ph:'Tell Saitara about yourself — what you do and what you want to achieve. The more you share, the sharper your intelligence becomes...',
+    sch_daily_name:'Daily', sch_daily_desc:'Every morning in your inbox', sch_weekly_name:'Weekly', sch_weekly_desc:'A comprehensive digest every week',
+    lang_ar_name:'العربية', lang_ar_desc:'ملخصك بالكامل بالعربية', lang_en_name:'English', lang_en_desc:'Your digest fully in English',
+    len_detailed_name:'Detailed', len_detailed_desc:'A full analysis of every story', len_brief_name:'Brief', len_brief_desc:'Quick bullet points only',
+    save_btn:'Save changes ✦', save_success:'Your profile was saved successfully. Saitara knows you better now.',
+    bio_char:'{n} chars', limit_topics:'Free plan: up to <span>{n} topics</span>', limit_companies:'Free plan: up to <span>{n} company</span>', limit_countries:'Free plan: up to <span>{n} country</span>',
+    alert_resent:'The link was sent again.', alert_session_expired:'Your session expired. Please sign in again.', signing_in_title:'Signing <span>you in</span>', signing_in_sub:'One moment, verifying your identity...',
+  },
+};
+
+let LANG = 'ar';
+const AR_DIGITS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function num(n){ return LANG === 'ar' ? String(n).split('').map(d => /[0-9]/.test(d) ? AR_DIGITS[+d] : d).join('') : String(n); }
+function t(key, vars){
+  let s = (I18N[LANG] && I18N[LANG][key] != null) ? I18N[LANG][key] : key;
+  if (vars) for (const k in vars) s = s.replace(new RegExp('\\{'+k+'\\}','g'), vars[k]);
+  return s;
+}
+function applyLangLinks(){
+  document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+    const base = a.getAttribute('data-base') || '/';
+    a.setAttribute('href', base + (base.includes('?') ? '&' : '?') + 'lang=' + LANG);
+  });
+}
+function setLang(lang){
+  LANG = (lang === 'en') ? 'en' : 'ar';
+  document.documentElement.lang = LANG;
+  document.documentElement.dir  = LANG === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[LANG][k] != null) el.innerHTML = I18N[LANG][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if (I18N[LANG][k] != null) el.setAttribute('placeholder', I18N[LANG][k]);
+  });
+  const tg = document.getElementById('lang-toggle');
+  if (tg) tg.textContent = LANG === 'ar' ? 'EN' : 'العربية';
+  try { localStorage.setItem('saitara_lang', LANG); } catch(e){}
+  applyLangLinks();
+  buildCategories(); renderSubtopics(); renderTopicChips();
+  buildSuggestedCompanies(); renderCompanyChips(); buildCountries();
+  updateBioCount(); updateLimitNotes();
+}
+function toggleLang(){ setLang(LANG === 'ar' ? 'en' : 'ar'); }
+(function initLang(){
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  let stored = null;
+  try { stored = localStorage.getItem('saitara_lang'); } catch(e){}
+  const initial = (urlLang === 'en' || urlLang === 'ar') ? urlLang : (stored === 'en' || stored === 'ar' ? stored : 'ar');
+  setLang(initial);
+})();
+
 // ── INIT ──────────────────────────────────────────────────────────
 (async function init() {
   if (window.location.hash && window.location.hash.includes('access_token')) {
     show('screen-sent');
-    document.querySelector('#screen-sent h2').innerHTML = 'جارٍ <span>تسجيل دخولك</span>';
-    document.querySelector('#screen-sent p').textContent = 'لحظة واحدة، يتم التحقق من هويتك...';
+    document.querySelector('#screen-sent h2').innerHTML = t('signing_in_title');
+    document.querySelector('#screen-sent p').textContent = t('signing_in_sub');
     const hash = window.location.hash.substring(1);
     const params = {};
     hash.split('&').forEach(part => {
