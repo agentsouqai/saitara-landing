@@ -8,7 +8,7 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سيطرة · الاستخبارات الشخصية الاستباقية</title>
+  <title data-i18n="_title">سيطرة · الاستخبارات الشخصية الاستباقية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
@@ -120,6 +120,10 @@
     .footer-tagline { font-size:0.75rem;color:var(--muted); }
     @keyframes fadeIn { from{opacity:0}to{opacity:1} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)} }
+    [dir="ltr"] .steps::before { right:auto;left:23px; }
+    [dir="ltr"] .section-body,[dir="ltr"] .plan-features { text-align:left; }
+    #lang-toggle { background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.8rem;padding:7px 16px;border-radius:20px;cursor:pointer;min-width:84px;transition:all 0.2s; }
+    #lang-toggle:hover { background:rgba(0,229,160,0.2); }
     @media(max-width:680px){
       nav{padding:18px 20px}.nav-center{font-size:0.8rem}
       .hero{padding:60px 20px 50px}
@@ -138,38 +142,38 @@
   <div class="orb orb-3"></div>
 
   <nav>
-    <div class="nav-logo">سيطرة</div>
+    <div class="nav-logo" data-i18n="brand">سيطرة</div>
     <div class="nav-center">SAITARA · AI</div>
-    <div style="width:120px"></div>
+    <button id="lang-toggle" onclick="toggleLang()">EN</button>
   </nav>
 
   <section class="hero">
     <div class="hero-tag">
       <span class="hero-tag-dot"></span>
-      وكيل ذكاء اصطناعي شخصي · النسخة التجريبية
+      <span data-i18n="hero_tag">وكيل ذكاء اصطناعي شخصي · النسخة التجريبية</span>
     </div>
-    <h1 class="hero-brand">سيطرة</h1>
+    <h1 class="hero-brand" data-i18n="brand">سيطرة</h1>
     <p class="hero-en">saitara.ai</p>
     <div class="concept-badge">
-      <div class="concept-badge-label">المفهوم الجوهري</div>
-      <div class="concept-badge-text">الاستخبارات الشخصية الاستباقية</div>
+      <div class="concept-badge-label" data-i18n="concept_label">المفهوم الجوهري</div>
+      <div class="concept-badge-text" data-i18n="concept_text">الاستخبارات الشخصية الاستباقية</div>
     </div>
 
-    <p style="font-family:'Cairo',sans-serif;font-size:clamp(1.05rem,2.8vw,1.45rem);font-weight:700;line-height:2;color:var(--text);max-width:660px;margin:0 auto 18px;animation:fadeUp 0.6s ease 0.4s both;">
+    <p data-i18n="hero_headline" style="font-family:'Cairo',sans-serif;font-size:clamp(1.05rem,2.8vw,1.45rem);font-weight:700;line-height:2;color:var(--text);max-width:660px;margin:0 auto 18px;animation:fadeUp 0.6s ease 0.4s both;">
       العالم لا ينتظر. كل ليلة تنام، تتغيّر مجالات، تُطلق منتجات، تُغلق فرص.<br/>
       الذي يصحى أولاً يكسب.<br/>
       <span style="color:var(--accent);font-size:0.95em;font-weight:700;">سيطرة يصحى بدلاً عنك.</span>
     </p>
 
-    <p class="hero-desc">
+    <p class="hero-desc" data-i18n="hero_desc">
       يلفّ العالم كل يوم، يتذكر ما أخبرك إياه بالأمس، يربط الأحداث ببعضها، ويرجعلك بأهم ما يخصك أنت تحديداً، من الزاوية التي تهمك. مباشرة على بريدك.
     </p>
 
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.65s both;margin-bottom:16px;">
-      <a href="/onboarding.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#00ffb3';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent)';this.style.transform='translateY(0)'">
+      <a href="/onboarding.html" data-base="/onboarding.html" data-keep-lang data-i18n="cta_primary" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#06080E;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#00ffb3';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent)';this.style.transform='translateY(0)'">
         ابدأ إعداد ملفك الآن ←
       </a>
-      <a href="/profile.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.35);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,229,160,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(0,229,160,0.12)';this.style.transform='translateY(0)'">
+      <a href="/profile.html" data-base="/profile.html" data-keep-lang data-i18n="cta_secondary" style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.35);color:var(--accent);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.95rem;padding:16px 36px;border-radius:12px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,229,160,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(0,229,160,0.12)';this.style.transform='translateY(0)'">
         عدّل ملفك الحالي
       </a>
     </div>
@@ -178,53 +182,53 @@
   <!-- WHAT IS PI -->
   <section class="section">
     <div class="wrap">
-      <div class="section-label">ما هي الاستخبارات الشخصية الاستباقية</div>
-      <h2 class="section-title">ليست أخباراً.<br/>بل <span>عقل ثانٍ يعمل لصالحك.</span></h2>
-      <p class="section-body">الفرق بين من يقرأ الأخبار ومن يملك استخبارات شخصية هو الفرق بين من يتفاعل مع الأحداث ومن يتوقعها. سيطرة لا ينتظر أن تسأل، يراقب باستمرار، يتذكر ما أخبرك إياه، ويخبرك بما يستحق انتباهك قبل أن يعرفه أحد.</p>
+      <div class="section-label" data-i18n="whatis_label">ما هي الاستخبارات الشخصية الاستباقية</div>
+      <h2 class="section-title" data-i18n="whatis_title">ليست أخباراً.<br/>بل <span>عقل ثانٍ يعمل لصالحك.</span></h2>
+      <p class="section-body" data-i18n="whatis_body">الفرق بين من يقرأ الأخبار ومن يملك استخبارات شخصية هو الفرق بين من يتفاعل مع الأحداث ومن يتوقعها. سيطرة لا ينتظر أن تسأل، يراقب باستمرار، يتذكر ما أخبرك إياه، ويخبرك بما يستحق انتباهك قبل أن يعرفه أحد.</p>
       <div class="intel-grid">
         <div class="intel-card">
           <div class="intel-card-num">٠١</div>
-          <div class="intel-card-title">استباقية لا تفاعلية</div>
-          <p class="intel-card-body">سيطرة لا ينتظر أن تسأل. يراقب مجالاتك وشركاتك وبلدانك على مدار الساعة، ويصلك تلقائياً عندما يكون هناك ما يستحق انتباهك، قبل أن يعرفه أحد.</p>
-          <span class="intel-card-tag">Proactive · استباقية</span>
+          <div class="intel-card-title" data-i18n="card1_title">استباقية لا تفاعلية</div>
+          <p class="intel-card-body" data-i18n="card1_body">سيطرة لا ينتظر أن تسأل. يراقب مجالاتك وشركاتك وبلدانك على مدار الساعة، ويصلك تلقائياً عندما يكون هناك ما يستحق انتباهك، قبل أن يعرفه أحد.</p>
+          <span class="intel-card-tag" data-i18n="card1_tag">Proactive · استباقية</span>
         </div>
         <div class="intel-card">
           <div class="intel-card-num">٠٢</div>
-          <div class="intel-card-title">يعرفك حقاً</div>
-          <p class="intel-card-body">أنت تخبر سيطرة من أنت، ماذا تعمل، وماذا تريد أن تحقق. ومن تلك اللحظة، كل خبر يصلك يُفسَّر من زاوية أهدافك أنت تحديداً، لا من زاوية الإعلام العام.</p>
-          <span class="intel-card-tag">Knows You · يعرفك</span>
+          <div class="intel-card-title" data-i18n="card2_title">يعرفك حقاً</div>
+          <p class="intel-card-body" data-i18n="card2_body">أنت تخبر سيطرة من أنت، ماذا تعمل، وماذا تريد أن تحقق. ومن تلك اللحظة، كل خبر يصلك يُفسَّر من زاوية أهدافك أنت تحديداً، لا من زاوية الإعلام العام.</p>
+          <span class="intel-card-tag" data-i18n="card2_tag">Knows You · يعرفك</span>
         </div>
         <div class="intel-card">
           <div class="intel-card-num">٠٣</div>
-          <div class="intel-card-title">ذاكرة حقيقية</div>
-          <p class="intel-card-body">سيطرة يتذكر كل ما أخبرك إياه. عندما يتطور خبر كنت على علم به، لا يكرر عليك القصة من البداية. يقول لك مباشرة: هذا ما تغيّر منذ المرة الأخيرة.</p>
-          <span class="intel-card-tag">Memory · ذاكرة</span>
+          <div class="intel-card-title" data-i18n="card3_title">ذاكرة حقيقية</div>
+          <p class="intel-card-body" data-i18n="card3_body">سيطرة يتذكر كل ما أخبرك إياه. عندما يتطور خبر كنت على علم به، لا يكرر عليك القصة من البداية. يقول لك مباشرة: هذا ما تغيّر منذ المرة الأخيرة.</p>
+          <span class="intel-card-tag" data-i18n="card3_tag">Memory · ذاكرة</span>
         </div>
         <div class="intel-card">
           <div class="intel-card-num">٠٤</div>
-          <div class="intel-card-title">استخبارات لا مجرد أخبار</div>
-          <p class="intel-card-body">كل خبر يصلك مع أربعة أشياء: لماذا يهمك بناءً على أهدافك، ما تأثيره على عملك أو حياتك، كيف تطور من الأسبوع الماضي، وماذا يمكنك أن تفعل حياله.</p>
-          <span class="intel-card-tag">Intelligence · استخبارات</span>
+          <div class="intel-card-title" data-i18n="card4_title">استخبارات لا مجرد أخبار</div>
+          <p class="intel-card-body" data-i18n="card4_body">كل خبر يصلك مع أربعة أشياء: لماذا يهمك بناءً على أهدافك، ما تأثيره على عملك أو حياتك، كيف تطور من الأسبوع الماضي، وماذا يمكنك أن تفعل حياله.</p>
+          <span class="intel-card-tag" data-i18n="card4_tag">Intelligence · استخبارات</span>
         </div>
         <div class="intel-card" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(0,229,160,0.07),rgba(0,80,220,0.05));border-color:rgba(0,229,160,0.2);">
           <div class="intel-card-num">٠٥</div>
-          <div class="intel-card-title">إنذار مبكر وتتبع دقيق</div>
-          <p class="intel-card-body">سيطرة يكتشف الاتجاهات الناشئة قبل أن تصل الإعلام الرئيسي بـ ٧٢ ساعة على الأقل. ويتتبع شركاتك وبلدانك المختارة بدقة، يرصد كل جديد عنها ويقرأ الأحداث من الزاوية التي تخصك أنت.</p>
+          <div class="intel-card-title" data-i18n="card5_title">إنذار مبكر وتتبع دقيق</div>
+          <p class="intel-card-body" data-i18n="card5_body">سيطرة يكتشف الاتجاهات الناشئة قبل أن تصل الإعلام الرئيسي بـ ٧٢ ساعة على الأقل. ويتتبع شركاتك وبلدانك المختارة بدقة، يرصد كل جديد عنها ويقرأ الأحداث من الزاوية التي تخصك أنت.</p>
           <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
-            <span style="font-size:0.75rem;color:var(--muted);margin-left:4px;">شركات:</span>
+            <span style="font-size:0.75rem;color:var(--muted);margin-left:4px;" data-i18n="card5_companies_label">شركات:</span>
             <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Apple</span>
             <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Aramco</span>
             <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">OpenAI</span>
             <span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Nvidia</span>
           </div>
           <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
-            <span style="font-size:0.75rem;color:var(--muted);margin-left:4px;">بلدان:</span>
-            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الإمارات</span>
-            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">السعودية</span>
-            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الولايات المتحدة</span>
-            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">+ أي بلد تختاره</span>
+            <span style="font-size:0.75rem;color:var(--muted);margin-left:4px;" data-i18n="card5_countries_label">بلدان:</span>
+            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="country_uae">الإمارات</span>
+            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="country_ksa">السعودية</span>
+            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="country_us">الولايات المتحدة</span>
+            <span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="country_any">+ أي بلد تختاره</span>
           </div>
-          <span class="intel-card-tag" style="margin-top:18px;">Company & Country Tracking · تتبع الشركات والبلدان</span>
+          <span class="intel-card-tag" style="margin-top:18px;" data-i18n="card5_tag">Company & Country Tracking · تتبع الشركات والبلدان</span>
         </div>
       </div>
     </div>
@@ -233,25 +237,25 @@
   <!-- COMPARISON -->
   <section class="compare-section">
     <div class="wrap">
-      <div class="section-label">الفرق الجوهري</div>
-      <h2 class="section-title">بدون سيطرة أنت تطفو.<br/>مع سيطرة <span>أنت تتحكم.</span></h2>
+      <div class="section-label" data-i18n="compare_label">الفرق الجوهري</div>
+      <h2 class="section-title" data-i18n="compare_title">بدون سيطرة أنت تطفو.<br/>مع سيطرة <span>أنت تتحكم.</span></h2>
       <div class="compare-grid">
         <div class="compare-col old">
-          <div class="compare-col-title">بدون سيطرة</div>
-          <div class="compare-item old"><span class="compare-icon">✕</span> تقرأ أخباراً كثيرة لكنك لا تعرف ماذا تفعل بها</div>
-          <div class="compare-item old"><span class="compare-icon">✕</span> كل يوم تبدأ من الصفر بدون سياق أو ذاكرة</div>
-          <div class="compare-item old"><span class="compare-icon">✕</span> الخوارزمية تقرر ما تراه بناءً على التفاعل لا الفائدة</div>
-          <div class="compare-item old"><span class="compare-icon">✕</span> تعرف بالأحداث بعد أن يعرفها الجميع</div>
-          <div class="compare-item old"><span class="compare-icon">✕</span> معلومة بدون تأثير، خبر بدون فعل</div>
+          <div class="compare-col-title" data-i18n="compare_old_title">بدون سيطرة</div>
+          <div class="compare-item old"><span class="compare-icon">✕</span> <span data-i18n="old1">تقرأ أخباراً كثيرة لكنك لا تعرف ماذا تفعل بها</span></div>
+          <div class="compare-item old"><span class="compare-icon">✕</span> <span data-i18n="old2">كل يوم تبدأ من الصفر بدون سياق أو ذاكرة</span></div>
+          <div class="compare-item old"><span class="compare-icon">✕</span> <span data-i18n="old3">الخوارزمية تقرر ما تراه بناءً على التفاعل لا الفائدة</span></div>
+          <div class="compare-item old"><span class="compare-icon">✕</span> <span data-i18n="old4">تعرف بالأحداث بعد أن يعرفها الجميع</span></div>
+          <div class="compare-item old"><span class="compare-icon">✕</span> <span data-i18n="old5">معلومة بدون تأثير، خبر بدون فعل</span></div>
         </div>
         <div class="compare-div"></div>
         <div class="compare-col new">
-          <div class="compare-col-title">مع سيطرة</div>
-          <div class="compare-item new"><span class="compare-icon">✓</span> كل خبر يأتي مع "لماذا يهمك" و"ماذا تفعل" بناءً على أهدافك</div>
-          <div class="compare-item new"><span class="compare-icon">✓</span> سيطرة يتذكر ويربط الأحداث ببعضها تلقائياً</div>
-          <div class="compare-item new"><span class="compare-icon">✓</span> أنت تحدد ما تريد معرفته، لا الخوارزمية</div>
-          <div class="compare-item new"><span class="compare-icon">✓</span> تكتشف الاتجاهات قبل انتشارها بـ ٧٢ ساعة</div>
-          <div class="compare-item new"><span class="compare-icon">✓</span> ٥ دقائق قراءة تعادل ساعات من البحث والمتابعة</div>
+          <div class="compare-col-title" data-i18n="compare_new_title">مع سيطرة</div>
+          <div class="compare-item new"><span class="compare-icon">✓</span> <span data-i18n="new1">كل خبر يأتي مع "لماذا يهمك" و"ماذا تفعل" بناءً على أهدافك</span></div>
+          <div class="compare-item new"><span class="compare-icon">✓</span> <span data-i18n="new2">سيطرة يتذكر ويربط الأحداث ببعضها تلقائياً</span></div>
+          <div class="compare-item new"><span class="compare-icon">✓</span> <span data-i18n="new3">أنت تحدد ما تريد معرفته، لا الخوارزمية</span></div>
+          <div class="compare-item new"><span class="compare-icon">✓</span> <span data-i18n="new4">تكتشف الاتجاهات قبل انتشارها بـ ٧٢ ساعة</span></div>
+          <div class="compare-item new"><span class="compare-icon">✓</span> <span data-i18n="new5">٥ دقائق قراءة تعادل ساعات من البحث والمتابعة</span></div>
         </div>
       </div>
     </div>
@@ -260,35 +264,35 @@
   <!-- HOW IT WORKS -->
   <section class="section">
     <div class="wrap">
-      <div class="section-label">كيف تعمل سيطرة</div>
-      <h2 class="section-title">أربع خطوات تغيّر<br/><span>طريقة تعاملك مع العالم.</span></h2>
+      <div class="section-label" data-i18n="how_label">كيف تعمل سيطرة</div>
+      <h2 class="section-title" data-i18n="how_title">أربع خطوات تغيّر<br/><span>طريقة تعاملك مع العالم.</span></h2>
       <div class="steps">
         <div class="step">
           <div class="step-num">١</div>
           <div class="step-content">
-            <div class="step-title">أخبرنا من أنت وماذا تريد</div>
-            <p class="step-body">في خمس دقائق، اختر مجالاتك وشركاتك وبلدانك. والأهم من ذلك: أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. هذه المعلومات تحوّله من مجرد وكيل أخبار إلى مستشار يفهمك ويتذكرك.</p>
+            <div class="step-title" data-i18n="step1_title">أخبرنا من أنت وماذا تريد</div>
+            <p class="step-body" data-i18n="step1_body">في خمس دقائق، اختر مجالاتك وشركاتك وبلدانك. والأهم من ذلك: أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. هذه المعلومات تحوّله من مجرد وكيل أخبار إلى مستشار يفهمك ويتذكرك.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">٢</div>
           <div class="step-content">
-            <div class="step-title">سيطرة يراقب ويتذكر</div>
-            <p class="step-body">كل يوم يفحص سيطرة آلاف المصادر الموثوقة عالمياً فقط. يصفّي ما لا يعنيك، ويحفظ في ذاكرته ما أرسله إليك سابقاً ليربط الصورة كاملة مع الوقت.</p>
+            <div class="step-title" data-i18n="step2_title">سيطرة يراقب ويتذكر</div>
+            <p class="step-body" data-i18n="step2_body">كل يوم يفحص سيطرة آلاف المصادر الموثوقة عالمياً فقط. يصفّي ما لا يعنيك، ويحفظ في ذاكرته ما أرسله إليك سابقاً ليربط الصورة كاملة مع الوقت.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">٣</div>
           <div class="step-content">
-            <div class="step-title">تصلك الاستخبارات جاهزة</div>
-            <p class="step-body">ملخص منسّق يصل بريدك. كل خبر مع مصدره الموثوق، سبب أهميته لك بالتحديد بناءً على أهدافك، تأثيره على عملك أو حياتك، وكيف تطور من المرة الأخيرة. تقرأه في ٥ دقائق وتبدأ يومك بثقة كاملة.</p>
+            <div class="step-title" data-i18n="step3_title">تصلك الاستخبارات جاهزة</div>
+            <p class="step-body" data-i18n="step3_body">ملخص منسّق يصل بريدك. كل خبر مع مصدره الموثوق، سبب أهميته لك بالتحديد بناءً على أهدافك، تأثيره على عملك أو حياتك، وكيف تطور من المرة الأخيرة. تقرأه في ٥ دقائق وتبدأ يومك بثقة كاملة.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">٤</div>
           <div class="step-content">
-            <div class="step-title">سيطرة يتطور معك</div>
-            <p class="step-body">كلما استخدمت سيطرة أكثر، كلما ازدادت دقته وعمقه. يتعلم ما يفيدك حقاً، ويصبح كل ملخص أقرب إلى احتياجاتك الفعلية وأهدافك المتطورة.</p>
+            <div class="step-title" data-i18n="step4_title">سيطرة يتطور معك</div>
+            <p class="step-body" data-i18n="step4_body">كلما استخدمت سيطرة أكثر، كلما ازدادت دقته وعمقه. يتعلم ما يفيدك حقاً، ويصبح كل ملخص أقرب إلى احتياجاتك الفعلية وأهدافك المتطورة.</p>
           </div>
         </div>
       </div>
@@ -298,68 +302,68 @@
   <!-- TABS EXAMPLE -->
   <section class="section" style="padding-bottom:0;">
     <div class="wrap">
-      <div class="section-label">أمثلة حية</div>
-      <h2 class="section-title">سيطرة لكل شخص<br/><span>بطريقته الخاصة</span></h2>
-      <p class="section-body">مهما كان مجالك أو هدفك، سيطرة يقرأ ملفك الشخصي، يتذكر ما أخبرك إياه سابقاً، ويبني لك تجربة مختلفة تماماً عن أي شخص آخر.</p>
+      <div class="section-label" data-i18n="ex_label">أمثلة حية</div>
+      <h2 class="section-title" data-i18n="ex_title">سيطرة لكل شخص<br/><span>بطريقته الخاصة</span></h2>
+      <p class="section-body" data-i18n="ex_body">مهما كان مجالك أو هدفك، سيطرة يقرأ ملفك الشخصي، يتذكر ما أخبرك إياه سابقاً، ويبني لك تجربة مختلفة تماماً عن أي شخص آخر.</p>
       <div style="display:flex;gap:12px;margin-top:44px;margin-bottom:32px;flex-wrap:wrap;">
-        <button onclick="switchTab('khalid')" id="tab-khalid" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--accent);color:#06080E;border:none;">🫀 د. خالد · طبيب القلب</button>
-        <button onclick="switchTab('tala')" id="tab-tala" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🌿 تالا · الصحة واللياقة</button>
-        <button onclick="switchTab('ahmed')" id="tab-ahmed" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🛡️ أحمد · مبيعات الأمن السيبراني</button>
+        <button onclick="switchTab('khalid')" id="tab-khalid" data-i18n="tab_khalid" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--accent);color:#06080E;border:none;">🫀 د. خالد · طبيب القلب</button>
+        <button onclick="switchTab('tala')" id="tab-tala" data-i18n="tab_tala" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🌿 تالا · الصحة واللياقة</button>
+        <button onclick="switchTab('ahmed')" id="tab-ahmed" data-i18n="tab_ahmed" style="font-family:'Cairo',sans-serif;font-weight:700;font-size:0.88rem;padding:10px 24px;border-radius:30px;cursor:pointer;transition:all 0.2s;background:var(--bg2);color:var(--muted);border:1px solid var(--border2);">🛡️ أحمد · مبيعات الأمن السيبراني</button>
       </div>
 
       <div id="example-khalid">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
-            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد د. خالد في سيطرة</div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">أمراض القلب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الذكاء الاصطناعي في الطب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأدوية القلبية</span></div></div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEJM</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">The Lancet</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ESC</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span></div></div>
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--accent);font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">أسبوعي · الجمعة</span></div>
+            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;" data-i18n="khalid_setup">إعداد د. خالد في سيطرة</div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_topics">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="khalid_topic1">أمراض القلب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="khalid_topic2">الذكاء الاصطناعي في الطب</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="khalid_topic3">الأدوية القلبية</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_sources">المصادر الموثوقة</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">NEJM</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">The Lancet</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">ESC</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Mayo Clinic</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);" data-i18n="lbl_freq">التكرار</span><span style="background:rgba(0,229,160,0.08);border:1px solid var(--border);color:var(--accent);font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;" data-i18n="khalid_freq">أسبوعي · الجمعة</span></div>
           </div>
           <div style="background:var(--bg2);border:1px solid rgba(0,229,160,0.2);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يصل د. خالد</div>
+            <div style="font-size:0.7rem;color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-weight:600;" data-i18n="khalid_recv">ما يصل د. خالد</div>
             <div style="background:rgba(0,229,160,0.04);border:1px solid rgba(0,229,160,0.12);border-radius:14px;padding:18px 20px;">
-              <div style="font-size:0.68rem;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div>
-              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشر NEJM دراسة على ٤٨٠٠ مريض تثبت أن دمج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج في عيادتك.</p>
+              <div style="font-size:0.68rem;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;" data-i18n="lbl_intel_summary">الملخص الاستخباراتي</div>
+              <p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;" data-i18n="khalid_summary">نشر NEJM دراسة على ٤٨٠٠ مريض تثبت أن دمج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج في عيادتك.</p>
             </div>
-            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك عن دراسة أولية حول AI في قراءة الـ ECG. هذا الأسبوع نُشرت النتائج الكاملة رسمياً في NEJM.</div></div></div>
-            <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">⚡</span><div><div style="font-size:0.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">إنذار مبكر · ٧٢ ساعة قبل الإعلام الرئيسي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">اتجاه ناشئ في ٣ مجلات: ربط إيقاع النوم بالرجفان الأذيني. لم ينتشر بعد لكنه سيكون محوراً في المؤتمرات القادمة.</div></div></div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;" data-i18n="lbl_memory">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;" data-i18n="khalid_memory">الأسبوع الماضي أخبرناك عن دراسة أولية حول AI في قراءة الـ ECG. هذا الأسبوع نُشرت النتائج الكاملة رسمياً في NEJM.</div></div></div>
+            <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.15);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">⚡</span><div><div style="font-size:0.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;" data-i18n="lbl_early_warning">إنذار مبكر · ٧٢ ساعة قبل الإعلام الرئيسي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;" data-i18n="khalid_warning">اتجاه ناشئ في ٣ مجلات: ربط إيقاع النوم بالرجفان الأذيني. لم ينتشر بعد لكنه سيكون محوراً في المؤتمرات القادمة.</div></div></div>
           </div>
         </div>
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(0,229,160,0.05),rgba(0,80,220,0.05));border:1px solid var(--border);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🫀</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً. يدخل على مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه. <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong></p></div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(0,229,160,0.05),rgba(0,80,220,0.05));border:1px solid var(--border);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🫀</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;" data-i18n="khalid_callout">د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً. يدخل على مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه. <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong></p></div>
       </div>
 
       <div id="example-tala" style="display:none;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
-            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد تالا في سيطرة</div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">اللياقة البدنية</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">التغذية والرشاقة</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">النوم والتعافي</span></div></div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المصادر الموثوقة فقط</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Harvard Health</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cell Metabolism</span></div></div>
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#A78BFA;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">مرتين أسبوعياً</span></div>
+            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;" data-i18n="tala_setup">إعداد تالا في سيطرة</div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_topics">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="tala_topic1">اللياقة البدنية</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="tala_topic2">التغذية والرشاقة</span><span style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="tala_topic3">النوم والتعافي</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_sources_only">المصادر الموثوقة فقط</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">PubMed</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Harvard Health</span><span style="background:rgba(0,80,220,0.08);border:1px solid rgba(0,80,220,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Cell Metabolism</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);" data-i18n="lbl_freq">التكرار</span><span style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#A78BFA;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;" data-i18n="tala_freq">مرتين أسبوعياً</span></div>
           </div>
           <div style="background:var(--bg2);border:1px solid rgba(167,139,250,0.25);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما تستلمه تالا</div>
-            <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#A78BFA;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">نشرت Cell Metabolism دراسة تثبت أن تمارين المقاومة ثلاث مرات أسبوعياً تُحسّن حساسية الأنسولين بنسبة ٢٨٪ لدى النساء في الثلاثينيات أكثر من الكارديو وحده. <strong style="color:var(--text);">ما يعنيك:</strong> إعادة النظر في خطة تمرينك قد يكون أسرع طريق لهدفك.</p></div>
-            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك عن دراسة تربط البروتين بعد التمرين ببناء العضلات. هذا الأسبوع نشرت ACSM بيانات تحدّد التوقيت الأمثل بدقة أكبر.</div></div></div>
+            <div style="font-size:0.7rem;color:#A78BFA;letter-spacing:2px;text-transform:uppercase;font-weight:600;" data-i18n="tala_recv">ما تستلمه تالا</div>
+            <div style="background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#A78BFA;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;" data-i18n="lbl_intel_summary">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;" data-i18n="tala_summary">نشرت Cell Metabolism دراسة تثبت أن تمارين المقاومة ثلاث مرات أسبوعياً تُحسّن حساسية الأنسولين بنسبة ٢٨٪ لدى النساء في الثلاثينيات أكثر من الكارديو وحده. <strong style="color:var(--text);">ما يعنيك:</strong> إعادة النظر في خطة تمرينك قد يكون أسرع طريق لهدفك.</p></div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;" data-i18n="lbl_memory">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;" data-i18n="tala_memory">الأسبوع الماضي أخبرناك عن دراسة تربط البروتين بعد التمرين ببناء العضلات. هذا الأسبوع نشرت ACSM بيانات تحدّد التوقيت الأمثل بدقة أكبر.</div></div></div>
           </div>
         </div>
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(0,80,220,0.05));border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🌿</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">تالا لم تعد تصدّق كل ما يقوله المؤثرون. قراراتها الآن مبنية على أبحاث حقيقية محكّمة. <strong style="color:var(--text);">سيطرة يُحوّل الضوضاء إلى علم، ويضعه بين يديها مباشرة.</strong></p></div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(0,80,220,0.05));border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🌿</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;" data-i18n="tala_callout">تالا لم تعد تصدّق كل ما يقوله المؤثرون. قراراتها الآن مبنية على أبحاث حقيقية محكّمة. <strong style="color:var(--text);">سيطرة يُحوّل الضوضاء إلى علم، ويضعه بين يديها مباشرة.</strong></p></div>
       </div>
 
       <div id="example-ahmed" style="display:none;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;">
-            <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;">إعداد أحمد في سيطرة</div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الأمن السيبراني</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">الحوسبة السحابية</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">رؤية 2030 التقنية</span></div></div>
-            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;">الشركات</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">stc</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Palo Alto Networks</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">CrowdStrike</span></div></div>
-            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);">التكرار</span><span style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:#F97316;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;">يومي · ٧:٠٠ صباحاً</span></div>
+            <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px;" data-i18n="ahmed_setup">إعداد أحمد في سيطرة</div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_topics">المواضيع</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="ahmed_topic1">الأمن السيبراني</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="ahmed_topic2">الحوسبة السحابية</span><span style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;" data-i18n="ahmed_topic3">رؤية 2030 التقنية</span></div></div>
+            <div style="margin-bottom:20px;"><div style="font-size:0.72rem;color:var(--muted);margin-bottom:8px;font-weight:500;" data-i18n="lbl_companies">الشركات</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">stc</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">Palo Alto Networks</span><span style="background:rgba(0,229,160,0.06);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:5px 14px;border-radius:20px;">CrowdStrike</span></div></div>
+            <div style="border-top:1px solid var(--border2);padding-top:16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.78rem;color:var(--muted);" data-i18n="lbl_freq">التكرار</span><span style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);color:#F97316;font-size:0.78rem;padding:4px 14px;border-radius:10px;font-weight:600;" data-i18n="ahmed_freq">يومي · ٧:٠٠ صباحاً</span></div>
           </div>
           <div style="background:var(--bg2);border:1px solid rgba(249,115,22,0.25);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;gap:16px;">
-            <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;">ما يستلمه أحمد كل صباح</div>
-            <div style="background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#F97316;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;">أعلنت هيئة الأمن السيبراني عن اشتراطات جديدة تدخل حيز التنفيذ خلال ٩٠ يوماً. رصدت CrowdStrike حملة تجسس ضد شركات الطاقة الخليجية. <strong style="color:var(--text);">ما يعنيك:</strong> نافذة مبيعات واسعة تفتح الآن.</p></div>
-            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أخبرناك أن NCA تدرس اشتراطات جديدة. اليوم صدرت رسمياً. نافذة المبيعات التي توقعناها فُتحت الآن.</div></div></div>
+            <div style="font-size:0.7rem;color:#F97316;letter-spacing:2px;text-transform:uppercase;font-weight:600;" data-i18n="ahmed_recv">ما يستلمه أحمد كل صباح</div>
+            <div style="background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:14px;padding:18px 20px;"><div style="font-size:0.68rem;color:#F97316;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;" data-i18n="lbl_intel_summary">الملخص الاستخباراتي</div><p style="font-size:0.85rem;color:var(--mid);line-height:1.9;font-weight:300;" data-i18n="ahmed_summary">أعلنت هيئة الأمن السيبراني عن اشتراطات جديدة تدخل حيز التنفيذ خلال ٩٠ يوماً. رصدت CrowdStrike حملة تجسس ضد شركات الطاقة الخليجية. <strong style="color:var(--text);">ما يعنيك:</strong> نافذة مبيعات واسعة تفتح الآن.</p></div>
+            <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.2);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:1rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.72rem;color:#A78BFA;font-weight:600;margin-bottom:4px;" data-i18n="lbl_memory">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.8rem;color:var(--mid);line-height:1.8;" data-i18n="ahmed_memory">الأسبوع الماضي أخبرناك أن NCA تدرس اشتراطات جديدة. اليوم صدرت رسمياً. نافذة المبيعات التي توقعناها فُتحت الآن.</div></div></div>
           </div>
         </div>
-        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(0,0,0,0));border:1px solid rgba(249,115,22,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🛡️</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;">أحمد يبدأ كل يوم بملخص سيطرة قبل أن يفتح أي اجتماع. <strong style="color:var(--text);">سيطرة لا يجعله مجرد مندوب مبيعات، بل مستشاراً يملك معلومات أكثر من العميل نفسه.</strong></p></div>
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(0,0,0,0));border:1px solid rgba(249,115,22,0.2);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;"><span style="font-size:2rem;flex-shrink:0;">🛡️</span><p style="font-size:0.9rem;color:var(--mid);line-height:1.9;" data-i18n="ahmed_callout">أحمد يبدأ كل يوم بملخص سيطرة قبل أن يفتح أي اجتماع. <strong style="color:var(--text);">سيطرة لا يجعله مجرد مندوب مبيعات، بل مستشاراً يملك معلومات أكثر من العميل نفسه.</strong></p></div>
       </div>
     </div>
   </section>
@@ -367,27 +371,27 @@
   <!-- EMAIL PREVIEW -->
   <section class="preview-section">
     <div class="wrap">
-      <div class="section-label">نموذج ما ستستلمه</div>
-      <h2 class="section-title">هكذا تبدو <span>استخباراتك الشخصية</span></h2>
+      <div class="section-label" data-i18n="preview_label">نموذج ما ستستلمه</div>
+      <h2 class="section-title" data-i18n="preview_title">هكذا تبدو <span>استخباراتك الشخصية</span></h2>
       <div class="email-mockup">
-        <div class="email-header"><div class="email-from">من: <strong>سيطرة Intelligence</strong> &lt;brief@saitara.ai&gt;</div><div class="email-date">السبت · ٨:٠٠ صباحاً</div></div>
-        <div style="padding:0 28px"><div class="email-subject">⚡ استخباراتك هذا الأسبوع · الذكاء الاصطناعي · الشرق الأوسط</div></div>
+        <div class="email-header"><div class="email-from" data-i18n="email_from">من: <strong>سيطرة Intelligence</strong> &lt;brief@saitara.ai&gt;</div><div class="email-date" data-i18n="email_date">السبت · ٨:٠٠ صباحاً</div></div>
+        <div style="padding:0 28px"><div class="email-subject" data-i18n="email_subject">⚡ استخباراتك هذا الأسبوع · الذكاء الاصطناعي · الشرق الأوسط</div></div>
         <div class="email-body">
-          <div class="email-section-title">الملخص الاستخباراتي</div>
-          <p class="email-summary">شهد هذا الأسبوع تسارعاً في تبني AI على مستوى المؤسسات في الخليج، مع إعلان ثلاث شركات سعودية عن شراكات استراتيجية مع مزودي خدمات AI عالميين.</p>
-          <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.18);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:0.9rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.65rem;color:#A78BFA;font-weight:600;letter-spacing:1px;margin-bottom:3px;">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.78rem;color:var(--mid);line-height:1.8;">الأسبوع الماضي أشرنا إلى أن Saudi Vision 2030 تُسرّع في تبني AI. هذا الأسبوع تحوّلت الخطط إلى إعلانات رسمية وشراكات موقّعة.</div></div></div>
-          <div class="email-section-title">أبرز الأخبار مع تحليل تأثيرها عليك</div>
+          <div class="email-section-title" data-i18n="lbl_intel_summary">الملخص الاستخباراتي</div>
+          <p class="email-summary" data-i18n="email_summary">شهد هذا الأسبوع تسارعاً في تبني AI على مستوى المؤسسات في الخليج، مع إعلان ثلاث شركات سعودية عن شراكات استراتيجية مع مزودي خدمات AI عالميين.</p>
+          <div style="background:rgba(100,80,200,0.06);border:1px solid rgba(100,80,200,0.18);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;"><span style="font-size:0.9rem;flex-shrink:0;">🧠</span><div><div style="font-size:0.65rem;color:#A78BFA;font-weight:600;letter-spacing:1px;margin-bottom:3px;" data-i18n="lbl_memory">ذاكرة سيطرة · تطور من الأسبوع الماضي</div><div style="font-size:0.78rem;color:var(--mid);line-height:1.8;" data-i18n="email_memory">الأسبوع الماضي أشرنا إلى أن Saudi Vision 2030 تُسرّع في تبني AI. هذا الأسبوع تحوّلت الخطط إلى إعلانات رسمية وشراكات موقّعة.</div></div></div>
+          <div class="email-section-title" data-i18n="email_section2">أبرز الأخبار مع تحليل تأثيرها عليك</div>
           <div class="email-links">
             <div class="email-link-item" style="flex-direction:column;gap:8px;">
               <div style="font-size:0.85rem;font-weight:600;color:var(--text);">Saudi Arabia's $40B AI Fund: What it means for regional talent</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;">لماذا يهمك</div><div style="font-size:0.73rem;color:var(--muted);">يؤثر على سوق العمل في مجالك</div></div>
-                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;">اقتراح</div><div style="font-size:0.73rem;color:var(--muted);">راجع فرص الشراكة قبل نهاية الربع</div></div>
+                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;" data-i18n="email_why_label">لماذا يهمك</div><div style="font-size:0.73rem;color:var(--muted);" data-i18n="email_why">يؤثر على سوق العمل في مجالك</div></div>
+                <div style="background:rgba(0,229,160,0.04);border-radius:6px;padding:6px 10px;"><div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-bottom:2px;" data-i18n="email_sugg_label">اقتراح</div><div style="font-size:0.73rem;color:var(--muted);" data-i18n="email_sugg">راجع فرص الشراكة قبل نهاية الربع</div></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="email-footer-bar"><div class="email-footer-logo">سيطرة</div><div class="email-footer-note">استخباراتك الشخصية · saitara.ai</div></div>
+        <div class="email-footer-bar"><div class="email-footer-logo" data-i18n="brand">سيطرة</div><div class="email-footer-note" data-i18n="email_footer_note">استخباراتك الشخصية · saitara.ai</div></div>
       </div>
     </div>
   </section>
@@ -395,33 +399,33 @@
   <!-- PLANS -->
   <section class="plans-section">
     <div class="wrap">
-      <div class="section-label">الخطط</div>
-      <h2 class="section-title">ابدأ مجاناً.<br/><span>ارتقِ عندما تحتاج أكثر.</span></h2>
+      <div class="section-label" data-i18n="plans_label">الخطط</div>
+      <h2 class="section-title" data-i18n="plans_title">ابدأ مجاناً.<br/><span>ارتقِ عندما تحتاج أكثر.</span></h2>
       <div class="plans-grid">
         <div class="plan-card">
-          <div class="plan-name">مجاني دائماً</div>
-          <div class="plan-price">٠<span> / شهرياً</span></div>
-          <div class="plan-sub">للأفراد الذين يريدون البداية</div>
+          <div class="plan-name" data-i18n="free_name">مجاني دائماً</div>
+          <div class="plan-price" data-i18n="free_price">٠<span> / شهرياً</span></div>
+          <div class="plan-sub" data-i18n="free_sub">للأفراد الذين يريدون البداية</div>
           <ul class="plan-features">
-            <li class="plan-feature"><span class="plan-check">✓</span> حتى ٤ مواضيع و٣ شركات و٣ بلدان</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ملخص أسبوعي أو يومي</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ذاكرة وربط الأحداث</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ملف شخصي وبيو</li>
-            <li class="plan-feature"><span class="plan-x">·</span> إنذار مبكر</li>
-            <li class="plan-feature"><span class="plan-x">·</span> ملخص صوتي</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="free_f1">حتى ٣ مواضيع وشركة واحدة ودولة واحدة</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="free_f2">ملخص أسبوعي أو يومي</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="free_f3">ذاكرة وربط الأحداث</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="free_f4">ملف شخصي وبيو</span></li>
+            <li class="plan-feature"><span class="plan-x">·</span> <span data-i18n="free_f5">إنذار مبكر</span></li>
+            <li class="plan-feature"><span class="plan-x">·</span> <span data-i18n="free_f6">ملخص صوتي</span></li>
           </ul>
         </div>
         <div class="plan-card featured">
-          <span class="plan-badge">قريباً</span>
-          <div class="plan-name">مميز</div>
-          <div class="plan-price">١٥<span> دولار / شهر</span></div>
-          <div class="plan-sub">للمحترفين الذين يريدون أكثر</div>
+          <span class="plan-badge" data-i18n="premium_badge">قريباً</span>
+          <div class="plan-name" data-i18n="premium_name">مميز</div>
+          <div class="plan-price" data-i18n="premium_price">١٥<span> دولار / شهر</span></div>
+          <div class="plan-sub" data-i18n="premium_sub">للمحترفين الذين يريدون أكثر</div>
           <ul class="plan-features">
-            <li class="plan-feature"><span class="plan-check">✓</span> مواضيع وشركات وبلدان غير محدودة</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> يومي أو كل يومين</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> إنذار مبكر فوري</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> ملخص صوتي ٣ دقائق</li>
-            <li class="plan-feature"><span class="plan-check">✓</span> أرشيف كامل</li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="premium_f1">مواضيع وشركات وبلدان غير محدودة</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="premium_f2">يومي أو كل يومين</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="premium_f3">إنذار مبكر فوري</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="premium_f4">ملخص صوتي ٣ دقائق</span></li>
+            <li class="plan-feature"><span class="plan-check">✓</span> <span data-i18n="premium_f5">أرشيف كامل</span></li>
           </ul>
         </div>
       </div>
@@ -430,23 +434,337 @@
 
   <!-- PHILOSOPHY -->
   <div class="philosophy">
-    <p class="philosophy-quote">
+    <p class="philosophy-quote" data-i18n="philosophy_quote">
       في عالم يغرق فيه الجميع بالمعلومات ويجوع من المعنى،<br/>
       <em>سيطرة</em> لا يعطيك أخباراً أكثر.<br/>
       يعطيك فهماً أعمق لما يحدث، وما يعنيه لك أنت بناءً على من أنت وما تريد أن تحقق. مباشرة على بريدك.
     </p>
-    <p class="philosophy-sub">هذا ليس مجرد منتج. هذا كيف يبدو أن يكون لك عقل ثانٍ يعمل لصالحك على مدار الساعة.</p>
-    <a href="/onboarding.html" class="philosophy-cta-btn">ابدأ إعداد ملفك الآن ←</a>
+    <p class="philosophy-sub" data-i18n="philosophy_sub">هذا ليس مجرد منتج. هذا كيف يبدو أن يكون لك عقل ثانٍ يعمل لصالحك على مدار الساعة.</p>
+    <a href="/onboarding.html" data-base="/onboarding.html" data-keep-lang class="philosophy-cta-btn" data-i18n="philosophy_cta">ابدأ إعداد ملفك الآن ←</a>
   </div>
 
   <footer>
-    <div class="footer-logo">سيطرة</div>
-    <div class="footer-tagline">الاستخبارات الشخصية الاستباقية</div>
+    <div class="footer-logo" data-i18n="brand">سيطرة</div>
+    <div class="footer-tagline" data-i18n="footer_tagline">الاستخبارات الشخصية الاستباقية</div>
     <a href="https://www.agentsouq.ai" target="_blank" style="font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Powered by: Agent Souq AI</a>
     <div style="font-size:0.75rem;color:var(--muted);direction:ltr;">saitara.ai · 2026</div>
   </footer>
 
   <script>
+    const I18N = {
+      ar: {
+        _title: 'سيطرة · الاستخبارات الشخصية الاستباقية',
+        brand: 'سيطرة',
+        hero_tag: 'وكيل ذكاء اصطناعي شخصي · النسخة التجريبية',
+        concept_label: 'المفهوم الجوهري',
+        concept_text: 'الاستخبارات الشخصية الاستباقية',
+        hero_headline: 'العالم لا ينتظر. كل ليلة تنام، تتغيّر مجالات، تُطلق منتجات، تُغلق فرص.<br/>الذي يصحى أولاً يكسب.<br/><span style="color:var(--accent);font-size:0.95em;font-weight:700;">سيطرة يصحى بدلاً عنك.</span>',
+        hero_desc: 'يلفّ العالم كل يوم، يتذكر ما أخبرك إياه بالأمس، يربط الأحداث ببعضها، ويرجعلك بأهم ما يخصك أنت تحديداً، من الزاوية التي تهمك. مباشرة على بريدك.',
+        cta_primary: 'ابدأ إعداد ملفك الآن ←',
+        cta_secondary: 'عدّل ملفك الحالي',
+        whatis_label: 'ما هي الاستخبارات الشخصية الاستباقية',
+        whatis_title: 'ليست أخباراً.<br/>بل <span>عقل ثانٍ يعمل لصالحك.</span>',
+        whatis_body: 'الفرق بين من يقرأ الأخبار ومن يملك استخبارات شخصية هو الفرق بين من يتفاعل مع الأحداث ومن يتوقعها. سيطرة لا ينتظر أن تسأل، يراقب باستمرار، يتذكر ما أخبرك إياه، ويخبرك بما يستحق انتباهك قبل أن يعرفه أحد.',
+        card1_title: 'استباقية لا تفاعلية',
+        card1_body: 'سيطرة لا ينتظر أن تسأل. يراقب مجالاتك وشركاتك وبلدانك على مدار الساعة، ويصلك تلقائياً عندما يكون هناك ما يستحق انتباهك، قبل أن يعرفه أحد.',
+        card1_tag: 'Proactive · استباقية',
+        card2_title: 'يعرفك حقاً',
+        card2_body: 'أنت تخبر سيطرة من أنت، ماذا تعمل، وماذا تريد أن تحقق. ومن تلك اللحظة، كل خبر يصلك يُفسَّر من زاوية أهدافك أنت تحديداً، لا من زاوية الإعلام العام.',
+        card2_tag: 'Knows You · يعرفك',
+        card3_title: 'ذاكرة حقيقية',
+        card3_body: 'سيطرة يتذكر كل ما أخبرك إياه. عندما يتطور خبر كنت على علم به، لا يكرر عليك القصة من البداية. يقول لك مباشرة: هذا ما تغيّر منذ المرة الأخيرة.',
+        card3_tag: 'Memory · ذاكرة',
+        card4_title: 'استخبارات لا مجرد أخبار',
+        card4_body: 'كل خبر يصلك مع أربعة أشياء: لماذا يهمك بناءً على أهدافك، ما تأثيره على عملك أو حياتك، كيف تطور من الأسبوع الماضي، وماذا يمكنك أن تفعل حياله.',
+        card4_tag: 'Intelligence · استخبارات',
+        card5_title: 'إنذار مبكر وتتبع دقيق',
+        card5_body: 'سيطرة يكتشف الاتجاهات الناشئة قبل أن تصل الإعلام الرئيسي بـ ٧٢ ساعة على الأقل. ويتتبع شركاتك وبلدانك المختارة بدقة، يرصد كل جديد عنها ويقرأ الأحداث من الزاوية التي تخصك أنت.',
+        card5_companies_label: 'شركات:',
+        card5_countries_label: 'بلدان:',
+        country_uae: 'الإمارات',
+        country_ksa: 'السعودية',
+        country_us: 'الولايات المتحدة',
+        country_any: '+ أي بلد تختاره',
+        card5_tag: 'Company & Country Tracking · تتبع الشركات والبلدان',
+        compare_label: 'الفرق الجوهري',
+        compare_title: 'بدون سيطرة أنت تطفو.<br/>مع سيطرة <span>أنت تتحكم.</span>',
+        compare_old_title: 'بدون سيطرة',
+        compare_new_title: 'مع سيطرة',
+        old1: 'تقرأ أخباراً كثيرة لكنك لا تعرف ماذا تفعل بها',
+        old2: 'كل يوم تبدأ من الصفر بدون سياق أو ذاكرة',
+        old3: 'الخوارزمية تقرر ما تراه بناءً على التفاعل لا الفائدة',
+        old4: 'تعرف بالأحداث بعد أن يعرفها الجميع',
+        old5: 'معلومة بدون تأثير، خبر بدون فعل',
+        new1: 'كل خبر يأتي مع "لماذا يهمك" و"ماذا تفعل" بناءً على أهدافك',
+        new2: 'سيطرة يتذكر ويربط الأحداث ببعضها تلقائياً',
+        new3: 'أنت تحدد ما تريد معرفته، لا الخوارزمية',
+        new4: 'تكتشف الاتجاهات قبل انتشارها بـ ٧٢ ساعة',
+        new5: '٥ دقائق قراءة تعادل ساعات من البحث والمتابعة',
+        how_label: 'كيف تعمل سيطرة',
+        how_title: 'أربع خطوات تغيّر<br/><span>طريقة تعاملك مع العالم.</span>',
+        step1_title: 'أخبرنا من أنت وماذا تريد',
+        step1_body: 'في خمس دقائق، اختر مجالاتك وشركاتك وبلدانك. والأهم من ذلك: أخبر سيطرة عن نفسك، ماذا تعمل، وماذا تريد أن تحقق. هذه المعلومات تحوّله من مجرد وكيل أخبار إلى مستشار يفهمك ويتذكرك.',
+        step2_title: 'سيطرة يراقب ويتذكر',
+        step2_body: 'كل يوم يفحص سيطرة آلاف المصادر الموثوقة عالمياً فقط. يصفّي ما لا يعنيك، ويحفظ في ذاكرته ما أرسله إليك سابقاً ليربط الصورة كاملة مع الوقت.',
+        step3_title: 'تصلك الاستخبارات جاهزة',
+        step3_body: 'ملخص منسّق يصل بريدك. كل خبر مع مصدره الموثوق، سبب أهميته لك بالتحديد بناءً على أهدافك، تأثيره على عملك أو حياتك، وكيف تطور من المرة الأخيرة. تقرأه في ٥ دقائق وتبدأ يومك بثقة كاملة.',
+        step4_title: 'سيطرة يتطور معك',
+        step4_body: 'كلما استخدمت سيطرة أكثر، كلما ازدادت دقته وعمقه. يتعلم ما يفيدك حقاً، ويصبح كل ملخص أقرب إلى احتياجاتك الفعلية وأهدافك المتطورة.',
+        ex_label: 'أمثلة حية',
+        ex_title: 'سيطرة لكل شخص<br/><span>بطريقته الخاصة</span>',
+        ex_body: 'مهما كان مجالك أو هدفك، سيطرة يقرأ ملفك الشخصي، يتذكر ما أخبرك إياه سابقاً، ويبني لك تجربة مختلفة تماماً عن أي شخص آخر.',
+        tab_khalid: '🫀 د. خالد · طبيب القلب',
+        tab_tala: '🌿 تالا · الصحة واللياقة',
+        tab_ahmed: '🛡️ أحمد · مبيعات الأمن السيبراني',
+        lbl_topics: 'المواضيع',
+        lbl_sources: 'المصادر الموثوقة',
+        lbl_sources_only: 'المصادر الموثوقة فقط',
+        lbl_companies: 'الشركات',
+        lbl_freq: 'التكرار',
+        lbl_intel_summary: 'الملخص الاستخباراتي',
+        lbl_memory: 'ذاكرة سيطرة · تطور من الأسبوع الماضي',
+        lbl_early_warning: 'إنذار مبكر · ٧٢ ساعة قبل الإعلام الرئيسي',
+        khalid_setup: 'إعداد د. خالد في سيطرة',
+        khalid_topic1: 'أمراض القلب',
+        khalid_topic2: 'الذكاء الاصطناعي في الطب',
+        khalid_topic3: 'الأدوية القلبية',
+        khalid_freq: 'أسبوعي · الجمعة',
+        khalid_recv: 'ما يصل د. خالد',
+        khalid_summary: 'نشر NEJM دراسة على ٤٨٠٠ مريض تثبت أن دمج الذكاء الاصطناعي مع تحليل ECG يرفع دقة اكتشاف الرجفان الأذيني بنسبة ٣١٪. <strong style="color:var(--text);">ما يعنيك:</strong> الإرشادات الجديدة تؤثر مباشرة على بروتوكول العلاج في عيادتك.',
+        khalid_memory: 'الأسبوع الماضي أخبرناك عن دراسة أولية حول AI في قراءة الـ ECG. هذا الأسبوع نُشرت النتائج الكاملة رسمياً في NEJM.',
+        khalid_warning: 'اتجاه ناشئ في ٣ مجلات: ربط إيقاع النوم بالرجفان الأذيني. لم ينتشر بعد لكنه سيكون محوراً في المؤتمرات القادمة.',
+        khalid_callout: 'د. خالد يقرأ ملخصه في ٥ دقائق كل جمعة صباحاً. يدخل على مرضاه وهو يحمل أحدث ما نشره العالم في تخصصه. <strong style="color:var(--text);">سيطرة لا يوفّر عليه الوقت فقط، بل يجعله طبيباً أفضل.</strong>',
+        tala_setup: 'إعداد تالا في سيطرة',
+        tala_topic1: 'اللياقة البدنية',
+        tala_topic2: 'التغذية والرشاقة',
+        tala_topic3: 'النوم والتعافي',
+        tala_freq: 'مرتين أسبوعياً',
+        tala_recv: 'ما تستلمه تالا',
+        tala_summary: 'نشرت Cell Metabolism دراسة تثبت أن تمارين المقاومة ثلاث مرات أسبوعياً تُحسّن حساسية الأنسولين بنسبة ٢٨٪ لدى النساء في الثلاثينيات أكثر من الكارديو وحده. <strong style="color:var(--text);">ما يعنيك:</strong> إعادة النظر في خطة تمرينك قد يكون أسرع طريق لهدفك.',
+        tala_memory: 'الأسبوع الماضي أخبرناك عن دراسة تربط البروتين بعد التمرين ببناء العضلات. هذا الأسبوع نشرت ACSM بيانات تحدّد التوقيت الأمثل بدقة أكبر.',
+        tala_callout: 'تالا لم تعد تصدّق كل ما يقوله المؤثرون. قراراتها الآن مبنية على أبحاث حقيقية محكّمة. <strong style="color:var(--text);">سيطرة يُحوّل الضوضاء إلى علم، ويضعه بين يديها مباشرة.</strong>',
+        ahmed_setup: 'إعداد أحمد في سيطرة',
+        ahmed_topic1: 'الأمن السيبراني',
+        ahmed_topic2: 'الحوسبة السحابية',
+        ahmed_topic3: 'رؤية 2030 التقنية',
+        ahmed_freq: 'يومي · ٧:٠٠ صباحاً',
+        ahmed_recv: 'ما يستلمه أحمد كل صباح',
+        ahmed_summary: 'أعلنت هيئة الأمن السيبراني عن اشتراطات جديدة تدخل حيز التنفيذ خلال ٩٠ يوماً. رصدت CrowdStrike حملة تجسس ضد شركات الطاقة الخليجية. <strong style="color:var(--text);">ما يعنيك:</strong> نافذة مبيعات واسعة تفتح الآن.',
+        ahmed_memory: 'الأسبوع الماضي أخبرناك أن NCA تدرس اشتراطات جديدة. اليوم صدرت رسمياً. نافذة المبيعات التي توقعناها فُتحت الآن.',
+        ahmed_callout: 'أحمد يبدأ كل يوم بملخص سيطرة قبل أن يفتح أي اجتماع. <strong style="color:var(--text);">سيطرة لا يجعله مجرد مندوب مبيعات، بل مستشاراً يملك معلومات أكثر من العميل نفسه.</strong>',
+        preview_label: 'نموذج ما ستستلمه',
+        preview_title: 'هكذا تبدو <span>استخباراتك الشخصية</span>',
+        email_from: 'من: <strong>سيطرة Intelligence</strong> &lt;brief@saitara.ai&gt;',
+        email_date: 'السبت · ٨:٠٠ صباحاً',
+        email_subject: '⚡ استخباراتك هذا الأسبوع · الذكاء الاصطناعي · الشرق الأوسط',
+        email_summary: 'شهد هذا الأسبوع تسارعاً في تبني AI على مستوى المؤسسات في الخليج، مع إعلان ثلاث شركات سعودية عن شراكات استراتيجية مع مزودي خدمات AI عالميين.',
+        email_memory: 'الأسبوع الماضي أشرنا إلى أن Saudi Vision 2030 تُسرّع في تبني AI. هذا الأسبوع تحوّلت الخطط إلى إعلانات رسمية وشراكات موقّعة.',
+        email_section2: 'أبرز الأخبار مع تحليل تأثيرها عليك',
+        email_why_label: 'لماذا يهمك',
+        email_why: 'يؤثر على سوق العمل في مجالك',
+        email_sugg_label: 'اقتراح',
+        email_sugg: 'راجع فرص الشراكة قبل نهاية الربع',
+        email_footer_note: 'استخباراتك الشخصية · saitara.ai',
+        plans_label: 'الخطط',
+        plans_title: 'ابدأ مجاناً.<br/><span>ارتقِ عندما تحتاج أكثر.</span>',
+        free_name: 'مجاني دائماً',
+        free_price: '٠<span> / شهرياً</span>',
+        free_sub: 'للأفراد الذين يريدون البداية',
+        free_f1: 'حتى ٣ مواضيع وشركة واحدة ودولة واحدة',
+        free_f2: 'ملخص أسبوعي أو يومي',
+        free_f3: 'ذاكرة وربط الأحداث',
+        free_f4: 'ملف شخصي وبيو',
+        free_f5: 'إنذار مبكر',
+        free_f6: 'ملخص صوتي',
+        premium_badge: 'قريباً',
+        premium_name: 'مميز',
+        premium_price: '١٥<span> دولار / شهر</span>',
+        premium_sub: 'للمحترفين الذين يريدون أكثر',
+        premium_f1: 'مواضيع وشركات وبلدان غير محدودة',
+        premium_f2: 'يومي أو كل يومين',
+        premium_f3: 'إنذار مبكر فوري',
+        premium_f4: 'ملخص صوتي ٣ دقائق',
+        premium_f5: 'أرشيف كامل',
+        philosophy_quote: 'في عالم يغرق فيه الجميع بالمعلومات ويجوع من المعنى،<br/><em>سيطرة</em> لا يعطيك أخباراً أكثر.<br/>يعطيك فهماً أعمق لما يحدث، وما يعنيه لك أنت بناءً على من أنت وما تريد أن تحقق. مباشرة على بريدك.',
+        philosophy_sub: 'هذا ليس مجرد منتج. هذا كيف يبدو أن يكون لك عقل ثانٍ يعمل لصالحك على مدار الساعة.',
+        philosophy_cta: 'ابدأ إعداد ملفك الآن ←',
+        footer_tagline: 'الاستخبارات الشخصية الاستباقية'
+      },
+      en: {
+        _title: 'Saitara · Proactive Personal Intelligence',
+        brand: 'Saitara',
+        hero_tag: 'Personal AI Agent · Beta',
+        concept_label: 'The Core Concept',
+        concept_text: 'Proactive Personal Intelligence',
+        hero_headline: "The world doesn't wait. Every night you sleep, industries shift, products launch, opportunities close.<br/>Whoever wakes up first, wins.<br/><span style=\"color:var(--accent);font-size:0.95em;font-weight:700;\">Saitara wakes up for you.</span>",
+        hero_desc: 'It scans the world every day, remembers what you told it yesterday, connects events together, and brings you back what matters to you specifically, from the angle you care about. Straight to your inbox.',
+        cta_primary: 'Set up your profile now →',
+        cta_secondary: 'Edit your existing profile',
+        whatis_label: 'What is Proactive Personal Intelligence',
+        whatis_title: "It's not news.<br/>It's <span>a second mind working for you.</span>",
+        whatis_body: "The difference between someone who reads the news and someone who owns personal intelligence is the difference between reacting to events and anticipating them. Saitara doesn't wait for you to ask, it monitors constantly, remembers what you told it, and tells you what deserves your attention before anyone else knows.",
+        card1_title: 'Proactive, Not Reactive',
+        card1_body: "Saitara doesn't wait for you to ask. It monitors your fields, companies, and countries around the clock, and reaches you automatically when there's something worth your attention, before anyone else knows.",
+        card1_tag: 'Proactive',
+        card2_title: 'It Truly Knows You',
+        card2_body: 'You tell Saitara who you are, what you do, and what you want to achieve. From that moment, every piece of news is interpreted through the lens of your goals specifically, not through the lens of general media.',
+        card2_tag: 'Knows You',
+        card3_title: 'Real Memory',
+        card3_body: "Saitara remembers everything it told you. When a story you already knew develops, it doesn't repeat it from the start. It tells you directly: here's what changed since last time.",
+        card3_tag: 'Memory',
+        card4_title: 'Intelligence, Not Just News',
+        card4_body: 'Every story reaches you with four things: why it matters based on your goals, its impact on your work or life, how it evolved from last week, and what you can do about it.',
+        card4_tag: 'Intelligence',
+        card5_title: 'Early Warning & Precise Tracking',
+        card5_body: 'Saitara detects emerging trends at least 72 hours before they reach mainstream media. It tracks your chosen companies and countries precisely, monitoring everything new about them and reading events from the angle that concerns you.',
+        card5_companies_label: 'Companies:',
+        card5_countries_label: 'Countries:',
+        country_uae: 'UAE',
+        country_ksa: 'Saudi Arabia',
+        country_us: 'United States',
+        country_any: '+ any country you choose',
+        card5_tag: 'Company & Country Tracking',
+        compare_label: 'The Core Difference',
+        compare_title: 'Without Saitara, you drift.<br/>With Saitara, <span>you take control.</span>',
+        compare_old_title: 'Without Saitara',
+        compare_new_title: 'With Saitara',
+        old1: "You read a lot of news but don't know what to do with it",
+        old2: 'Every day you start from zero with no context or memory',
+        old3: 'The algorithm decides what you see based on engagement, not value',
+        old4: 'You learn about events after everyone else already knows',
+        old5: 'Information without impact, news without action',
+        new1: 'Every story comes with "why it matters" and "what to do" based on your goals',
+        new2: 'Saitara remembers and connects events together automatically',
+        new3: 'You decide what you want to know, not the algorithm',
+        new4: 'You spot trends 72 hours before they spread',
+        new5: '5 minutes of reading equals hours of research and following',
+        how_label: 'How Saitara Works',
+        how_title: 'Four steps that change<br/><span>how you engage with the world.</span>',
+        step1_title: 'Tell us who you are and what you want',
+        step1_body: 'In five minutes, choose your fields, companies, and countries. And most importantly: tell Saitara about yourself, what you do, and what you want to achieve. This information turns it from a mere news agent into an advisor that understands and remembers you.',
+        step2_title: 'Saitara monitors and remembers',
+        step2_body: "Every day, Saitara scans thousands of globally trusted sources only. It filters out what doesn't concern you, and stores in its memory what it sent you before to connect the full picture over time.",
+        step3_title: 'Intelligence arrives ready',
+        step3_body: 'A polished summary lands in your inbox. Every story with its trusted source, why it matters to you specifically based on your goals, its impact on your work or life, and how it evolved since last time. You read it in 5 minutes and start your day with full confidence.',
+        step4_title: 'Saitara evolves with you',
+        step4_body: 'The more you use Saitara, the more accurate and deep it becomes. It learns what truly benefits you, and every summary gets closer to your actual needs and evolving goals.',
+        ex_label: 'Live Examples',
+        ex_title: 'Saitara for everyone<br/><span>in their own way</span>',
+        ex_body: 'Whatever your field or goal, Saitara reads your profile, remembers what you told it before, and builds you an experience completely different from anyone else.',
+        tab_khalid: '🫀 Dr. Khalid · Cardiologist',
+        tab_tala: '🌿 Tala · Health & Fitness',
+        tab_ahmed: '🛡️ Ahmed · Cybersecurity Sales',
+        lbl_topics: 'Topics',
+        lbl_sources: 'Trusted Sources',
+        lbl_sources_only: 'Trusted Sources Only',
+        lbl_companies: 'Companies',
+        lbl_freq: 'Frequency',
+        lbl_intel_summary: 'Intelligence Summary',
+        lbl_memory: 'Saitara Memory · Update since last week',
+        lbl_early_warning: 'Early Warning · 72 hours before mainstream media',
+        khalid_setup: "Dr. Khalid's setup in Saitara",
+        khalid_topic1: 'Cardiology',
+        khalid_topic2: 'AI in Medicine',
+        khalid_topic3: 'Cardiac Drugs',
+        khalid_freq: 'Weekly · Friday',
+        khalid_recv: 'What Dr. Khalid receives',
+        khalid_summary: 'NEJM published a study on 4,800 patients proving that combining AI with ECG analysis raises atrial fibrillation detection accuracy by 31%. <strong style="color:var(--text);">What it means for you:</strong> the new guidelines directly affect the treatment protocol in your clinic.',
+        khalid_memory: 'Last week we told you about a preliminary study on AI in reading ECGs. This week the full results were officially published in NEJM.',
+        khalid_warning: 'An emerging trend across 3 journals: linking sleep rhythm to atrial fibrillation. Not yet widespread but it will be a focus at upcoming conferences.',
+        khalid_callout: "Dr. Khalid reads his summary in 5 minutes every Friday morning. He walks in to his patients carrying the latest the world has published in his specialty. <strong style=\"color:var(--text);\">Saitara doesn't just save him time, it makes him a better doctor.</strong>",
+        tala_setup: "Tala's setup in Saitara",
+        tala_topic1: 'Physical Fitness',
+        tala_topic2: 'Nutrition & Fitness',
+        tala_topic3: 'Sleep & Recovery',
+        tala_freq: 'Twice Weekly',
+        tala_recv: 'What Tala receives',
+        tala_summary: 'Cell Metabolism published a study proving that resistance training three times a week improves insulin sensitivity by 28% in women in their thirties more than cardio alone. <strong style="color:var(--text);">What it means for you:</strong> rethinking your workout plan may be the fastest path to your goal.',
+        tala_memory: 'Last week we told you about a study linking post-workout protein to muscle building. This week ACSM published data pinpointing the optimal timing more precisely.',
+        tala_callout: 'Tala no longer believes everything influencers say. Her decisions are now based on real, peer-reviewed research. <strong style="color:var(--text);">Saitara turns noise into science, and places it directly in her hands.</strong>',
+        ahmed_setup: "Ahmed's setup in Saitara",
+        ahmed_topic1: 'Cybersecurity',
+        ahmed_topic2: 'Cloud Computing',
+        ahmed_topic3: 'Vision 2030 Tech',
+        ahmed_freq: 'Daily · 7:00 AM',
+        ahmed_recv: 'What Ahmed receives every morning',
+        ahmed_summary: 'The National Cybersecurity Authority announced new requirements taking effect within 90 days. CrowdStrike detected an espionage campaign against Gulf energy companies. <strong style="color:var(--text);">What it means for you:</strong> a wide sales window is opening now.',
+        ahmed_memory: 'Last week we told you the NCA was studying new requirements. Today they were officially issued. The sales window we predicted has now opened.',
+        ahmed_callout: "Ahmed starts every day with Saitara's summary before opening any meeting. <strong style=\"color:var(--text);\">Saitara doesn't just make him a sales rep, but an advisor who holds more information than the client himself.</strong>",
+        preview_label: "A sample of what you'll receive",
+        preview_title: 'This is what <span>your personal intelligence</span> looks like',
+        email_from: 'From: <strong>Saitara Intelligence</strong> &lt;brief@saitara.ai&gt;',
+        email_date: 'Saturday · 8:00 AM',
+        email_subject: '⚡ Your intelligence this week · AI · Middle East',
+        email_summary: 'This week saw an acceleration in enterprise-level AI adoption in the Gulf, with three Saudi companies announcing strategic partnerships with global AI service providers.',
+        email_memory: 'Last week we noted that Saudi Vision 2030 is accelerating AI adoption. This week the plans turned into official announcements and signed partnerships.',
+        email_section2: 'Top stories with impact analysis for you',
+        email_why_label: 'Why it matters',
+        email_why: 'Affects the job market in your field',
+        email_sugg_label: 'Suggestion',
+        email_sugg: 'Review partnership opportunities before quarter-end',
+        email_footer_note: 'Your personal intelligence · saitara.ai',
+        plans_label: 'Plans',
+        plans_title: 'Start free.<br/><span>Upgrade when you need more.</span>',
+        free_name: 'Free Forever',
+        free_price: '0<span> / month</span>',
+        free_sub: 'For individuals who want to start',
+        free_f1: 'Up to 3 topics, 1 company, and 1 country',
+        free_f2: 'Weekly or daily summary',
+        free_f3: 'Memory and event linking',
+        free_f4: 'Profile and bio',
+        free_f5: 'Early warning',
+        free_f6: 'Audio summary',
+        premium_badge: 'Soon',
+        premium_name: 'Premium',
+        premium_price: '$15<span> / month</span>',
+        premium_sub: 'For professionals who want more',
+        premium_f1: 'Unlimited topics, companies, and countries',
+        premium_f2: 'Daily or every other day',
+        premium_f3: 'Instant early warning',
+        premium_f4: '3-minute audio summary',
+        premium_f5: 'Full archive',
+        philosophy_quote: "In a world where everyone drowns in information and starves for meaning,<br/><em>Saitara</em> doesn't give you more news.<br/>It gives you a deeper understanding of what's happening, and what it means for you based on who you are and what you want to achieve. Straight to your inbox.",
+        philosophy_sub: 'This is not just a product. This is what it looks like to have a second mind working for you around the clock.',
+        philosophy_cta: 'Set up your profile now →',
+        footer_tagline: 'Proactive Personal Intelligence'
+      }
+    };
+
+    function applyLangLinks(lang) {
+      document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+        const base = a.getAttribute('data-base') || a.getAttribute('href').split('?')[0];
+        a.setAttribute('href', base + '?lang=' + lang);
+      });
+    }
+    function setLang(lang) {
+      const dict = I18N[lang] || I18N.ar;
+      if (!I18N[lang]) lang = 'ar';
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ar';
+      document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (dict[k] !== undefined) el.innerHTML = dict[k];
+      });
+      const t = document.getElementById('lang-toggle');
+      if (t) t.textContent = lang === 'en' ? 'العربية' : 'EN';
+      applyLangLinks(lang);
+      try { localStorage.setItem('saitara_lang', lang); } catch (e) {}
+    }
+    function toggleLang() {
+      let cur = 'ar';
+      try { cur = localStorage.getItem('saitara_lang') || 'ar'; } catch (e) {}
+      setLang(cur === 'ar' ? 'en' : 'ar');
+    }
+    (function () {
+      let lang = null;
+      try {
+        const p = new URLSearchParams(window.location.search).get('lang');
+        if (p === 'ar' || p === 'en') lang = p;
+        if (!lang) lang = localStorage.getItem('saitara_lang');
+      } catch (e) {}
+      setLang(lang === 'en' ? 'en' : 'ar');
+    })();
+
     const SUPABASE_URL  = 'https://jwtmjjlfzpwzzsdlgbno.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dG1qamxmenB3enpzZGxnYm5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDkwMDEsImV4cCI6MjA5NTc4NTAwMX0.aDZyKkm7bbYGGfEx0_5rAPsKKW9D86RmFo4QWSlqduc';
     const { createClient } = supabase;
