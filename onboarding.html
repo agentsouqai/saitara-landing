@@ -804,7 +804,7 @@ async function submitProfile() {
     // success screen never waits on the webhook's cold-start. keepalive lets
     // the request finish even if the page is closed right after.
     try {
-      const WELCOME_URL = 'https://saitara-webhook.onrender.com/welcome';
+      const WELCOME_URL = 'https://saitara-webhook.onrender.com';
       fetch(WELCOME_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
