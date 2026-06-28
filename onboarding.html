@@ -800,6 +800,25 @@ async function submitProfile() {
       throw new Error(err.message || response.statusText);
     }
 
+    // Fire the immediate welcome email — fully decoupled (no await) so the
+    // success screen never waits on the webhook's cold-start. keepalive lets
+    // the request finish even if the page is closed right after.
+    try {
+      const WELCOME_URL = 'https://saitara-webhook.onrender.com/welcome';
+      fetch(WELCOME_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          email: state.email,
+          name: state.name,
+          language: state.language || 'arabic'
+        })
+      }).catch(e => console.warn('Welcome email request failed (ignored):', e));
+    } catch (e) {
+      console.warn('Welcome email request failed (ignored):', e);
+    }
+
     for (let i = 1; i <= 7; i++) {
       const el = document.getElementById('step-' + i);
       if (el) el.style.display = 'none';
