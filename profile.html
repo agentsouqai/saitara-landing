@@ -137,7 +137,7 @@
     <a href="/" class="nav-logo" data-i18n="brand" data-keep-lang data-base="/">سيطرة</a>
     <div style="display:flex;align-items:center;gap:16px">
       <button id="lang-toggle" onclick="toggleLang()">EN</button>
-      <a href="/feed.html" class="nav-back" data-i18n="nav_feed" data-keep-lang data-base="/feed.html">نشرتي</a>
+      <a href="/feed.html" class="nav-back" data-i18n="nav_feed" data-keep-lang data-base="/feed.html">مركز الاستخبارات</a>
       <a href="/" class="nav-back" data-i18n="nav_back" data-keep-lang data-base="/">← الرئيسية</a>
       <button class="nav-signout" id="signout-btn" onclick="signOut()" data-i18n="signout">تسجيل الخروج</button>
     </div>
@@ -576,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── I18N ──────────────────────────────────────────────────────────
 const I18N = {
   ar: {
-    _title:'سيطرة · ملفك الشخصي', brand:'سيطرة', nav_feed:'نشرتي', nav_back:'← الرئيسية', signout:'تسجيل الخروج',
+    _title:'سيطرة · ملفك الشخصي', brand:'سيطرة', nav_feed:'مركز الاستخبارات', nav_back:'← الرئيسية', signout:'تسجيل الخروج',
     login_eyebrow:'الوصول إلى ملفك', login_title:'أدخل بريدك<br/><span>لنرسل لك رابط الدخول</span>', login_sub:'سيطرة يرسل لك رابطاً مؤقتاً على بريدك. اضغط عليه وستدخل مباشرة بدون كلمة مرور.', login_email_label:'بريدك الإلكتروني المسجّل', login_btn:'أرسل لي رابط الدخول ✦',
     sent_eyebrow:'تم الإرسال', sent_title:'تحقق من <span>بريدك</span>', sent_sub:'أرسلنا لك رابط دخول مؤقت. افتح بريدك واضغط على الرابط للدخول مباشرة.', sent_resend_q:'لم يصلك؟', sent_resend_link:'أرسل مرة أخرى',
     prof_eyebrow:'ملفك الاستخباراتي', prof_title:'عدّل <span>إعداداتك</span>', prof_sub:'كل تعديل يجعل استخباراتك أدق وأكثر صلة بما تحتاجه.', prof_name_label:'اسمك', prof_name_ph:'اسمك الكريم',
@@ -590,7 +590,7 @@ const I18N = {
     alert_resent:'تم إرسال الرابط مرة أخرى.', alert_session_expired:'انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.', signing_in_title:'جارٍ <span>تسجيل دخولك</span>', signing_in_sub:'لحظة واحدة، يتم التحقق من هويتك...',
   },
   en: {
-    _title:'Saitara · Your Profile', brand:'Saitara', nav_feed:'My feed', nav_back:'Home →', signout:'Sign out',
+    _title:'Saitara · Your Profile', brand:'Saitara', nav_feed:'Intelligence Hub', nav_back:'Home →', signout:'Sign out',
     login_eyebrow:'Access your profile', login_title:'Enter your email<br/><span>and we will send you a login link</span>', login_sub:'Saitara sends you a temporary link to your email. Click it and you are in instantly — no password.', login_email_label:'Your registered email', login_btn:'Send me a login link ✦',
     sent_eyebrow:'Sent', sent_title:'Check your <span>email</span>', sent_sub:'We sent you a temporary login link. Open your inbox and click the link to sign in instantly.', sent_resend_q:"Didn't get it?", sent_resend_link:'Send again',
     prof_eyebrow:'Your intelligence profile', prof_title:'Edit <span>your settings</span>', prof_sub:'Every edit makes your intelligence sharper and more relevant to what you need.', prof_name_label:'Your name', prof_name_ph:'Your name',
